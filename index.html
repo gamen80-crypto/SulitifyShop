@@ -1,4 +1,4 @@
-<!-- Sulitify V6.17 — fix: sticky nav döljde sektionsrubriker vid skroll-länkar -->
+<!-- Sulitify V6.18 — riktig varukorgspanel + fix: Mitt konto lades felaktigt till i varukorgen -->
 <!DOCTYPE html>
 <html lang="sv">
 <head>
@@ -582,6 +582,140 @@ nav {
   cursor: pointer;
 }
 
+.cart-drawer-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15,13,10,0.5);
+  display: none;
+  z-index: 998;
+}
+
+.cart-drawer-overlay.open {
+  display: block;
+}
+
+.cart-drawer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 380px;
+  max-width: 100%;
+  height: 100%;
+  background: var(--white, #fff);
+  box-shadow: -10px 0 40px rgba(0,0,0,0.25);
+  display: flex;
+  flex-direction: column;
+  animation: cartSlideIn 0.3s ease;
+}
+
+@keyframes cartSlideIn {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+.cart-drawer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22px 24px;
+  border-bottom: 1px solid var(--border, #eee);
+}
+
+.cart-drawer-header h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.4rem;
+  color: #1c1c1c;
+  margin: 0;
+}
+
+.cart-drawer-close {
+  background: none;
+  border: none;
+  font-size: 1.6rem;
+  line-height: 1;
+  cursor: pointer;
+  color: #999;
+}
+
+.cart-drawer-close:hover { color: #333; }
+
+.cart-drawer-items {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px 24px;
+}
+
+.cart-empty {
+  color: #888;
+  font-size: 0.9rem;
+  text-align: center;
+  margin-top: 40px;
+}
+
+.cart-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border, #f0f0f0);
+}
+
+.cart-item-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+}
+
+.cart-item-name {
+  font-size: 0.92rem;
+  color: #1c1c1c;
+}
+
+.cart-item-qty {
+  font-size: 0.78rem;
+  color: #999;
+}
+
+.cart-item-price {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1rem;
+  color: var(--gold, #c9a24a);
+  white-space: nowrap;
+}
+
+.cart-item-remove {
+  background: none;
+  border: none;
+  color: #bbb;
+  font-size: 1.2rem;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.cart-item-remove:hover { color: #c0392b; }
+
+.cart-drawer-footer {
+  padding: 20px 24px 26px;
+  border-top: 1px solid var(--border, #eee);
+}
+
+.cart-drawer-total {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.15rem;
+  color: #1c1c1c;
+  margin-bottom: 14px;
+}
+
+.cart-checkout-btn {
+  width: 100%;
+  text-align: center;
+  display: block;
+  border: none;
+  cursor: pointer;
+}
+
 .product-card h4 {
   font-size: 0.88rem;
   font-weight: 500;
@@ -1032,7 +1166,7 @@ footer {
       <span class="perk">✓ <span data-i18n="hero.perk4">Perfekt present</span></span>
     </div>
 
-    <a href="#" class="btn-primary" data-i18n="cta.order">Beställ Nu</a>
+    <a href="#" class="btn-primary add-to-cart-btn" data-name="AromaLux Premium Diffuser" data-price="599" data-i18n="cta.order">Beställ Nu</a>
   </div>
 
   <div class="hero-image">
@@ -1142,7 +1276,7 @@ footer {
       <div class="product-card-dark-body">
         <h4>Aroma Luxe Diffuser</h4>
         <div class="price">699 kr</div>
-        <button class="btn-mini" data-i18n="cta.order">Beställ Nu</button>
+        <button class="btn-mini add-to-cart-btn" data-name="Aroma Luxe Diffuser" data-price="699" data-i18n="cta.order">Beställ Nu</button>
       </div>
     </div>
 
@@ -1151,7 +1285,7 @@ footer {
       <div class="product-card-dark-body">
         <h4>Nordic Glow Lamp</h4>
         <div class="price">899 kr</div>
-        <button class="btn-mini" data-i18n="cta.order">Beställ Nu</button>
+        <button class="btn-mini add-to-cart-btn" data-name="Nordic Glow Lamp" data-price="899" data-i18n="cta.order">Beställ Nu</button>
       </div>
     </div>
 
@@ -1160,7 +1294,7 @@ footer {
       <div class="product-card-dark-body">
         <h4>Serenity Humidifier</h4>
         <div class="price">799 kr</div>
-        <button class="btn-mini" data-i18n="cta.order">Beställ Nu</button>
+        <button class="btn-mini add-to-cart-btn" data-name="Serenity Humidifier" data-price="799" data-i18n="cta.order">Beställ Nu</button>
       </div>
     </div>
 
@@ -1169,7 +1303,7 @@ footer {
       <div class="product-card-dark-body">
         <h4>Bamboo Ambient Light</h4>
         <div class="price">599 kr</div>
-        <button class="btn-mini" data-i18n="cta.order">Beställ Nu</button>
+        <button class="btn-mini add-to-cart-btn" data-name="Bamboo Ambient Light" data-price="599" data-i18n="cta.order">Beställ Nu</button>
       </div>
     </div>
 
@@ -1320,15 +1454,75 @@ const observer = new IntersectionObserver((entries) => {
 
 document.querySelectorAll('.promise-card').forEach(card => observer.observe(card));
 
-// Varukorg-räknare (demo)
-let count = 0;
-document.querySelectorAll('.btn-mini, .btn-primary').forEach(btn => {
-  btn.addEventListener('click', (e) => {
-    e.preventDefault();
-    count++;
-    document.querySelector('.cart-count').textContent = count;
-  });
+// ── VARUKORG (demo) ──
+let cartItems = [];
+
+function currentLang() {
+  return document.documentElement.lang === 'en' ? 'en' : 'sv';
+}
+
+function handleAddToCart(event, btn) {
+  event.preventDefault();
+  const name = btn.getAttribute('data-name');
+  const price = parseFloat(btn.getAttribute('data-price'));
+  const existing = cartItems.find(i => i.name === name);
+  if (existing) {
+    existing.qty++;
+  } else {
+    cartItems.push({ name, price, qty: 1 });
+  }
+  updateCartUI();
+  openCartDrawer();
+}
+
+function updateCartUI() {
+  const totalCount = cartItems.reduce((sum, i) => sum + i.qty, 0);
+  document.querySelector('.cart-count').textContent = totalCount;
+
+  const itemsEl = document.getElementById('cartDrawerItems');
+  if (cartItems.length === 0) {
+    itemsEl.innerHTML = '<p class="cart-empty">' +
+      (currentLang() === 'en' ? 'Your cart is empty.' : 'Din varukorg är tom.') +
+      '</p>';
+  } else {
+    itemsEl.innerHTML = cartItems.map((i, idx) => `
+      <div class="cart-item">
+        <div class="cart-item-info">
+          <span class="cart-item-name">${i.name}</span>
+          <span class="cart-item-qty">x${i.qty}</span>
+        </div>
+        <span class="cart-item-price">${i.price * i.qty} kr</span>
+        <button class="cart-item-remove" onclick="removeFromCart(${idx})" aria-label="Ta bort">&times;</button>
+      </div>
+    `).join('');
+  }
+
+  const total = cartItems.reduce((sum, i) => sum + i.price * i.qty, 0);
+  document.getElementById('cartDrawerTotal').textContent = total + ' kr';
+}
+
+function removeFromCart(idx) {
+  cartItems.splice(idx, 1);
+  updateCartUI();
+}
+
+function openCartDrawer(event) {
+  if (event) event.preventDefault();
+  document.getElementById('cartDrawerOverlay').classList.add('open');
+}
+
+function closeCartDrawer(event) {
+  if (event) event.preventDefault();
+  document.getElementById('cartDrawerOverlay').classList.remove('open');
+}
+
+document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
+  btn.addEventListener('click', (e) => handleAddToCart(e, btn));
 });
+
+document.querySelector('.cart-btn').addEventListener('click', openCartDrawer);
+updateCartUI();
+
 
 // ── SPRÅK / LANGUAGE ──
 const translations = {
@@ -1342,6 +1536,9 @@ const translations = {
     "nav.news": "Nyheter",
     "nav.account": "Mitt konto",
     "nav.cartAria": "Varukorg",
+    "cart.title": "Varukorg",
+    "cart.total": "Totalt",
+    "cart.checkout": "Till kassan",
     "hero.badge": "Veckans Skatt",
     "hero.tagline": "Premium Diffuser",
     "hero.desc": "Skapa en harmonisk atmosfär i ditt hem med vår eleganta AromaLux Diffuser. Perfekt för avslappning, bättre sömn och en exklusiv känsla i vardagen.",
@@ -1438,6 +1635,9 @@ const translations = {
     "nav.news": "News",
     "nav.account": "My Account",
     "nav.cartAria": "Cart",
+    "cart.title": "Cart",
+    "cart.total": "Total",
+    "cart.checkout": "Checkout",
     "hero.badge": "Weekly Treasure",
     "hero.tagline": "Premium Diffuser",
     "hero.desc": "Create a harmonious atmosphere in your home with our elegant AromaLux Diffuser. Perfect for relaxation, better sleep, and an exclusive everyday feel.",
@@ -1552,6 +1752,8 @@ function applyLanguage(lang) {
   });
 
   try { localStorage.setItem('sulitify-lang', lang); } catch (e) {}
+
+  if (typeof updateCartUI === 'function') updateCartUI();
 }
 
 const langBtn = document.getElementById('langBtn');
@@ -1594,6 +1796,23 @@ applyLanguage(savedLang);
   </div>
 </div>
 
+<!-- VARUKORG -->
+<div class="cart-drawer-overlay" id="cartDrawerOverlay" onclick="closeCartDrawer(event)">
+  <div class="cart-drawer" onclick="event.stopPropagation()">
+    <div class="cart-drawer-header">
+      <h3 data-i18n="cart.title">Varukorg</h3>
+      <button class="cart-drawer-close" onclick="closeCartDrawer(event)" aria-label="Stäng">&times;</button>
+    </div>
+    <div class="cart-drawer-items" id="cartDrawerItems"></div>
+    <div class="cart-drawer-footer">
+      <div class="cart-drawer-total">
+        <span data-i18n="cart.total">Totalt</span>: <span id="cartDrawerTotal">0 kr</span>
+      </div>
+      <button class="btn-primary cart-checkout-btn" onclick="openInfoModal(event, this)" data-modal="checkout" data-i18n="cart.checkout">Till kassan</button>
+    </div>
+  </div>
+</div>
+
 <script>
 function toggleCategory(btn) {
   const col = btn.closest('.category-col');
@@ -1628,6 +1847,10 @@ const infoModalContent = {
   wishlist: {
     sv: { title: 'Önskelista', body: 'Önskelistan aktiveras tillsammans med kundkonton vid lansering.' },
     en: { title: 'Wishlist', body: 'The wishlist activates together with customer accounts at launch.' }
+  },
+  checkout: {
+    sv: { title: 'Kassan', body: 'Kassan och betalning aktiveras när butiken lanseras. Din varukorg sparas kvar tills då.' },
+    en: { title: 'Checkout', body: 'Checkout and payment activate when the store launches. Your cart is saved until then.' }
   }
 };
 
