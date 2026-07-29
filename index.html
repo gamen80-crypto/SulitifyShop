@@ -1,4 +1,4 @@
-<!-- Sulitify V6.14 — språkmeny öppnas till höger om knappen (PWA-paket) -->
+<!-- Sulitify V6.15 — kategori-expansion, fungerande nav/footer-länkar, kontoplatshållare -->
 <!DOCTYPE html>
 <html lang="sv">
 <head>
@@ -466,6 +466,89 @@ nav {
   box-shadow: 0 6px 18px rgba(201,162,74,0.12);
 }
 
+.category-more {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.45s ease, opacity 0.35s ease;
+}
+
+.category-col.expanded .category-more {
+  max-height: 900px;
+  opacity: 1;
+}
+
+.show-more-btn {
+  cursor: pointer;
+}
+
+.show-more-btn svg {
+  transition: transform 0.3s ease;
+  vertical-align: middle;
+  margin-left: 4px;
+}
+
+.category-col.expanded .show-more-btn svg {
+  transform: rotate(180deg);
+}
+
+.btn-label-less { display: none; }
+.category-col.expanded .btn-label-more { display: none; }
+.category-col.expanded .btn-label-less { display: inline; }
+
+.info-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15,13,10,0.6);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  padding: 20px;
+}
+
+.info-modal-overlay.open {
+  display: flex;
+}
+
+.info-modal {
+  background: var(--white, #fff);
+  max-width: 420px;
+  width: 100%;
+  border-radius: 8px;
+  padding: 36px 32px;
+  position: relative;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+}
+
+.info-modal-close {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  background: none;
+  border: none;
+  font-size: 1.6rem;
+  line-height: 1;
+  cursor: pointer;
+  color: #999;
+}
+
+.info-modal-close:hover { color: #333; }
+
+.info-modal-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.6rem;
+  margin-bottom: 14px;
+  color: #1c1c1c;
+}
+
+.info-modal-body {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #555;
+}
+
 .product-card h4 {
   font-size: 0.88rem;
   font-weight: 500;
@@ -850,7 +933,7 @@ footer {
 }
 </style>
 </head>
-<body>
+<body id="home">
 
 <!-- ANNOUNCEMENT BAR -->
 <div class="announcement">
@@ -865,9 +948,9 @@ footer {
 <!-- NAV -->
 <nav>
   <ul class="nav-links">
-    <li><a href="#" data-i18n="nav.home">Hem</a></li>
-    <li><a href="#" data-i18n="nav.shop">Shop</a></li>
-    <li><a href="#" data-i18n="nav.news">Nyheter</a></li>
+    <li><a href="#home" data-i18n="nav.home">Hem</a></li>
+    <li><a href="#shop" data-i18n="nav.shop">Shop</a></li>
+    <li><a href="#news" data-i18n="nav.news">Nyheter</a></li>
   </ul>
 
   <div class="nav-right">
@@ -885,7 +968,7 @@ footer {
       🛒
       <span class="cart-count">0</span>
     </button>
-    <a href="#" class="btn-primary" style="padding:10px 22px;font-size:0.78rem;" data-i18n="nav.account">Mitt konto</a>
+    <a href="#" class="btn-primary" style="padding:10px 22px;font-size:0.78rem;" data-i18n="nav.account" data-modal="account" onclick="openInfoModal(event, this)">Mitt konto</a>
   </div>
 </nav>
 
@@ -894,7 +977,7 @@ footer {
 </div>
 
 <!-- HERO -->
-<section class="hero">
+<section class="hero" id="news">
   <div class="hero-content">
     <div class="hero-badge">⭐ <span data-i18n="hero.badge">Veckans Skatt</span></div>
     <h1>AromaLux<br><em data-i18n="hero.tagline">Premium Diffuser</em></h1>
@@ -932,43 +1015,79 @@ footer {
   <h2 data-i18n="categories.heading">Våra Kategorier</h2>
 </div>
 
-<section class="categories-section">
+<section class="categories-section" id="shop">
   <div class="category-grid">
 
-    <div class="category-col">
+    <div class="category-col" data-category="smarthome">
       <div class="category-title" data-i18n="cat.smarthome">Smart Hem</div>
       <div class="product-card"><h4 data-i18n="prod.smartlamp">Smart Lampa</h4><span class="product-price">299 kr</span></div>
       <div class="product-card"><h4 data-i18n="prod.wificam">WiFi Kamera</h4><span class="product-price">499 kr</span></div>
       <div class="product-card"><h4 data-i18n="prod.smartoutlet">Smart Kontakt</h4><span class="product-price">199 kr</span></div>
       <div class="product-card"><h4 data-i18n="prod.ledstrip">LED Strip</h4><span class="product-price">249 kr</span></div>
-      <button class="show-more-btn" data-i18n="cta.viewcategory">Se hela kategorin →</button>
+      <div class="category-more">
+        <div class="product-card"><h4 data-i18n="prod.smartplug2">Smart Timer</h4><span class="product-price">179 kr</span></div>
+        <div class="product-card"><h4 data-i18n="prod.doorsensor">Dörrsensor</h4><span class="product-price">229 kr</span></div>
+        <div class="product-card"><h4 data-i18n="prod.robotvac">Robotdammsugare</h4><span class="product-price">1499 kr</span></div>
+        <div class="product-card"><h4 data-i18n="prod.smartplug">Smart Eluttag</h4><span class="product-price">159 kr</span></div>
+      </div>
+      <button class="show-more-btn" data-category="smarthome" onclick="toggleCategory(this)">
+        <span class="btn-label-more" data-i18n="cta.viewcategory">Se hela kategorin →</span>
+        <span class="btn-label-less" data-i18n="cta.viewless">Visa färre ↑</span>
+      </button>
     </div>
 
-    <div class="category-col">
+    <div class="category-col" data-category="tech">
       <div class="category-title" data-i18n="cat.tech">Teknik</div>
       <div class="product-card"><h4 data-i18n="prod.projector">Projektor</h4><span class="product-price">899 kr</span></div>
       <div class="product-card"><h4 data-i18n="prod.smartwatch">Smart Watch</h4><span class="product-price">599 kr</span></div>
       <div class="product-card"><h4 data-i18n="prod.speaker">Högtalare</h4><span class="product-price">349 kr</span></div>
       <div class="product-card"><h4 data-i18n="prod.powerbank">Powerbank</h4><span class="product-price">279 kr</span></div>
-      <button class="show-more-btn" data-i18n="cta.viewcategory">Se hela kategorin →</button>
+      <div class="category-more">
+        <div class="product-card"><h4 data-i18n="prod.earbuds">Trådlösa Hörlurar</h4><span class="product-price">449 kr</span></div>
+        <div class="product-card"><h4 data-i18n="prod.keyboard">Trådlöst Tangentbord</h4><span class="product-price">399 kr</span></div>
+        <div class="product-card"><h4 data-i18n="prod.tripod">Flexibelt Stativ</h4><span class="product-price">199 kr</span></div>
+        <div class="product-card"><h4 data-i18n="prod.ringlight">Ringbelysning</h4><span class="product-price">329 kr</span></div>
+      </div>
+      <button class="show-more-btn" data-category="tech" onclick="toggleCategory(this)">
+        <span class="btn-label-more" data-i18n="cta.viewcategory">Se hela kategorin →</span>
+        <span class="btn-label-less" data-i18n="cta.viewless">Visa färre ↑</span>
+      </button>
     </div>
 
-    <div class="category-col">
+    <div class="category-col" data-category="lifestyle">
       <div class="category-title" data-i18n="cat.lifestyle">Livsstil</div>
       <div class="product-card"><h4 data-i18n="prod.aromadiffuser">Aroma Diffuser</h4><span class="product-price">399 kr</span></div>
       <div class="product-card"><h4 data-i18n="prod.massagegun">Massage Gun</h4><span class="product-price">699 kr</span></div>
       <div class="product-card"><h4 data-i18n="prod.ledmirror">LED Spegel</h4><span class="product-price">549 kr</span></div>
       <div class="product-card"><h4 data-i18n="prod.humidifier2">Luftfuktare</h4><span class="product-price">449 kr</span></div>
-      <button class="show-more-btn" data-i18n="cta.viewcategory">Se hela kategorin →</button>
+      <div class="category-more">
+        <div class="product-card"><h4 data-i18n="prod.weightedblanket">Tyngdtäcke</h4><span class="product-price">799 kr</span></div>
+        <div class="product-card"><h4 data-i18n="prod.yogamat">Yogamatta Premium</h4><span class="product-price">349 kr</span></div>
+        <div class="product-card"><h4 data-i18n="prod.candleset">Doftljus Set</h4><span class="product-price">299 kr</span></div>
+        <div class="product-card"><h4 data-i18n="prod.travelpillow">Reskudde</h4><span class="product-price">229 kr</span></div>
+      </div>
+      <button class="show-more-btn" data-category="lifestyle" onclick="toggleCategory(this)">
+        <span class="btn-label-more" data-i18n="cta.viewcategory">Se hela kategorin →</span>
+        <span class="btn-label-less" data-i18n="cta.viewless">Visa färre ↑</span>
+      </button>
     </div>
 
-    <div class="category-col">
+    <div class="category-col" data-category="pets">
       <div class="category-title" data-i18n="cat.pets">Husdjur</div>
       <div class="product-card"><h4 data-i18n="prod.fountain">Vattenfontän</h4><span class="product-price">399 kr</span></div>
       <div class="product-card"><h4 data-i18n="prod.feeder">Matare</h4><span class="product-price">599 kr</span></div>
       <div class="product-card"><h4 data-i18n="prod.scratchpost">Klösbräda</h4><span class="product-price">249 kr</span></div>
       <div class="product-card"><h4 data-i18n="prod.dogharness">Hundsele</h4><span class="product-price">299 kr</span></div>
-      <button class="show-more-btn" data-i18n="cta.viewcategory">Se hela kategorin →</button>
+      <div class="category-more">
+        <div class="product-card"><h4 data-i18n="prod.petbed">Hundbädd Deluxe</h4><span class="product-price">499 kr</span></div>
+        <div class="product-card"><h4 data-i18n="prod.catwheel">Katthjul</h4><span class="product-price">899 kr</span></div>
+        <div class="product-card"><h4 data-i18n="prod.gpstracker">GPS-halsband</h4><span class="product-price">349 kr</span></div>
+        <div class="product-card"><h4 data-i18n="prod.groomingkit">Vårdset för Päls</h4><span class="product-price">249 kr</span></div>
+      </div>
+      <button class="show-more-btn" data-category="pets" onclick="toggleCategory(this)">
+        <span class="btn-label-more" data-i18n="cta.viewcategory">Se hela kategorin →</span>
+        <span class="btn-label-less" data-i18n="cta.viewless">Visa färre ↑</span>
+      </button>
     </div>
 
   </div>
@@ -1126,25 +1245,25 @@ footer {
 
     <div class="footer-col">
       <h5 data-i18n="footer.shop.title">Butik</h5>
-      <a href="#" data-i18n="nav.home">Hem</a>
-      <a href="#" data-i18n="nav.shop">Shop</a>
-      <a href="#" data-i18n="nav.news">Nyheter</a>
-      <a href="#" data-i18n="footer.bestsellers">Bästsäljare</a>
+      <a href="#home" data-i18n="nav.home">Hem</a>
+      <a href="#shop" data-i18n="nav.shop">Shop</a>
+      <a href="#news" data-i18n="nav.news">Nyheter</a>
+      <a href="#shop" data-i18n="footer.bestsellers">Bästsäljare</a>
     </div>
 
     <div class="footer-col">
       <h5 data-i18n="footer.info.title">Info</h5>
-      <a href="#" data-i18n="footer.about">Om Oss</a>
-      <a href="#" data-i18n="footer.contact">Kontakt</a>
-      <a href="#" data-i18n="footer.shipping">Frakt & Retur</a>
-      <a href="#" data-i18n="footer.faq">FAQ</a>
+      <a href="#" data-i18n="footer.about" data-modal="about" onclick="openInfoModal(event, this)">Om Oss</a>
+      <a href="#" data-i18n="footer.contact" data-modal="contact" onclick="openInfoModal(event, this)">Kontakt</a>
+      <a href="#" data-i18n="footer.shipping" data-modal="shipping" onclick="openInfoModal(event, this)">Frakt & Retur</a>
+      <a href="#" data-i18n="footer.faq" data-modal="faq" onclick="openInfoModal(event, this)">FAQ</a>
     </div>
 
     <div class="footer-col">
       <h5 data-i18n="footer.account.title">Konto</h5>
-      <a href="#" data-i18n="footer.myaccount">Mitt Konto</a>
-      <a href="#" data-i18n="footer.orderhistory">Orderhistorik</a>
-      <a href="#" data-i18n="footer.wishlist">Önskelista</a>
+      <a href="#" data-i18n="footer.myaccount" data-modal="account" onclick="openInfoModal(event, this)">Mitt Konto</a>
+      <a href="#" data-i18n="footer.orderhistory" data-modal="orders" onclick="openInfoModal(event, this)">Orderhistorik</a>
+      <a href="#" data-i18n="footer.wishlist" data-modal="wishlist" onclick="openInfoModal(event, this)">Önskelista</a>
     </div>
   </div>
 
@@ -1200,6 +1319,7 @@ const translations = {
     "hero.perk4": "Perfekt present",
     "cta.order": "Beställ Nu",
     "cta.viewcategory": "Se hela kategorin →",
+    "cta.viewless": "Visa färre ↑",
     "categories.eyebrow": "UTFORSKA",
     "categories.heading": "Våra Kategorier",
     "cat.smarthome": "Smart Hem",
@@ -1222,6 +1342,22 @@ const translations = {
     "prod.feeder": "Matare",
     "prod.scratchpost": "Klösbräda",
     "prod.dogharness": "Hundsele",
+    "prod.smartplug2": "Smart Timer",
+    "prod.doorsensor": "Dörrsensor",
+    "prod.robotvac": "Robotdammsugare",
+    "prod.smartplug": "Smart Eluttag",
+    "prod.earbuds": "Trådlösa Hörlurar",
+    "prod.keyboard": "Trådlöst Tangentbord",
+    "prod.tripod": "Flexibelt Stativ",
+    "prod.ringlight": "Ringbelysning",
+    "prod.weightedblanket": "Tyngdtäcke",
+    "prod.yogamat": "Yogamatta Premium",
+    "prod.candleset": "Doftljus Set",
+    "prod.travelpillow": "Reskudde",
+    "prod.petbed": "Hundbädd Deluxe",
+    "prod.catwheel": "Katthjul",
+    "prod.gpstracker": "GPS-halsband",
+    "prod.groomingkit": "Vårdset för Päls",
     "bestsellers.eyebrow": "Mest populära",
     "bestsellers.heading": "Favoriter bland våra kunder",
     "newarrivals.eyebrow": "Nytt i sortimentet",
@@ -1279,6 +1415,7 @@ const translations = {
     "hero.perk4": "The perfect gift",
     "cta.order": "Order Now",
     "cta.viewcategory": "View full category →",
+    "cta.viewless": "Show less ↑",
     "categories.eyebrow": "EXPLORE",
     "categories.heading": "Our Categories",
     "cat.smarthome": "Smart Home",
@@ -1301,6 +1438,22 @@ const translations = {
     "prod.feeder": "Feeder",
     "prod.scratchpost": "Scratching Post",
     "prod.dogharness": "Dog Harness",
+    "prod.smartplug2": "Smart Timer",
+    "prod.doorsensor": "Door Sensor",
+    "prod.robotvac": "Robot Vacuum",
+    "prod.smartplug": "Smart Outlet",
+    "prod.earbuds": "Wireless Earbuds",
+    "prod.keyboard": "Wireless Keyboard",
+    "prod.tripod": "Flexible Tripod",
+    "prod.ringlight": "Ring Light",
+    "prod.weightedblanket": "Weighted Blanket",
+    "prod.yogamat": "Premium Yoga Mat",
+    "prod.candleset": "Scented Candle Set",
+    "prod.travelpillow": "Travel Pillow",
+    "prod.petbed": "Deluxe Dog Bed",
+    "prod.catwheel": "Cat Exercise Wheel",
+    "prod.gpstracker": "GPS Collar",
+    "prod.groomingkit": "Pet Grooming Kit",
     "bestsellers.eyebrow": "Most Popular",
     "bestsellers.heading": "Customer Favorites",
     "newarrivals.eyebrow": "New in the Collection",
@@ -1395,6 +1548,68 @@ document.addEventListener('click', (e) => {
 let savedLang = 'sv';
 try { savedLang = localStorage.getItem('sulitify-lang') || 'sv'; } catch (e) {}
 applyLanguage(savedLang);
+</script>
+
+<!-- INFO MODAL (Mitt konto, FAQ, Kontakt m.fl. — fylls med riktigt innehåll när butiken lanseras) -->
+<div class="info-modal-overlay" id="infoModalOverlay" onclick="closeInfoModal(event)">
+  <div class="info-modal" role="dialog" aria-modal="true">
+    <button class="info-modal-close" onclick="closeInfoModal(event)" aria-label="Stäng">&times;</button>
+    <div class="info-modal-title" id="infoModalTitle"></div>
+    <div class="info-modal-body" id="infoModalBody"></div>
+  </div>
+</div>
+
+<script>
+function toggleCategory(btn) {
+  const col = btn.closest('.category-col');
+  if (col) col.classList.toggle('expanded');
+}
+
+const infoModalContent = {
+  account: {
+    sv: { title: 'Mitt konto', body: 'Konto- och inloggningsfunktioner aktiveras när butiken lanseras. Just nu förbereder vi allt bakom kulisserna.' },
+    en: { title: 'My Account', body: 'Account and login features go live when the store launches. We\'re preparing everything behind the scenes right now.' }
+  },
+  about: {
+    sv: { title: 'Om Oss', body: 'Sulitify kurerar premiumprodukter med enkel, förfinad känsla. Mer om vår historia kommer snart.' },
+    en: { title: 'About Us', body: 'Sulitify curates premium products with a simple, refined feel. More about our story coming soon.' }
+  },
+  contact: {
+    sv: { title: 'Kontakt', body: 'Kontaktvägar öppnas i samband med butikslanseringen. Håll utkik!' },
+    en: { title: 'Contact', body: 'Contact channels open when the store launches. Stay tuned!' }
+  },
+  shipping: {
+    sv: { title: 'Frakt & Retur', body: 'Fullständig frakt- och returinformation publiceras när butiken är live.' },
+    en: { title: 'Shipping & Returns', body: 'Full shipping and return details will be published when the store goes live.' }
+  },
+  faq: {
+    sv: { title: 'FAQ', body: 'Vanliga frågor fylls i inför lanseringen. Har du en fråga redan nu, hör av dig via sociala medier.' },
+    en: { title: 'FAQ', body: 'Frequently asked questions will be filled in ahead of launch. Got a question already? Reach out on social media.' }
+  },
+  orders: {
+    sv: { title: 'Orderhistorik', body: 'Din orderhistorik blir tillgänglig här så snart butiken och kundkonton är live.' },
+    en: { title: 'Order History', body: 'Your order history will be available here as soon as the store and accounts go live.' }
+  },
+  wishlist: {
+    sv: { title: 'Önskelista', body: 'Önskelistan aktiveras tillsammans med kundkonton vid lansering.' },
+    en: { title: 'Wishlist', body: 'The wishlist activates together with customer accounts at launch.' }
+  }
+};
+
+function openInfoModal(event, el) {
+  event.preventDefault();
+  const key = el.getAttribute('data-modal');
+  const lang = document.documentElement.lang === 'en' ? 'en' : 'sv';
+  const content = (infoModalContent[key] && infoModalContent[key][lang]) || { title: '', body: '' };
+  document.getElementById('infoModalTitle').textContent = content.title;
+  document.getElementById('infoModalBody').textContent = content.body;
+  document.getElementById('infoModalOverlay').classList.add('open');
+}
+
+function closeInfoModal(event) {
+  if (event) event.preventDefault();
+  document.getElementById('infoModalOverlay').classList.remove('open');
+}
 </script>
 
 <!-- PWA: register service worker -->
