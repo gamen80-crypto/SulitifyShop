@@ -1,4 +1,4 @@
-<!-- Sulitify V6.15 — kategori-expansion, fungerande nav/footer-länkar, kontoplatshållare -->
+<!-- Sulitify V6.16 — Nyheter-länk till Nytt i sortimentet, klickbara produktkort med modal -->
 <!DOCTYPE html>
 <html lang="sv">
 <head>
@@ -549,6 +549,35 @@ nav {
   color: #555;
 }
 
+.info-modal-image {
+  display: none;
+  width: 100%;
+  max-height: 220px;
+  object-fit: cover;
+  border-radius: 6px;
+  margin-bottom: 18px;
+}
+
+.info-modal-image.show {
+  display: block;
+}
+
+.info-modal-price {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.3rem;
+  color: var(--gold, #c9a24a);
+  margin-bottom: 10px;
+  display: none;
+}
+
+.info-modal-price.show {
+  display: block;
+}
+
+.product-card, .new-card {
+  cursor: pointer;
+}
+
 .product-card h4 {
   font-size: 0.88rem;
   font-weight: 500;
@@ -950,7 +979,7 @@ footer {
   <ul class="nav-links">
     <li><a href="#home" data-i18n="nav.home">Hem</a></li>
     <li><a href="#shop" data-i18n="nav.shop">Shop</a></li>
-    <li><a href="#news" data-i18n="nav.news">Nyheter</a></li>
+    <li><a href="#newarrivals" data-i18n="nav.news">Nyheter</a></li>
   </ul>
 
   <div class="nav-right">
@@ -977,7 +1006,7 @@ footer {
 </div>
 
 <!-- HERO -->
-<section class="hero" id="news">
+<section class="hero">
   <div class="hero-content">
     <div class="hero-badge">⭐ <span data-i18n="hero.badge">Veckans Skatt</span></div>
     <h1>AromaLux<br><em data-i18n="hero.tagline">Premium Diffuser</em></h1>
@@ -1144,7 +1173,7 @@ footer {
 </section>
 
 <!-- NYHETER -->
-<section class="new-arrivals-section">
+<section class="new-arrivals-section" id="newarrivals">
   <div class="section-header">
     <div class="section-eyebrow" data-i18n="newarrivals.eyebrow">Nytt i sortimentet</div>
     <h2 data-i18n="newarrivals.heading">Äntligen här – upptäck våra senaste produkter</h2>
@@ -1247,7 +1276,7 @@ footer {
       <h5 data-i18n="footer.shop.title">Butik</h5>
       <a href="#home" data-i18n="nav.home">Hem</a>
       <a href="#shop" data-i18n="nav.shop">Shop</a>
-      <a href="#news" data-i18n="nav.news">Nyheter</a>
+      <a href="#newarrivals" data-i18n="nav.news">Nyheter</a>
       <a href="#shop" data-i18n="footer.bestsellers">Bästsäljare</a>
     </div>
 
@@ -1554,7 +1583,9 @@ applyLanguage(savedLang);
 <div class="info-modal-overlay" id="infoModalOverlay" onclick="closeInfoModal(event)">
   <div class="info-modal" role="dialog" aria-modal="true">
     <button class="info-modal-close" onclick="closeInfoModal(event)" aria-label="Stäng">&times;</button>
+    <img class="info-modal-image" id="infoModalImage" alt="">
     <div class="info-modal-title" id="infoModalTitle"></div>
+    <div class="info-modal-price" id="infoModalPrice"></div>
     <div class="info-modal-body" id="infoModalBody"></div>
   </div>
 </div>
@@ -1610,6 +1641,50 @@ function closeInfoModal(event) {
   if (event) event.preventDefault();
   document.getElementById('infoModalOverlay').classList.remove('open');
 }
+
+const genericProductDesc = {
+  sv: 'Fler detaljer om denna produkt läggs till när butiken lanseras.',
+  en: 'More details about this product will be added when the store launches.'
+};
+
+function openProductModal(card) {
+  const lang = document.documentElement.lang === 'en' ? 'en' : 'sv';
+  const nameEl = card.querySelector('h4');
+  const priceEl = card.querySelector('.price, .product-price');
+  const descEl = card.querySelector('p');
+  const imgEl = card.querySelector('img');
+
+  document.getElementById('infoModalTitle').textContent = nameEl ? nameEl.textContent.trim() : '';
+
+  const priceField = document.getElementById('infoModalPrice');
+  if (priceEl && priceEl.textContent.trim()) {
+    priceField.textContent = priceEl.textContent.trim();
+    priceField.classList.add('show');
+  } else {
+    priceField.classList.remove('show');
+  }
+
+  document.getElementById('infoModalBody').textContent = descEl && descEl.textContent.trim()
+    ? descEl.textContent.trim()
+    : genericProductDesc[lang];
+
+  const imgField = document.getElementById('infoModalImage');
+  if (imgEl && imgEl.getAttribute('src')) {
+    imgField.src = imgEl.getAttribute('src');
+    imgField.classList.add('show');
+  } else {
+    imgField.classList.remove('show');
+  }
+
+  document.getElementById('infoModalOverlay').classList.add('open');
+}
+
+document.addEventListener('click', function (e) {
+  const btn = e.target.closest('.show-more-btn');
+  if (btn) return; // handled by toggleCategory, don't open the modal too
+  const card = e.target.closest('.product-card, .new-card');
+  if (card) openProductModal(card);
+});
 </script>
 
 <!-- PWA: register service worker -->
