@@ -1,4 +1,4 @@
-<!-- Sulitify V6.18 — riktig varukorgspanel + fix: Mitt konto lades felaktigt till i varukorgen -->
+<!-- Sulitify V6.19 — sökruta, antalsjustering direkt i varukorgen -->
 <!DOCTYPE html>
 <html lang="sv">
 <head>
@@ -678,6 +678,130 @@ nav {
   color: #999;
 }
 
+.cart-item-qty-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.cart-item-qty-controls .cart-item-qty {
+  min-width: 16px;
+  text-align: center;
+  color: #333;
+  font-size: 0.85rem;
+}
+
+.qty-btn {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 1px solid var(--border, #ddd);
+  background: #fff;
+  color: #555;
+  font-size: 0.95rem;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.qty-btn:hover {
+  border-color: var(--gold, #c9a24a);
+  color: var(--gold, #c9a24a);
+}
+
+.search-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15,13,10,0.5);
+  display: none;
+  align-items: flex-start;
+  justify-content: center;
+  z-index: 999;
+  padding: 90px 20px 20px;
+}
+
+.search-overlay.open {
+  display: flex;
+}
+
+.search-box {
+  background: var(--white, #fff);
+  width: 100%;
+  max-width: 480px;
+  border-radius: 8px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  overflow: hidden;
+}
+
+.search-input-row {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid var(--border, #eee);
+  padding: 10px 16px;
+}
+
+.search-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+  padding: 8px 4px;
+  font-family: inherit;
+}
+
+.search-close {
+  background: none;
+  border: none;
+  font-size: 1.4rem;
+  color: #999;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.search-close:hover { color: #333; }
+
+.search-results {
+  max-height: 360px;
+  overflow-y: auto;
+}
+
+.search-result-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  cursor: pointer;
+  border-bottom: 1px solid var(--border, #f3f3f3);
+}
+
+.search-result-item:hover {
+  background: #faf7f2;
+}
+
+.search-result-name {
+  font-size: 0.92rem;
+  color: #1c1c1c;
+}
+
+.search-result-price {
+  font-family: 'Cormorant Garamond', serif;
+  color: var(--gold, #c9a24a);
+  font-size: 1rem;
+  white-space: nowrap;
+  margin-left: 12px;
+}
+
+.search-empty {
+  padding: 20px 16px;
+  color: #999;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
 .cart-item-price {
   font-family: 'Cormorant Garamond', serif;
   font-size: 1rem;
@@ -1130,7 +1254,7 @@ footer {
         <li><button type="button" class="lang-option" data-lang="en">🇬🇧 English</button></li>
       </ul>
     </div>
-    <span class="nav-icon">🔍</span>
+    <span class="nav-icon" onclick="openSearchOverlay(event)" role="button" tabindex="0" aria-label="Sök">🔍</span>
     <button class="cart-btn" aria-label="Varukorg" data-i18n-aria="nav.cartAria">
       🛒
       <span class="cart-count">0</span>
@@ -1489,7 +1613,11 @@ function updateCartUI() {
       <div class="cart-item">
         <div class="cart-item-info">
           <span class="cart-item-name">${i.name}</span>
-          <span class="cart-item-qty">x${i.qty}</span>
+          <div class="cart-item-qty-controls">
+            <button class="qty-btn" onclick="decreaseQty(${idx})" aria-label="Minska antal">&minus;</button>
+            <span class="cart-item-qty">${i.qty}</span>
+            <button class="qty-btn" onclick="increaseQty(${idx})" aria-label="Öka antal">+</button>
+          </div>
         </div>
         <span class="cart-item-price">${i.price * i.qty} kr</span>
         <button class="cart-item-remove" onclick="removeFromCart(${idx})" aria-label="Ta bort">&times;</button>
@@ -1499,6 +1627,21 @@ function updateCartUI() {
 
   const total = cartItems.reduce((sum, i) => sum + i.price * i.qty, 0);
   document.getElementById('cartDrawerTotal').textContent = total + ' kr';
+}
+
+function increaseQty(idx) {
+  if (!cartItems[idx]) return;
+  cartItems[idx].qty++;
+  updateCartUI();
+}
+
+function decreaseQty(idx) {
+  if (!cartItems[idx]) return;
+  cartItems[idx].qty--;
+  if (cartItems[idx].qty <= 0) {
+    cartItems.splice(idx, 1);
+  }
+  updateCartUI();
 }
 
 function removeFromCart(idx) {
@@ -1796,6 +1939,17 @@ applyLanguage(savedLang);
   </div>
 </div>
 
+<!-- SÖK -->
+<div class="search-overlay" id="searchOverlay" onclick="closeSearchOverlay(event)">
+  <div class="search-box" onclick="event.stopPropagation()">
+    <div class="search-input-row">
+      <input type="text" id="searchInput" class="search-input" placeholder="Sök produkter..." oninput="performSearch()">
+      <button class="search-close" onclick="closeSearchOverlay(event)" aria-label="Stäng">&times;</button>
+    </div>
+    <div class="search-results" id="searchResults"></div>
+  </div>
+</div>
+
 <!-- VARUKORG -->
 <div class="cart-drawer-overlay" id="cartDrawerOverlay" onclick="closeCartDrawer(event)">
   <div class="cart-drawer" onclick="event.stopPropagation()">
@@ -1912,6 +2066,62 @@ document.addEventListener('click', function (e) {
   const card = e.target.closest('.product-card, .new-card');
   if (card) openProductModal(card);
 });
+
+// ── SÖK ──
+function getAllProducts() {
+  return Array.from(document.querySelectorAll('.product-card, .new-card, .product-card-dark')).map(card => {
+    const nameEl = card.querySelector('h4');
+    const priceEl = card.querySelector('.price, .product-price');
+    return {
+      el: card,
+      name: nameEl ? nameEl.textContent.trim() : '',
+      price: priceEl ? priceEl.textContent.trim() : ''
+    };
+  }).filter(p => p.name);
+}
+
+function openSearchOverlay(event) {
+  if (event) event.preventDefault();
+  document.getElementById('searchOverlay').classList.add('open');
+  const input = document.getElementById('searchInput');
+  input.value = '';
+  document.getElementById('searchResults').innerHTML = '';
+  setTimeout(() => input.focus(), 50);
+}
+
+function closeSearchOverlay(event) {
+  if (event) event.preventDefault();
+  document.getElementById('searchOverlay').classList.remove('open');
+}
+
+function performSearch() {
+  const query = document.getElementById('searchInput').value.trim().toLowerCase();
+  const resultsEl = document.getElementById('searchResults');
+  if (!query) {
+    resultsEl.innerHTML = '';
+    return;
+  }
+  const matches = getAllProducts().filter(p => p.name.toLowerCase().includes(query));
+  if (matches.length === 0) {
+    resultsEl.innerHTML = '<div class="search-empty">' +
+      (currentLang() === 'en' ? 'No products found.' : 'Inga produkter hittades.') +
+      '</div>';
+    return;
+  }
+  resultsEl.innerHTML = matches.map((p, idx) => `
+    <div class="search-result-item" data-idx="${idx}">
+      <span class="search-result-name">${p.name}</span>
+      <span class="search-result-price">${p.price}</span>
+    </div>
+  `).join('');
+  resultsEl.querySelectorAll('.search-result-item').forEach((el, idx) => {
+    el.addEventListener('click', () => {
+      closeSearchOverlay();
+      openProductModal(matches[idx].el);
+    });
+  });
+}
+
 </script>
 
 <!-- PWA: register service worker -->
