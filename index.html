@@ -1,4 +1,4 @@
-<!-- Sulitify V6.29 — fix: Bästsäljare i footer länkade till fel sektion -->
+<!-- Sulitify V6.30 — sökresultat visar nu bilder; sprakvalskod granskad -->
 <!DOCTYPE html>
 <html lang="sv">
 <head>
@@ -812,9 +812,28 @@ nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 16px;
+  padding: 10px 16px;
   cursor: pointer;
   border-bottom: 1px solid var(--border, #f3f3f3);
+  gap: 10px;
+}
+
+.search-result-thumb {
+  width: 42px;
+  height: 32px;
+  object-fit: cover;
+  border-radius: 5px;
+  flex-shrink: 0;
+}
+
+.search-result-thumb-empty {
+  background: #f1ede4;
+}
+
+.search-result-name {
+  font-size: 0.92rem;
+  color: #1c1c1c;
+  flex: 1;
 }
 
 .search-result-item:hover {
@@ -2177,10 +2196,12 @@ function getAllProducts() {
   return Array.from(document.querySelectorAll('.product-card, .new-card, .product-card-dark')).map(card => {
     const nameEl = card.querySelector('h4');
     const priceEl = card.querySelector('.price, .product-price');
+    const imgEl = card.querySelector('img');
     return {
       el: card,
       name: nameEl ? nameEl.textContent.trim() : '',
-      price: priceEl ? priceEl.textContent.trim() : ''
+      price: priceEl ? priceEl.textContent.trim() : '',
+      img: imgEl ? imgEl.getAttribute('src') : ''
     };
   }).filter(p => p.name);
 }
@@ -2215,6 +2236,7 @@ function performSearch() {
   }
   resultsEl.innerHTML = matches.map((p, idx) => `
     <div class="search-result-item" data-idx="${idx}">
+      ${p.img ? `<img class="search-result-thumb" src="${p.img}" alt="">` : '<div class="search-result-thumb search-result-thumb-empty"></div>'}
       <span class="search-result-name">${p.name}</span>
       <span class="search-result-price">${p.price}</span>
     </div>
