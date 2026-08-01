@@ -1,4 +1,4 @@
-<!-- Sulitify V6.31 — språkkoden körs nu först i skriptet, oberoende av allt annat -->
+<!-- Sulitify V6.32 — fix: varukorgen kraschade pga variabelordning efter sprakflytten -->
 <!DOCTYPE html>
 <html lang="sv">
 <head>
@@ -1624,6 +1624,8 @@ footer {
 
 <script>
 
+let cartItems = [];
+
 // ── SPRÅK / LANGUAGE ──
 const translations = {
   sv: {
@@ -1964,7 +1966,6 @@ const observer = new IntersectionObserver((entries) => {
 document.querySelectorAll('.promise-card').forEach(card => observer.observe(card));
 
 // ── VARUKORG (demo) ──
-let cartItems = [];
 
 function currentLang() {
   return document.documentElement.lang === 'en' ? 'en' : 'sv';
