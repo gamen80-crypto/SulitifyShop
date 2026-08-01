@@ -1,4 +1,4 @@
-<!-- Sulitify V6.32 — fix: varukorgen kraschade pga variabelordning efter sprakflytten -->
+<!-- Sulitify V6.33 — fix: modal/sok/varukorgs-HTML flyttad fore skriptet (grundorsaken) -->
 <!DOCTYPE html>
 <html lang="sv">
 <head>
@@ -1622,6 +1622,45 @@ footer {
   </div>
 </footer>
 
+<!-- INFO MODAL (Mitt konto, FAQ, Kontakt m.fl. — fylls med riktigt innehåll när butiken lanseras) -->
+<div class="info-modal-overlay" id="infoModalOverlay" onclick="closeInfoModal(event)">
+  <div class="info-modal" role="dialog" aria-modal="true">
+    <button class="info-modal-close" onclick="closeInfoModal(event)" aria-label="Stäng">&times;</button>
+    <img class="info-modal-image" id="infoModalImage" alt="">
+    <div class="info-modal-title" id="infoModalTitle"></div>
+    <div class="info-modal-price" id="infoModalPrice"></div>
+    <div class="info-modal-body" id="infoModalBody"></div>
+  </div>
+</div>
+
+<!-- SÖK -->
+<div class="search-overlay" id="searchOverlay" onclick="closeSearchOverlay(event)">
+  <div class="search-box" onclick="event.stopPropagation()">
+    <div class="search-input-row">
+      <input type="text" id="searchInput" class="search-input" placeholder="Sök produkter..." oninput="performSearch()">
+      <button class="search-close" onclick="closeSearchOverlay(event)" aria-label="Stäng">&times;</button>
+    </div>
+    <div class="search-results" id="searchResults"></div>
+  </div>
+</div>
+
+<!-- VARUKORG -->
+<div class="cart-drawer-overlay" id="cartDrawerOverlay" onclick="closeCartDrawer(event)">
+  <div class="cart-drawer" onclick="event.stopPropagation()">
+    <div class="cart-drawer-header">
+      <h3 data-i18n="cart.title">Varukorg</h3>
+      <button class="cart-drawer-close" onclick="closeCartDrawer(event)" aria-label="Stäng">&times;</button>
+    </div>
+    <div class="cart-drawer-items" id="cartDrawerItems"></div>
+    <div class="cart-drawer-footer">
+      <div class="cart-drawer-total">
+        <span data-i18n="cart.total">Totalt</span>: <span id="cartDrawerTotal">0 kr</span>
+      </div>
+      <button class="btn-primary cart-checkout-btn" onclick="openInfoModal(event, this)" data-modal="checkout" data-i18n="cart.checkout">Till kassan</button>
+    </div>
+  </div>
+</div>
+
 <script>
 
 let cartItems = [];
@@ -2055,45 +2094,6 @@ updateCartUI();
 
 
 </script>
-
-<!-- INFO MODAL (Mitt konto, FAQ, Kontakt m.fl. — fylls med riktigt innehåll när butiken lanseras) -->
-<div class="info-modal-overlay" id="infoModalOverlay" onclick="closeInfoModal(event)">
-  <div class="info-modal" role="dialog" aria-modal="true">
-    <button class="info-modal-close" onclick="closeInfoModal(event)" aria-label="Stäng">&times;</button>
-    <img class="info-modal-image" id="infoModalImage" alt="">
-    <div class="info-modal-title" id="infoModalTitle"></div>
-    <div class="info-modal-price" id="infoModalPrice"></div>
-    <div class="info-modal-body" id="infoModalBody"></div>
-  </div>
-</div>
-
-<!-- SÖK -->
-<div class="search-overlay" id="searchOverlay" onclick="closeSearchOverlay(event)">
-  <div class="search-box" onclick="event.stopPropagation()">
-    <div class="search-input-row">
-      <input type="text" id="searchInput" class="search-input" placeholder="Sök produkter..." oninput="performSearch()">
-      <button class="search-close" onclick="closeSearchOverlay(event)" aria-label="Stäng">&times;</button>
-    </div>
-    <div class="search-results" id="searchResults"></div>
-  </div>
-</div>
-
-<!-- VARUKORG -->
-<div class="cart-drawer-overlay" id="cartDrawerOverlay" onclick="closeCartDrawer(event)">
-  <div class="cart-drawer" onclick="event.stopPropagation()">
-    <div class="cart-drawer-header">
-      <h3 data-i18n="cart.title">Varukorg</h3>
-      <button class="cart-drawer-close" onclick="closeCartDrawer(event)" aria-label="Stäng">&times;</button>
-    </div>
-    <div class="cart-drawer-items" id="cartDrawerItems"></div>
-    <div class="cart-drawer-footer">
-      <div class="cart-drawer-total">
-        <span data-i18n="cart.total">Totalt</span>: <span id="cartDrawerTotal">0 kr</span>
-      </div>
-      <button class="btn-primary cart-checkout-btn" onclick="openInfoModal(event, this)" data-modal="checkout" data-i18n="cart.checkout">Till kassan</button>
-    </div>
-  </div>
-</div>
 
 <script>
 function toggleCategory(btn) {
