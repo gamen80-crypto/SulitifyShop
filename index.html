@@ -1,4 +1,4 @@
-<!-- Sulitify V6.30 — sökresultat visar nu bilder; sprakvalskod granskad -->
+<!-- Sulitify V6.31 — språkkoden körs nu först i skriptet, oberoende av allt annat -->
 <!DOCTYPE html>
 <html lang="sv">
 <head>
@@ -1623,107 +1623,6 @@ footer {
 </footer>
 
 <script>
-// Fade-in animation för promise-kort
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach((entry, i) => {
-    if (entry.isIntersecting) {
-      setTimeout(() => {
-        entry.target.classList.add('visible');
-      }, i * 130);
-    }
-  });
-}, { threshold: 0.15 });
-
-document.querySelectorAll('.promise-card').forEach(card => observer.observe(card));
-
-// ── VARUKORG (demo) ──
-let cartItems = [];
-
-function currentLang() {
-  return document.documentElement.lang === 'en' ? 'en' : 'sv';
-}
-
-function handleAddToCart(event, btn) {
-  event.preventDefault();
-  const name = btn.getAttribute('data-name');
-  const price = parseFloat(btn.getAttribute('data-price'));
-  const existing = cartItems.find(i => i.name === name);
-  if (existing) {
-    existing.qty++;
-  } else {
-    cartItems.push({ name, price, qty: 1 });
-  }
-  updateCartUI();
-  openCartDrawer();
-}
-
-function updateCartUI() {
-  const totalCount = cartItems.reduce((sum, i) => sum + i.qty, 0);
-  document.querySelector('.cart-count').textContent = totalCount;
-
-  const itemsEl = document.getElementById('cartDrawerItems');
-  if (cartItems.length === 0) {
-    itemsEl.innerHTML = '<p class="cart-empty">' +
-      (currentLang() === 'en' ? 'Your cart is empty.' : 'Din varukorg är tom.') +
-      '</p>';
-  } else {
-    itemsEl.innerHTML = cartItems.map((i, idx) => `
-      <div class="cart-item">
-        <div class="cart-item-info">
-          <span class="cart-item-name">${i.name}</span>
-          <div class="cart-item-qty-controls">
-            <button class="qty-btn" onclick="decreaseQty(${idx})" aria-label="Minska antal">&minus;</button>
-            <span class="cart-item-qty">${i.qty}</span>
-            <button class="qty-btn" onclick="increaseQty(${idx})" aria-label="Öka antal">+</button>
-          </div>
-        </div>
-        <span class="cart-item-price">${i.price * i.qty} kr</span>
-        <button class="cart-item-remove" onclick="removeFromCart(${idx})" aria-label="Ta bort">&times;</button>
-      </div>
-    `).join('');
-  }
-
-  const total = cartItems.reduce((sum, i) => sum + i.price * i.qty, 0);
-  document.getElementById('cartDrawerTotal').textContent = total + ' kr';
-}
-
-function increaseQty(idx) {
-  if (!cartItems[idx]) return;
-  cartItems[idx].qty++;
-  updateCartUI();
-}
-
-function decreaseQty(idx) {
-  if (!cartItems[idx]) return;
-  cartItems[idx].qty--;
-  if (cartItems[idx].qty <= 0) {
-    cartItems.splice(idx, 1);
-  }
-  updateCartUI();
-}
-
-function removeFromCart(idx) {
-  cartItems.splice(idx, 1);
-  updateCartUI();
-}
-
-function openCartDrawer(event) {
-  if (event) event.preventDefault();
-  document.getElementById('cartDrawerOverlay').classList.add('open');
-}
-
-function closeCartDrawer(event) {
-  if (event) event.preventDefault();
-  document.getElementById('cartDrawerOverlay').classList.remove('open');
-}
-
-document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
-  btn.addEventListener('click', (e) => handleAddToCart(e, btn));
-});
-
-document.querySelector('.cart-btn').addEventListener('click', openCartDrawer);
-updateCartUI();
-
 
 // ── SPRÅK / LANGUAGE ──
 const translations = {
@@ -2050,6 +1949,110 @@ document.addEventListener('click', (e) => {
 let savedLang = 'sv';
 try { savedLang = localStorage.getItem('sulitify-lang') || 'sv'; } catch (e) {}
 applyLanguage(savedLang);
+
+// Fade-in animation för promise-kort
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) {
+      setTimeout(() => {
+        entry.target.classList.add('visible');
+      }, i * 130);
+    }
+  });
+}, { threshold: 0.15 });
+
+document.querySelectorAll('.promise-card').forEach(card => observer.observe(card));
+
+// ── VARUKORG (demo) ──
+let cartItems = [];
+
+function currentLang() {
+  return document.documentElement.lang === 'en' ? 'en' : 'sv';
+}
+
+function handleAddToCart(event, btn) {
+  event.preventDefault();
+  const name = btn.getAttribute('data-name');
+  const price = parseFloat(btn.getAttribute('data-price'));
+  const existing = cartItems.find(i => i.name === name);
+  if (existing) {
+    existing.qty++;
+  } else {
+    cartItems.push({ name, price, qty: 1 });
+  }
+  updateCartUI();
+  openCartDrawer();
+}
+
+function updateCartUI() {
+  const totalCount = cartItems.reduce((sum, i) => sum + i.qty, 0);
+  document.querySelector('.cart-count').textContent = totalCount;
+
+  const itemsEl = document.getElementById('cartDrawerItems');
+  if (cartItems.length === 0) {
+    itemsEl.innerHTML = '<p class="cart-empty">' +
+      (currentLang() === 'en' ? 'Your cart is empty.' : 'Din varukorg är tom.') +
+      '</p>';
+  } else {
+    itemsEl.innerHTML = cartItems.map((i, idx) => `
+      <div class="cart-item">
+        <div class="cart-item-info">
+          <span class="cart-item-name">${i.name}</span>
+          <div class="cart-item-qty-controls">
+            <button class="qty-btn" onclick="decreaseQty(${idx})" aria-label="Minska antal">&minus;</button>
+            <span class="cart-item-qty">${i.qty}</span>
+            <button class="qty-btn" onclick="increaseQty(${idx})" aria-label="Öka antal">+</button>
+          </div>
+        </div>
+        <span class="cart-item-price">${i.price * i.qty} kr</span>
+        <button class="cart-item-remove" onclick="removeFromCart(${idx})" aria-label="Ta bort">&times;</button>
+      </div>
+    `).join('');
+  }
+
+  const total = cartItems.reduce((sum, i) => sum + i.price * i.qty, 0);
+  document.getElementById('cartDrawerTotal').textContent = total + ' kr';
+}
+
+function increaseQty(idx) {
+  if (!cartItems[idx]) return;
+  cartItems[idx].qty++;
+  updateCartUI();
+}
+
+function decreaseQty(idx) {
+  if (!cartItems[idx]) return;
+  cartItems[idx].qty--;
+  if (cartItems[idx].qty <= 0) {
+    cartItems.splice(idx, 1);
+  }
+  updateCartUI();
+}
+
+function removeFromCart(idx) {
+  cartItems.splice(idx, 1);
+  updateCartUI();
+}
+
+function openCartDrawer(event) {
+  if (event) event.preventDefault();
+  document.getElementById('cartDrawerOverlay').classList.add('open');
+}
+
+function closeCartDrawer(event) {
+  if (event) event.preventDefault();
+  document.getElementById('cartDrawerOverlay').classList.remove('open');
+}
+
+document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
+  btn.addEventListener('click', (e) => handleAddToCart(e, btn));
+});
+
+const cartBtnEl = document.querySelector('.cart-btn');
+if (cartBtnEl) cartBtnEl.addEventListener('click', openCartDrawer);
+updateCartUI();
+
+
 </script>
 
 <!-- INFO MODAL (Mitt konto, FAQ, Kontakt m.fl. — fylls med riktigt innehåll när butiken lanseras) -->
