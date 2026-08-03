@@ -24,6 +24,7 @@
   --gold:       #c9a24a;
   --gold-light: #f2d57e;
   --gold-dark:  #a0782a;
+  --gold-rest:  #d9bd82;
   --ink:        #1c1c1c;
   --ink-mid:    #3a3a3a;
   --ink-soft:   #6b6b6b;
@@ -115,13 +116,20 @@ nav {
 .nav-links a {
   font-size: 0.82rem;
   letter-spacing: 1.5px;
-  color: var(--ink-mid);
+  color: var(--gold-rest);
   font-weight: 500;
   text-transform: uppercase;
-  transition: color 0.2s;
+  transition: color 0.2s, border-color 0.2s;
+  padding-bottom: 4px;
+  border-bottom: 2px solid transparent;
 }
 
-.nav-links a:hover { color: var(--gold); }
+.nav-links a:hover { color: var(--gold-dark); }
+
+.nav-links a.active {
+  color: var(--gold-dark);
+  border-bottom-color: var(--gold-dark);
+}
 
 .nav-logo img {
   height: 54px;
@@ -2003,6 +2011,30 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.15 });
 
 document.querySelectorAll('.promise-card').forEach(card => observer.observe(card));
+
+// ── NAV AKTIV/VILO-LÄGE (scroll-spy) ──
+const navLinksMap = {
+  home: document.querySelector('.nav-links a[href="#home"]'),
+  shop: document.querySelector('.nav-links a[href="#shop"]'),
+  bestsellers: document.querySelector('.nav-links a[href="#shop"]'), // Bästsäljare räknas som del av Shop
+  newarrivals: document.querySelector('.nav-links a[href="#newarrivals"]')
+};
+
+const navSections = document.querySelectorAll('#home, #shop, #bestsellers, #newarrivals');
+
+const navObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const link = navLinksMap[entry.target.id];
+      if (link) {
+        document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+        link.classList.add('active');
+      }
+    }
+  });
+}, { rootMargin: '-40% 0px -55% 0px', threshold: 0 });
+
+navSections.forEach(section => navObserver.observe(section));
 
 // ── VARUKORG (demo) ──
 
