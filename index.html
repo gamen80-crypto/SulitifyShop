@@ -351,7 +351,7 @@ nav {
 
 .btn-primary {
   display: inline-block;
-  background: linear-gradient(135deg, var(--gold-dark) 0%, var(--gold) 60%, var(--gold-light) 100%);
+  background: linear-gradient(160deg, var(--gold-light) 0%, var(--gold) 55%, var(--gold-dark) 100%);
   color: var(--ink);
   padding: 15px 38px;
   border-radius: 999px;
@@ -359,15 +359,23 @@ nav {
   font-size: 0.9rem;
   letter-spacing: 1px;
   text-transform: uppercase;
-  border: none;
+  border: 1px solid var(--gold-dark);
   cursor: pointer;
   transition: transform 0.25s, box-shadow 0.25s;
-  box-shadow: 0 6px 20px rgba(201,162,74,0.3);
+  box-shadow:
+    inset 0 1px 1px rgba(255,255,255,0.6),
+    inset 0 -2px 4px rgba(0,0,0,0.15),
+    0 6px 20px rgba(201,162,74,0.3);
 }
 
 .btn-primary:hover {
   transform: translateY(-3px);
-  box-shadow: 0 0 14px rgba(255,229,153,0.65), 0 14px 32px rgba(201,162,74,0.45), 0 0 40px rgba(242,213,126,0.55);
+  box-shadow:
+    inset 0 1px 1px rgba(255,255,255,0.6),
+    inset 0 -2px 4px rgba(0,0,0,0.15),
+    0 0 14px rgba(255,229,153,0.65),
+    0 14px 32px rgba(201,162,74,0.45),
+    0 0 40px rgba(242,213,126,0.55);
 }
 
 .hero-image {
@@ -923,7 +931,7 @@ nav {
   display: block;
   width: 100%;
   margin-top: 14px;
-  background: linear-gradient(135deg, var(--gold-dark) 0%, var(--gold) 60%, var(--gold-light) 100%);
+  background: linear-gradient(160deg, var(--gold-light) 0%, var(--gold) 55%, var(--gold-dark) 100%);
   color: var(--ink);
   padding: 11px 18px;
   border-radius: 999px;
@@ -931,15 +939,23 @@ nav {
   font-weight: 700;
   letter-spacing: 1px;
   text-transform: uppercase;
-  border: none;
+  border: 1px solid var(--gold-dark);
   cursor: pointer;
   transition: transform 0.25s, box-shadow 0.25s;
-  box-shadow: 0 4px 14px rgba(201,162,74,0.25);
+  box-shadow:
+    inset 0 1px 1px rgba(255,255,255,0.6),
+    inset 0 -1px 3px rgba(0,0,0,0.15),
+    0 4px 14px rgba(201,162,74,0.25);
 }
 
 .show-more-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 0 12px rgba(255,229,153,0.6), 0 10px 24px rgba(201,162,74,0.42), 0 0 32px rgba(242,213,126,0.5);
+  box-shadow:
+    inset 0 1px 1px rgba(255,255,255,0.6),
+    inset 0 -1px 3px rgba(0,0,0,0.15),
+    0 0 12px rgba(255,229,153,0.6),
+    0 10px 24px rgba(201,162,74,0.42),
+    0 0 32px rgba(242,213,126,0.5);
 }
 
 /* ── BESTSELLERS ── */
@@ -1002,22 +1018,30 @@ nav {
   display: inline-block;
   margin-top: 10px;
   padding: 10px 22px;
-  background: linear-gradient(135deg, var(--gold-dark) 0%, var(--gold) 60%, var(--gold-light) 100%);
+  background: linear-gradient(160deg, var(--gold-light) 0%, var(--gold) 55%, var(--gold-dark) 100%);
   color: var(--ink);
   border-radius: 999px;
   font-size: 0.78rem;
   font-weight: 700;
   letter-spacing: 1px;
   text-transform: uppercase;
-  border: none;
+  border: 1px solid var(--gold-dark);
   cursor: pointer;
   transition: transform 0.25s, box-shadow 0.25s;
-  box-shadow: 0 4px 14px rgba(201,162,74,0.25);
+  box-shadow:
+    inset 0 1px 1px rgba(255,255,255,0.6),
+    inset 0 -1px 3px rgba(0,0,0,0.15),
+    0 4px 14px rgba(201,162,74,0.25);
 }
 
 .product-card-dark-body .btn-mini:hover {
   transform: translateY(-2px);
-  box-shadow: 0 0 12px rgba(255,229,153,0.6), 0 10px 24px rgba(201,162,74,0.42), 0 0 32px rgba(242,213,126,0.5);
+  box-shadow:
+    inset 0 1px 1px rgba(255,255,255,0.6),
+    inset 0 -1px 3px rgba(0,0,0,0.15),
+    0 0 12px rgba(255,229,153,0.6),
+    0 10px 24px rgba(201,162,74,0.42),
+    0 0 32px rgba(242,213,126,0.5);
 }
 
 /* ── NEW ARRIVALS ── */
@@ -2013,28 +2037,39 @@ const observer = new IntersectionObserver((entries) => {
 document.querySelectorAll('.promise-card').forEach(card => observer.observe(card));
 
 // ── NAV AKTIV/VILO-LÄGE (scroll-spy) ──
-const navLinksMap = {
+// Skroll-baserad istället för IntersectionObserver, eftersom #home ligger på <body>
+// och därmed täcker hela dokumentets höjd (IntersectionObserver hanterar det dåligt).
+const navSectionIds = ['home', 'shop', 'bestsellers', 'newarrivals'];
+const navLinkFor = {
   home: document.querySelector('.nav-links a[href="#home"]'),
   shop: document.querySelector('.nav-links a[href="#shop"]'),
   bestsellers: document.querySelector('.nav-links a[href="#shop"]'), // Bästsäljare räknas som del av Shop
   newarrivals: document.querySelector('.nav-links a[href="#newarrivals"]')
 };
 
-const navSections = document.querySelectorAll('#home, #shop, #bestsellers, #newarrivals');
+function updateActiveNavLink() {
+  const navEl = document.querySelector('nav');
+  const navHeight = navEl ? navEl.offsetHeight : 72;
+  // +40 extra marginal utöver navhöjden så vi matchar sektionernas scroll-margin-top (88px)
+  // och inte hamnar ett steg efter när man klickar en nav-länk.
+  const scrollPos = window.scrollY + navHeight + 40;
 
-const navObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      const link = navLinksMap[entry.target.id];
-      if (link) {
-        document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
-        link.classList.add('active');
-      }
+  let currentId = 'home';
+  navSectionIds.forEach(id => {
+    const el = document.getElementById(id);
+    if (el && el.offsetTop <= scrollPos) {
+      currentId = id;
     }
   });
-}, { rootMargin: '-40% 0px -55% 0px', threshold: 0 });
 
-navSections.forEach(section => navObserver.observe(section));
+  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+  const activeLink = navLinkFor[currentId];
+  if (activeLink) activeLink.classList.add('active');
+}
+
+window.addEventListener('scroll', updateActiveNavLink, { passive: true });
+window.addEventListener('resize', updateActiveNavLink);
+updateActiveNavLink();
 
 // ── VARUKORG (demo) ──
 
