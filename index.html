@@ -894,6 +894,83 @@ nav {
 
 .cart-item-remove:hover { color: #c0392b; }
 
+.cart-section-heading {
+  font-size: 0.7rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--gold-dark);
+  font-weight: 700;
+  margin: 4px 0 10px;
+}
+
+.save-later-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 6px;
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 0.72rem;
+  color: var(--gold-rest);
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.save-later-btn:hover { color: var(--gold-dark); }
+.save-later-btn svg { fill: currentColor; flex-shrink: 0; }
+
+.saved-items-section {
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px dashed var(--border, #e6ded0);
+}
+
+.saved-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border, #f0f0f0);
+  opacity: 0.92;
+}
+
+.saved-item-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.saved-item-qty {
+  font-size: 0.78rem;
+  color: #999;
+}
+
+.saved-item-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.move-to-cart-btn {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 1px solid var(--gold-dark);
+  background: var(--cream, #faf7f2);
+  color: var(--gold-dark);
+  font-size: 0.85rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition: background 0.2s, color 0.2s;
+}
+
+.move-to-cart-btn:hover { background: var(--gold-dark); color: var(--white); }
+
 .cart-drawer-footer {
   padding: 20px 24px 26px;
   border-top: 1px solid var(--border, #eee);
@@ -1697,6 +1774,16 @@ footer {
 
 let cartItems = [];
 
+let savedItems = [];
+try {
+  const rawSaved = localStorage.getItem('sulitify-saved-items');
+  if (rawSaved) savedItems = JSON.parse(rawSaved);
+} catch (e) { savedItems = []; }
+
+function persistSavedItems() {
+  try { localStorage.setItem('sulitify-saved-items', JSON.stringify(savedItems)); } catch (e) {}
+}
+
 // ── SPRÅK / LANGUAGE ──
 const translations = {
   sv: {
@@ -2094,31 +2181,100 @@ function handleAddToCart(event, btn) {
 function updateCartUI() {
   const totalCount = cartItems.reduce((sum, i) => sum + i.qty, 0);
   document.querySelector('.cart-count').textContent = totalCount;
+  const isEn = currentLang() === 'en';
 
   const itemsEl = document.getElementById('cartDrawerItems');
-  if (cartItems.length === 0) {
-    itemsEl.innerHTML = '<p class="cart-empty">' +
-      (currentLang() === 'en' ? 'Your cart is empty.' : 'Din varukorg är tom.') +
+  let html = '';
+
+  if (cartItems.length === 0 && savedItems.length === 0) {
+    html = '<p class="cart-empty">' +
+      (isEn ? 'Your cart is empty.' : 'Din varukorg är tom.') +
       '</p>';
   } else {
-    itemsEl.innerHTML = cartItems.map((i, idx) => `
-      <div class="cart-item">
-        <div class="cart-item-info">
-          <span class="cart-item-name">${i.name}</span>
-          <div class="cart-item-qty-controls">
-            <button class="qty-btn" onclick="decreaseQty(${idx})" aria-label="Minska antal">&minus;</button>
-            <span class="cart-item-qty">${i.qty}</span>
-            <button class="qty-btn" onclick="increaseQty(${idx})" aria-label="Öka antal">+</button>
+    if (cartItems.length > 0) {
+      html += `<div class="cart-section-heading">${isEn ? 'Selected for order' : 'Beställ valda produkter'}</div>`;
+      html += cartItems.map((i, idx) => `
+        <div class="cart-item">
+          <div class="cart-item-info">
+            <span class="cart-item-name">${i.name}</span>
+            <div class="cart-item-qty-controls">
+              <button class="qty-btn" onclick="decreaseQty(${idx})" aria-label="Minska antal">&minus;</button>
+              <span class="cart-item-qty">${i.qty}</span>
+              <button class="qty-btn" onclick="increaseQty(${idx})" aria-label="Öka antal">+</button>
+            </div>
+            <button class="save-later-btn" onclick="saveForLater(${idx})">
+              <svg viewBox="0 0 24 24" width="12" height="12"><path d="M6 2h12v20l-6-4.5L6 22z"/></svg>
+              ${isEn ? 'Save for next selection' : 'Spara till nästa selection'}
+            </button>
+          </div>
+          <span class="cart-item-price">${i.price * i.qty} kr</span>
+          <button class="cart-item-remove" onclick="removeFromCart(${idx})" aria-label="Ta bort">&times;</button>
+        </div>
+      `).join('');
+    } else {
+      html += '<p class="cart-empty">' +
+        (isEn ? 'No products selected for order yet.' : 'Inga produkter valda för beställning ännu.') +
+        '</p>';
+    }
+
+    if (savedItems.length > 0) {
+      html += '<div class="saved-items-section">';
+      html += `<div class="cart-section-heading">${isEn ? 'Saved for next selection' : 'Sparade till nästa selection'}</div>`;
+      html += savedItems.map((i, idx) => `
+        <div class="saved-item">
+          <div class="saved-item-info">
+            <span class="cart-item-name">${i.name}</span>
+            <span class="saved-item-qty">${isEn ? 'Qty' : 'Antal'}: ${i.qty}</span>
+          </div>
+          <span class="cart-item-price">${i.price * i.qty} kr</span>
+          <div class="saved-item-actions">
+            <button class="move-to-cart-btn" onclick="moveToCart(${idx})" title="${isEn ? 'Add to cart' : 'Lägg i varukorgen'}">&#8635;</button>
+            <button class="cart-item-remove" onclick="removeSavedItem(${idx})" aria-label="Ta bort">&times;</button>
           </div>
         </div>
-        <span class="cart-item-price">${i.price * i.qty} kr</span>
-        <button class="cart-item-remove" onclick="removeFromCart(${idx})" aria-label="Ta bort">&times;</button>
-      </div>
-    `).join('');
+      `).join('');
+      html += '</div>';
+    }
   }
+
+  itemsEl.innerHTML = html;
 
   const total = cartItems.reduce((sum, i) => sum + i.price * i.qty, 0);
   document.getElementById('cartDrawerTotal').textContent = total + ' kr';
+}
+
+function saveForLater(idx) {
+  const item = cartItems[idx];
+  if (!item) return;
+  const existing = savedItems.find(i => i.name === item.name && i.price === item.price);
+  if (existing) {
+    existing.qty += item.qty;
+  } else {
+    savedItems.push({ name: item.name, price: item.price, qty: item.qty });
+  }
+  cartItems.splice(idx, 1);
+  persistSavedItems();
+  updateCartUI();
+}
+
+function moveToCart(idx) {
+  const item = savedItems[idx];
+  if (!item) return;
+  const existing = cartItems.find(i => i.name === item.name && i.price === item.price);
+  if (existing) {
+    existing.qty += item.qty;
+  } else {
+    cartItems.push({ name: item.name, price: item.price, qty: item.qty });
+  }
+  savedItems.splice(idx, 1);
+  persistSavedItems();
+  updateCartUI();
+}
+
+function removeSavedItem(idx) {
+  savedItems.splice(idx, 1);
+  persistSavedItems();
+  updateCartUI();
 }
 
 function increaseQty(idx) {
