@@ -637,6 +637,111 @@ nav {
   cursor: pointer;
 }
 
+/* ── PRODUKTDETALJ (fullständig mockup-vy) ── */
+.product-detail-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15,13,10,0.6);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.product-detail-overlay.open { display: flex; }
+
+.product-detail-panel {
+  background: var(--white);
+  max-width: 880px;
+  width: 100%;
+  max-height: 92vh;
+  border-radius: 16px;
+  position: relative;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.35);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.product-detail-close {
+  position: absolute;
+  top: 14px; right: 16px;
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.9);
+  border: none;
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  color: var(--ink-mid);
+  z-index: 2;
+}
+.product-detail-close:hover { color: var(--ink); }
+
+.product-detail-scroll {
+  overflow-y: auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+}
+@media (max-width: 720px) {
+  .product-detail-scroll { grid-template-columns: 1fr; }
+}
+
+.pd-gallery {
+  background: var(--cream-dark);
+  min-height: 260px;
+}
+.pd-gallery img {
+  width: 100%; height: 100%;
+  min-height: 260px;
+  object-fit: cover;
+}
+
+.pd-info { padding: 34px 32px 32px; }
+
+.pd-eyebrow {
+  font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--gold-dark); font-weight: 700; margin-bottom: 12px;
+}
+
+.pd-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.8rem; font-weight: 600; line-height: 1.1; margin-bottom: 10px;
+}
+
+.pd-rating-row {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 0.82rem; color: var(--ink-soft); margin-bottom: 18px;
+}
+.pd-rating-row .crown-rating { display: flex; gap: 2px; }
+.pd-rating-row .crown-icon { width: 14px; height: 14px; }
+.pd-rating-row .crown-icon.filled path { fill: var(--gold); stroke: none; }
+.pd-rating-row .crown-icon.empty path { fill: none; stroke: var(--gold-rest); stroke-width: 1.4; }
+
+.pd-pitch {
+  font-size: 0.92rem; color: var(--ink-mid); line-height: 1.6; margin-bottom: 20px;
+}
+
+.pd-trust-checklist {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 8px 14px;
+  margin-bottom: 26px;
+}
+.pd-trust-item {
+  font-size: 0.82rem; color: var(--ink);
+}
+.pd-trust-item .check { color: var(--gold-dark); font-weight: 700; margin-right: 4px; }
+
+.pd-price-row {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.7rem; color: var(--gold-dark); font-weight: 600;
+  margin-bottom: 18px;
+}
+.pd-price-row.hide { display: none; }
+
+
 .cart-drawer-overlay {
   position: fixed;
   inset: 0;
@@ -1753,6 +1858,35 @@ footer {
   </div>
 </div>
 
+<!-- PRODUKTDETALJ -->
+<div class="product-detail-overlay" id="productDetailOverlay" onclick="closeProductDetail(event)">
+  <div class="product-detail-panel" onclick="event.stopPropagation()">
+    <button class="product-detail-close" onclick="closeProductDetail(event)" aria-label="Stäng">&times;</button>
+    <div class="product-detail-scroll">
+      <div class="pd-gallery">
+        <img id="pdImage" src="" alt="">
+      </div>
+      <div class="pd-info">
+        <div class="pd-eyebrow" id="pdEyebrow">The Sulitify Selection</div>
+        <h2 class="pd-name" id="pdName"></h2>
+        <div class="pd-rating-row">
+          <span class="crown-rating" id="pdCrownRating" data-rating="0"></span>
+          <span id="pdRatingText">Inga recensioner än — bli den första!</span>
+        </div>
+        <p class="pd-pitch" id="pdPitch"></p>
+        <div class="pd-trust-checklist">
+          <div class="pd-trust-item"><span class="check">✓</span><span data-i18n="hero.perk3">Fri frakt</span></div>
+          <div class="pd-trust-item"><span class="check">✓</span><span data-i18n="announce.returns">30 dagars öppet köp</span></div>
+          <div class="pd-trust-item"><span class="check">✓</span>Snabb leverans</div>
+          <div class="pd-trust-item"><span class="check">✓</span>Säker betalning</div>
+        </div>
+        <div class="pd-price-row" id="pdPriceRow"></div>
+        <a href="#" class="btn-primary add-to-cart-btn" id="pdAddToCartBtn" data-name="" data-price="">Lägg i varukorg</a>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- VARUKORG -->
 <div class="cart-drawer-overlay" id="cartDrawerOverlay" onclick="closeCartDrawer(event)">
   <div class="cart-drawer" onclick="event.stopPropagation()">
@@ -2166,6 +2300,7 @@ function currentLang() {
 
 function handleAddToCart(event, btn) {
   event.preventDefault();
+  document.getElementById('productDetailOverlay').classList.remove('open');
   const name = btn.getAttribute('data-name');
   const price = parseFloat(btn.getAttribute('data-price'));
   const existing = cartItems.find(i => i.name === name);
@@ -2379,6 +2514,75 @@ const genericProductDesc = {
   en: 'More details about this product will be added when the store launches.'
 };
 
+function crownIcons(rating) {
+  const crownPath = 'M3 17h18v2H3v-2zm0-2l2.5-8L9 12l3-9 3 9 3.5-5L21 15H3z';
+  let out = '';
+  for (let i = 1; i <= 5; i++) {
+    const filled = i <= rating;
+    out += `<svg class="crown-icon ${filled ? 'filled' : 'empty'}" viewBox="0 0 24 24"><path d="${crownPath}"/></svg>`;
+  }
+  return out;
+}
+
+function upscaleImage(src) {
+  if (!src) return src;
+  // picsum.photos/seed/NAMN/BREDD/HÖJD -> begär en större bild
+  const picsumMatch = src.match(/(picsum\.photos\/seed\/[^/]+\/)(\d+)\/(\d+)/);
+  if (picsumMatch) {
+    return src.replace(picsumMatch[0], `${picsumMatch[1]}800/600`);
+  }
+  // unsplash ?w=NN -> begär bredare bild
+  if (src.includes('images.unsplash.com')) {
+    return src.replace(/w=\d+/, 'w=900');
+  }
+  return src;
+}
+
+function openProductDetail(card) {
+  const lang = document.documentElement.lang === 'en' ? 'en' : 'sv';
+  const nameEl = card.querySelector('h4');
+  const priceEl = card.querySelector('.price, .product-price');
+  const descEl = card.querySelector('p');
+  const imgEl = card.querySelector('img');
+
+  const name = nameEl ? nameEl.textContent.trim() : '';
+  const priceText = priceEl ? priceEl.textContent.trim() : '';
+  const priceNum = priceText ? parseFloat(priceText.replace(/[^\d.]/g, '')) : 0;
+
+  document.getElementById('pdName').textContent = name;
+  document.getElementById('pdPitch').textContent = descEl && descEl.textContent.trim()
+    ? descEl.textContent.trim()
+    : genericProductDesc[lang];
+
+  const priceRow = document.getElementById('pdPriceRow');
+  if (priceText) {
+    priceRow.textContent = priceText;
+    priceRow.classList.remove('hide');
+  } else {
+    priceRow.classList.add('hide');
+  }
+
+  const imgSrc = imgEl ? imgEl.getAttribute('src') : '';
+  document.getElementById('pdImage').src = upscaleImage(imgSrc);
+  document.getElementById('pdImage').alt = name;
+
+  document.getElementById('pdCrownRating').innerHTML = crownIcons(0);
+  document.getElementById('pdRatingText').textContent = lang === 'en'
+    ? 'No reviews yet — be the first!'
+    : 'Inga recensioner än — bli den första!';
+
+  const addBtn = document.getElementById('pdAddToCartBtn');
+  addBtn.setAttribute('data-name', name);
+  addBtn.setAttribute('data-price', priceNum);
+
+  document.getElementById('productDetailOverlay').classList.add('open');
+}
+
+function closeProductDetail(event) {
+  if (event) event.preventDefault();
+  document.getElementById('productDetailOverlay').classList.remove('open');
+}
+
 function openProductModal(card) {
   const lang = document.documentElement.lang === 'en' ? 'en' : 'sv';
   const nameEl = card.querySelector('h4');
@@ -2415,7 +2619,7 @@ document.addEventListener('click', function (e) {
   const btn = e.target.closest('.show-more-btn');
   if (btn) return; // handled by toggleCategory, don't open the modal too
   const card = e.target.closest('.product-card, .new-card');
-  if (card) openProductModal(card);
+  if (card) openProductDetail(card);
 });
 
 // ── SÖK ──
@@ -2471,7 +2675,7 @@ function performSearch() {
   resultsEl.querySelectorAll('.search-result-item').forEach((el, idx) => {
     el.addEventListener('click', () => {
       closeSearchOverlay();
-      openProductModal(matches[idx].el);
+      openProductDetail(matches[idx].el);
     });
   });
 }
