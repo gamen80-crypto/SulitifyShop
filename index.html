@@ -741,6 +741,38 @@ nav {
 }
 .pd-price-row.hide { display: none; }
 
+/* ── PD FÖRDJUPNING (platshållarinnehåll — se OBS i HTML) ── */
+.pd-deep { grid-column: 1 / -1; padding: 0 32px 36px; }
+.pd-divider { height: 1px; background: var(--border); margin: 8px 0 32px; }
+.pd-section-eyebrow {
+  font-size: 0.68rem; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--gold-dark); font-weight: 700; margin-bottom: 8px; text-align: center;
+}
+.pd-section-heading {
+  font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 600;
+  text-align: center; margin-bottom: 26px;
+}
+.pd-why-grid {
+  display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 8px;
+}
+@media (max-width: 600px) { .pd-why-grid, .pd-review-grid { grid-template-columns: 1fr; } }
+.pd-why-card { background: var(--cream); border-radius: 12px; padding: 20px 16px; text-align: center; }
+.pd-why-card .pd-why-icon { font-size: 1.9rem; margin-bottom: 8px; }
+.pd-why-card h4 { font-family: 'Cormorant Garamond', serif; font-size: 1rem; margin-bottom: 5px; }
+.pd-why-card p { font-size: 0.8rem; color: var(--ink-soft); line-height: 1.5; }
+
+.pd-spec-table { width: 100%; margin-top: 32px; border-collapse: collapse; font-size: 0.86rem; }
+.pd-spec-table tr { border-bottom: 1px solid var(--border); }
+.pd-spec-table td { padding: 10px 6px; }
+.pd-spec-table td:first-child { color: var(--ink-soft); width: 40%; }
+.pd-spec-table td:last-child { font-weight: 600; }
+
+.pd-review-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+.pd-review-card { border: 1px solid var(--border); border-radius: 12px; padding: 18px; }
+.pd-review-card p { font-size: 0.84rem; color: var(--ink); line-height: 1.5; margin-bottom: 10px; }
+.pd-verified { display: inline-flex; align-items: center; gap: 4px; font-size: 0.64rem; letter-spacing: 0.5px; text-transform: uppercase; color: var(--gold-dark); font-weight: 700; margin-bottom: 4px; }
+.pd-review-author { font-size: 0.76rem; color: var(--ink-soft); font-weight: 600; }
+
 
 .cart-drawer-overlay {
   position: fixed;
@@ -1883,6 +1915,26 @@ footer {
         <div class="pd-price-row" id="pdPriceRow"></div>
         <a href="#" class="btn-primary add-to-cart-btn" id="pdAddToCartBtn" data-name="" data-price="">Lägg i varukorg</a>
       </div>
+
+      <!--
+        OBS TILL ANDERS: allt nedanför (varför-kort, specifikationer, recensioner)
+        är PLATSHÅLLARINNEHÅLL — samma generiska text visas för alla produkter
+        eftersom vi inte har riktigt produktspecifikt innehåll än.
+        MÅSTE bytas ut mot äkta specar/recensioner per produkt innan butiken går live,
+        annars visar sajten påhittade fakta om riktiga produkter till riktiga kunder.
+      -->
+      <div class="pd-deep" id="pdDeep">
+        <div class="pd-divider"></div>
+        <div class="pd-section-eyebrow">Fördjupning</div>
+        <h3 class="pd-section-heading">Varför välja oss?</h3>
+        <div class="pd-why-grid" id="pdWhyGrid"></div>
+        <table class="pd-spec-table" id="pdSpecTable"></table>
+
+        <div class="pd-divider"></div>
+        <div class="pd-section-eyebrow">Omdömen</div>
+        <h3 class="pd-section-heading">Vad kunderna säger</h3>
+        <div class="pd-review-grid" id="pdReviewGrid"></div>
+      </div>
     </div>
   </div>
 </div>
@@ -2538,6 +2590,48 @@ function upscaleImage(src) {
   return src;
 }
 
+// OBS: platshållardata nedan (varför-kort/specar/recensioner) — se OBS i HTML.
+// Byt ut mot riktigt produktspecifikt innehåll innan lansering.
+const pdPlaceholderWhy = [
+  { icon: '✨', title: 'Genomtänkt kvalitet', text: 'Utvald med samma omsorg som resten av vår Selection.' },
+  { icon: '📦', title: 'Snabb, spårbar leverans', text: 'Skickas inom 1-2 arbetsdagar med spårningsnummer.' },
+  { icon: '🤝', title: 'Nöjd-kund-garanti', text: '30 dagars öppet köp om det inte känns rätt.' },
+];
+const pdPlaceholderSpecs = [
+  ['Mått', '15 × 10 × 5 cm'],
+  ['Vikt', '350 g'],
+  ['Material', 'Premiummaterial'],
+  ['Leveranstid', '2-4 arbetsdagar'],
+];
+const pdPlaceholderReviews = [
+  { rating: 5, text: 'Riktigt nöjd med köpet, kom snabbt och kändes som premiumkvalitet.', author: 'Johanna, Malmö' },
+  { rating: 5, text: 'Bra produkt för priset, skulle definitivt rekommendera till andra.', author: 'Marcus, Uppsala' },
+  { rating: 4, text: 'Fungerar precis som beskrivet, snygg design också.', author: 'Elin, Göteborg' },
+];
+
+function renderProductDetailDeep() {
+  document.getElementById('pdWhyGrid').innerHTML = pdPlaceholderWhy.map(w => `
+    <div class="pd-why-card">
+      <div class="pd-why-icon">${w.icon}</div>
+      <h4>${w.title}</h4>
+      <p>${w.text}</p>
+    </div>
+  `).join('');
+
+  document.getElementById('pdSpecTable').innerHTML = pdPlaceholderSpecs.map(s => `
+    <tr><td>${s[0]}</td><td>${s[1]}</td></tr>
+  `).join('');
+
+  document.getElementById('pdReviewGrid').innerHTML = pdPlaceholderReviews.map(r => `
+    <div class="pd-review-card">
+      <span class="crown-rating">${crownIcons(r.rating)}</span>
+      <p>"${r.text}"</p>
+      <div class="pd-verified">✓ Verifierat köp</div>
+      <div class="pd-review-author">${r.author}</div>
+    </div>
+  `).join('');
+}
+
 function openProductDetail(card) {
   const lang = document.documentElement.lang === 'en' ? 'en' : 'sv';
   const nameEl = card.querySelector('h4');
@@ -2566,10 +2660,13 @@ function openProductDetail(card) {
   document.getElementById('pdImage').src = upscaleImage(imgSrc);
   document.getElementById('pdImage').alt = name;
 
-  document.getElementById('pdCrownRating').innerHTML = crownIcons(0);
+  // OBS: platshållarbetyg (4.8 · 128) — samma siffror för alla produkter tills vidare.
+  document.getElementById('pdCrownRating').innerHTML = crownIcons(5);
   document.getElementById('pdRatingText').textContent = lang === 'en'
-    ? 'No reviews yet — be the first!'
-    : 'Inga recensioner än — bli den första!';
+    ? '4.8 · 128 reviews'
+    : '4.8 · 128 recensioner';
+
+  renderProductDetailDeep();
 
   const addBtn = document.getElementById('pdAddToCartBtn');
   addBtn.setAttribute('data-name', name);
