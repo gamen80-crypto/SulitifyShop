@@ -769,6 +769,10 @@ nav {
 
 .pd-review-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
 .pd-review-card { border: 1px solid var(--border); border-radius: 12px; padding: 18px; }
+.pd-review-card .crown-rating { display: flex; gap: 3px; margin-bottom: 10px; }
+.pd-review-card .crown-icon { width: 15px; height: 15px; }
+.pd-review-card .crown-icon.filled path { fill: var(--gold); stroke: none; }
+.pd-review-card .crown-icon.empty path { fill: none; stroke: var(--gold-rest); stroke-width: 1.4; }
 .pd-review-card p { font-size: 0.84rem; color: var(--ink); line-height: 1.5; margin-bottom: 10px; }
 .pd-verified { display: inline-flex; align-items: center; gap: 4px; font-size: 0.64rem; letter-spacing: 0.5px; text-transform: uppercase; color: var(--gold-dark); font-weight: 700; margin-bottom: 4px; }
 .pd-review-author { font-size: 0.76rem; color: var(--ink-soft); font-weight: 600; }
