@@ -741,6 +741,31 @@ nav {
 }
 .pd-price-row.hide { display: none; }
 
+/* ── PD MODELLVAL (för sammanslagna produkter, t.ex. Smart Plug) ── */
+.pd-model-select { margin-bottom: 4px; }
+.model-select-label {
+  font-size: 0.76rem; letter-spacing: 1px; text-transform: uppercase;
+  color: var(--ink-mid); font-weight: 600; margin-bottom: 10px;
+}
+.model-cards { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 18px; }
+@media (max-width: 480px) { .model-cards { grid-template-columns: 1fr; } }
+.model-card {
+  border: 1.5px solid var(--border); border-radius: 10px; padding: 12px 10px;
+  cursor: pointer; text-align: center; position: relative;
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.15s;
+  background: var(--white);
+}
+.model-card:hover { transform: translateY(-2px); }
+.model-card.selected { border-color: var(--gold); box-shadow: 0 8px 20px rgba(201,162,74,0.16); }
+.model-card .badge {
+  position: absolute; top: -10px; left: 50%; transform: translateX(-50%);
+  background: linear-gradient(135deg, var(--gold-light), var(--gold));
+  color: var(--ink); font-size: 0.58rem; letter-spacing: 0.4px; font-weight: 700;
+  text-transform: uppercase; padding: 3px 8px; border-radius: 999px; white-space: nowrap;
+}
+.model-card .tier-name { font-family: 'Cormorant Garamond', serif; font-size: 1rem; font-weight: 600; margin: 4px 0 2px; }
+.model-card .tier-price { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: var(--gold-dark); font-weight: 600; }
+
 /* ── PD FÖRDJUPNING (platshållarinnehåll — se OBS i HTML) ── */
 .pd-deep { grid-column: 1 / -1; padding: 0 32px 36px; }
 .pd-divider { height: 1px; background: var(--border); margin: 8px 0 32px; }
@@ -1621,13 +1646,11 @@ footer {
       <div class="category-title" data-i18n="cat.smarthome">Smart Hem</div>
       <div class="product-card"><img class="product-card-thumb" src="https://picsum.photos/seed/smartlamp/82/58" alt="Smart Lampa"><div class="product-card-text"><div class="product-card-info"><h4 data-i18n="prod.smartlamp">Smart Lampa</h4><p class="product-card-desc" data-i18n="desc.smartlamp">Dimbar smart belysning styrd via app.</p></div><span class="product-price">299 kr</span></div></div>
       <div class="product-card"><img class="product-card-thumb" src="https://picsum.photos/seed/wificam/82/58" alt="WiFi Kamera"><div class="product-card-text"><div class="product-card-info"><h4 data-i18n="prod.wificam">WiFi Kamera</h4><p class="product-card-desc" data-i18n="desc.wificam">Håll koll på hemmet var du än är.</p></div><span class="product-price">499 kr</span></div></div>
-      <div class="product-card"><img class="product-card-thumb" src="https://picsum.photos/seed/smartoutlet/82/58" alt="Smart Kontakt"><div class="product-card-text"><div class="product-card-info"><h4 data-i18n="prod.smartoutlet">Smart Kontakt</h4><p class="product-card-desc" data-i18n="desc.smartoutlet">Styr dina prylar trådlöst och smart.</p></div><span class="product-price">199 kr</span></div></div>
+      <div class="product-card" data-tiered="smartplug"><img class="product-card-thumb" src="https://picsum.photos/seed/smartplugbundle/82/58" alt="Sulitify Smart Plug"><div class="product-card-text"><div class="product-card-info"><h4 data-i18n="prod.smartplugbundle">Sulitify Smart Plug</h4><p class="product-card-desc" data-i18n="desc.smartplugbundle">Smart strömstyrning — välj din nivå.</p></div><span class="product-price">Från 159 kr</span></div></div>
       <div class="product-card"><img class="product-card-thumb" src="https://picsum.photos/seed/ledstrip/82/58" alt="LED Strip"><div class="product-card-text"><div class="product-card-info"><h4 data-i18n="prod.ledstrip">LED Strip</h4><p class="product-card-desc" data-i18n="desc.ledstrip">Skapa atmosfär med färgstark LED-belysning.</p></div><span class="product-price">249 kr</span></div></div>
       <div class="category-more">
-        <div class="product-card"><img class="product-card-thumb" src="https://picsum.photos/seed/smartplug2/82/58" alt="Smart Timer"><div class="product-card-text"><div class="product-card-info"><h4 data-i18n="prod.smartplug2">Smart Timer</h4><p class="product-card-desc" data-i18n="desc.smartplug2">Schemalägg och spara energi automatiskt.</p></div><span class="product-price">179 kr</span></div></div>
         <div class="product-card"><img class="product-card-thumb" src="https://picsum.photos/seed/doorsensor/82/58" alt="Dörrsensor"><div class="product-card-text"><div class="product-card-info"><h4 data-i18n="prod.doorsensor">Dörrsensor</h4><p class="product-card-desc" data-i18n="desc.doorsensor">Få notis direkt när dörren öppnas.</p></div><span class="product-price">229 kr</span></div></div>
         <div class="product-card"><img class="product-card-thumb" src="https://picsum.photos/seed/robotvac/82/58" alt="Robotdammsugare"><div class="product-card-text"><div class="product-card-info"><h4 data-i18n="prod.robotvac">Robotdammsugare</h4><p class="product-card-desc" data-i18n="desc.robotvac">Automatisk städning, dag som natt.</p></div><span class="product-price">1499 kr</span></div></div>
-        <div class="product-card"><img class="product-card-thumb" src="https://picsum.photos/seed/smartplug/82/58" alt="Smart Eluttag"><div class="product-card-text"><div class="product-card-info"><h4 data-i18n="prod.smartplug">Smart Eluttag</h4><p class="product-card-desc" data-i18n="desc.smartplug">Smart kontroll för alla dina enheter.</p></div><span class="product-price">159 kr</span></div></div>
       </div>
       <button class="show-more-btn" data-category="smarthome" onclick="toggleCategory(this)">
         <span class="btn-label-more" data-i18n="cta.viewcategory">Se hela kategorin →</span>
@@ -1910,6 +1933,10 @@ footer {
           <span id="pdRatingText">Inga recensioner än — bli den första!</span>
         </div>
         <p class="pd-pitch" id="pdPitch"></p>
+        <div class="pd-model-select" id="pdModelSelect" style="display:none;">
+          <div class="model-select-label">Välj din modell</div>
+          <div class="model-cards" id="pdModelCards"></div>
+        </div>
         <div class="pd-trust-checklist">
           <div class="pd-trust-item"><span class="check">✓</span><span data-i18n="hero.perk3">Fri frakt</span></div>
           <div class="pd-trust-item"><span class="check">✓</span><span data-i18n="announce.returns">30 dagars öppet köp</span></div>
@@ -2003,6 +2030,7 @@ const translations = {
     "desc.smartlamp": "Dimbar smart belysning styrd via app.",
     "desc.wificam": "Håll koll på hemmet var du än är.",
     "desc.smartoutlet": "Styr dina prylar trådlöst och smart.",
+    "desc.smartplugbundle": "Smart strömstyrning — välj din nivå.",
     "desc.ledstrip": "Skapa atmosfär med färgstark LED-belysning.",
     "desc.smartplug2": "Schemalägg och spara energi automatiskt.",
     "desc.doorsensor": "Få notis direkt när dörren öppnas.",
@@ -2042,6 +2070,7 @@ const translations = {
     "prod.smartlamp": "Smart Lampa",
     "prod.wificam": "WiFi Kamera",
     "prod.smartoutlet": "Smart Kontakt",
+    "prod.smartplugbundle": "Sulitify Smart Plug",
     "prod.ledstrip": "LED Strip",
     "prod.projector": "Projektor",
     "prod.smartwatch": "Smart Watch",
@@ -2135,6 +2164,7 @@ const translations = {
     "desc.smartlamp": "Dimmable smart lighting controlled via app.",
     "desc.wificam": "Keep an eye on home from anywhere.",
     "desc.smartoutlet": "Control your devices wirelessly and smart.",
+    "desc.smartplugbundle": "Smart power control — choose your level.",
     "desc.ledstrip": "Set the mood with vibrant LED lighting.",
     "desc.smartplug2": "Schedule and save energy automatically.",
     "desc.doorsensor": "Get notified instantly when the door opens.",
@@ -2174,6 +2204,7 @@ const translations = {
     "prod.smartlamp": "Smart Lamp",
     "prod.wificam": "WiFi Camera",
     "prod.smartoutlet": "Smart Outlet",
+    "prod.smartplugbundle": "Sulitify Smart Plug",
     "prod.ledstrip": "LED Strip",
     "prod.projector": "Projector",
     "prod.smartwatch": "Smart Watch",
@@ -2570,6 +2601,100 @@ const genericProductDesc = {
   en: 'More details about this product will be added when the store launches.'
 };
 
+// ── SAMMANSLAGNA PRODUKTER MED MODELLVAL ──
+// Byggs ut med fler produkter (t.ex. fler Spocket-varianter) allt eftersom.
+const TIERED_PRODUCTS = {
+  smartplug: {
+    name: 'Sulitify Smart Plug',
+    pitch: '"Smart strömstyrning i tre nivåer — välj den som passar ditt hem."',
+    models: [
+      {
+        id: 'essential', name: 'Essential', badge: null, price: 159,
+        diff: 'Grundläget — trådlös på/av-styrning via app.',
+        why: [
+          { icon: '🔌', title: 'Trådlös på/av-styrning', text: 'Styr anslutna enheter var du än är via appen.' },
+          { icon: '📱', title: 'Enkel app-installation', text: 'Klart på under 5 minuter, ingen extra hub behövs.' },
+          { icon: '🏠', title: 'Fungerar i hela hemmet', text: 'Kompatibel med vanliga eluttag i alla rum.' },
+        ],
+        specs: [
+          ['Max belastning', '2300 W'], ['Anslutning', 'WiFi 2.4 GHz'],
+          ['App', 'iOS & Android'], ['Mått', '65 × 65 × 85 mm'],
+        ]
+      },
+      {
+        id: 'signature', name: 'Signature', badge: '👑 Vald Favorit', price: 179,
+        diff: 'Lägg till tidsschema och energiövervakning.',
+        why: [
+          { icon: '⏰', title: 'Tidsschema', text: 'Ställ in när enheter ska slås på/av automatiskt.' },
+          { icon: '📊', title: 'Energiövervakning', text: 'Se hur mycket ström varje enhet drar i appen.' },
+          { icon: '🔌', title: 'Allt från Essential', text: 'Samma trådlösa på/av-styrning, plus mer kontroll.' },
+        ],
+        specs: [
+          ['Max belastning', '2300 W'], ['Anslutning', 'WiFi 2.4 GHz'],
+          ['Energimätning', 'Ja, i realtid'], ['Mått', '65 × 65 × 90 mm'],
+        ]
+      },
+      {
+        id: 'prestige', name: 'Prestige', badge: null, price: 199,
+        diff: 'Fullt paket med röststyrning och smarta automatiseringar.',
+        why: [
+          { icon: '🎙️', title: 'Röststyrning', text: 'Fungerar med Google Assistant och Amazon Alexa.' },
+          { icon: '🤖', title: 'Smarta automatiseringar', text: 'Koppla ihop med andra smarta enheter i hemmet.' },
+          { icon: '📊', title: 'Allt från Signature', text: 'Tidsschema och energiövervakning ingår också.' },
+        ],
+        specs: [
+          ['Max belastning', '2300 W'], ['Anslutning', 'WiFi 2.4 GHz + Bluetooth'],
+          ['Röstassistent', 'Google & Alexa'], ['Mått', '65 × 65 × 90 mm'],
+        ]
+      }
+    ]
+  }
+};
+
+let pdSelectedModelId = null;
+
+function renderTierCards(tieredId) {
+  const models = TIERED_PRODUCTS[tieredId].models;
+  document.getElementById('pdModelCards').innerHTML = models.map(m => `
+    <div class="model-card ${m.id === pdSelectedModelId ? 'selected' : ''}" onclick="selectPdModel('${tieredId}', '${m.id}')">
+      ${m.badge ? `<div class="badge">${m.badge}</div>` : ''}
+      <div class="tier-name">${m.name}</div>
+      <div class="tier-price">${m.price} kr</div>
+    </div>
+  `).join('');
+}
+
+function applyTierData(tieredId) {
+  const p = TIERED_PRODUCTS[tieredId];
+  const m = p.models.find(x => x.id === pdSelectedModelId);
+
+  const priceRow = document.getElementById('pdPriceRow');
+  priceRow.textContent = m.price + ' kr';
+  priceRow.classList.remove('hide');
+
+  const addBtn = document.getElementById('pdAddToCartBtn');
+  addBtn.setAttribute('data-name', p.name + ' – ' + m.name);
+  addBtn.setAttribute('data-price', m.price);
+
+  document.getElementById('pdWhyGrid').innerHTML = m.why.map(w => `
+    <div class="pd-why-card">
+      <div class="pd-why-icon">${w.icon}</div>
+      <h4>${w.title}</h4>
+      <p>${w.text}</p>
+    </div>
+  `).join('');
+
+  document.getElementById('pdSpecTable').innerHTML = m.specs.map(s => `
+    <tr><td>${s[0]}</td><td>${s[1]}</td></tr>
+  `).join('');
+}
+
+function selectPdModel(tieredId, modelId) {
+  pdSelectedModelId = modelId;
+  renderTierCards(tieredId);
+  applyTierData(tieredId);
+}
+
 function crownIcons(rating) {
   const crownPath = 'M3 17h18v2H3v-2zm0-2l2.5-8L9 12l3-9 3 9 3.5-5L21 15H3z';
   let out = '';
@@ -2626,6 +2751,10 @@ function renderProductDetailDeep() {
     <tr><td>${s[0]}</td><td>${s[1]}</td></tr>
   `).join('');
 
+  renderPdReviews();
+}
+
+function renderPdReviews() {
   document.getElementById('pdReviewGrid').innerHTML = pdPlaceholderReviews.map(r => `
     <div class="pd-review-card">
       <span class="crown-rating">${crownIcons(r.rating)}</span>
@@ -2638,27 +2767,20 @@ function renderProductDetailDeep() {
 
 function openProductDetail(card) {
   const lang = document.documentElement.lang === 'en' ? 'en' : 'sv';
+  const tieredId = card.getAttribute('data-tiered');
   const nameEl = card.querySelector('h4');
   const priceEl = card.querySelector('.price, .product-price');
   const descEl = card.querySelector('p');
   const imgEl = card.querySelector('img');
 
-  const name = nameEl ? nameEl.textContent.trim() : '';
+  const name = tieredId && TIERED_PRODUCTS[tieredId] ? TIERED_PRODUCTS[tieredId].name : (nameEl ? nameEl.textContent.trim() : '');
   const priceText = priceEl ? priceEl.textContent.trim() : '';
   const priceNum = priceText ? parseFloat(priceText.replace(/[^\d.]/g, '')) : 0;
 
   document.getElementById('pdName').textContent = name;
-  document.getElementById('pdPitch').textContent = descEl && descEl.textContent.trim()
-    ? descEl.textContent.trim()
-    : genericProductDesc[lang];
-
-  const priceRow = document.getElementById('pdPriceRow');
-  if (priceText) {
-    priceRow.textContent = priceText;
-    priceRow.classList.remove('hide');
-  } else {
-    priceRow.classList.add('hide');
-  }
+  document.getElementById('pdPitch').textContent = tieredId && TIERED_PRODUCTS[tieredId]
+    ? TIERED_PRODUCTS[tieredId].pitch
+    : (descEl && descEl.textContent.trim() ? descEl.textContent.trim() : genericProductDesc[lang]);
 
   const imgSrc = imgEl ? imgEl.getAttribute('src') : '';
   document.getElementById('pdImage').src = upscaleImage(imgSrc);
@@ -2670,11 +2792,29 @@ function openProductDetail(card) {
     ? '4.8 · 128 reviews'
     : '4.8 · 128 recensioner';
 
-  renderProductDetailDeep();
-
+  const modelSelect = document.getElementById('pdModelSelect');
+  const priceRow = document.getElementById('pdPriceRow');
   const addBtn = document.getElementById('pdAddToCartBtn');
-  addBtn.setAttribute('data-name', name);
-  addBtn.setAttribute('data-price', priceNum);
+
+  if (tieredId && TIERED_PRODUCTS[tieredId]) {
+    modelSelect.style.display = '';
+    const models = TIERED_PRODUCTS[tieredId].models;
+    pdSelectedModelId = models[Math.floor(models.length / 2)].id; // Signature som standard
+    renderTierCards(tieredId);
+    applyTierData(tieredId); // sätter pris, add-to-cart, why-grid och spec-table
+    renderPdReviews();
+  } else {
+    modelSelect.style.display = 'none';
+    if (priceText) {
+      priceRow.textContent = priceText;
+      priceRow.classList.remove('hide');
+    } else {
+      priceRow.classList.add('hide');
+    }
+    addBtn.setAttribute('data-name', name);
+    addBtn.setAttribute('data-price', priceNum);
+    renderProductDetailDeep();
+  }
 
   document.getElementById('productDetailOverlay').classList.add('open');
 }
