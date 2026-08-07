@@ -1,4 +1,4 @@
-<!-- Sulitify V6.47 — Frakt & Retur, Kontakt, Om Oss + guld-badge-ikonsystem, samlat och paketerat -->
+<!-- Sulitify V6.49 — FAQ-avslutningen: "via länken nedan" rättat till "via ett enkelt knapptryck" -->
 <!DOCTYPE html>
 <html lang="sv">
 <head>
@@ -715,6 +715,49 @@ nav {
   .about-timeline { flex-direction: column; }
   .about-timeline-arrow { transform: rotate(90deg); padding: 2px 0; }
 }
+
+/* ── FAQ: dragspel ── */
+.faq-category { margin: 0 0 20px; }
+.faq-category > h4 { margin: 0 0 4px; }
+
+.faq-item {
+  border-bottom: 1px solid rgba(201,162,74,0.25);
+}
+
+.faq-item summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 2px;
+  cursor: pointer;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.96rem;
+  color: var(--ink, #1c1c1c);
+  list-style: none;
+}
+
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item summary::marker { content: ''; }
+
+.faq-item .faq-arrow {
+  color: var(--gold-dark, #a0782a);
+  font-size: 0.68rem;
+  transition: transform 0.25s;
+  flex-shrink: 0;
+}
+
+.faq-item[open] .faq-arrow { transform: rotate(180deg); }
+
+.faq-item p {
+  font-size: 0.85rem;
+  color: var(--ink-soft, #6b6b6b);
+  padding: 0 2px 14px;
+  margin: 0;
+  line-height: 1.55;
+}
+
+.faq-item p a { color: var(--gold-dark, #a0782a); text-decoration: underline; cursor: pointer; }
 
 /* ── KONTAKT-MODAL ── */
 .contact-cards {
@@ -2939,12 +2982,12 @@ const infoModalContent = {
         <div class="contact-card" onclick="window.location.href='mailto:sulitify@tutamail.com'">
           ${badgeIcon('email')}
           <h5>E-post</h5>
-          <p>sulitify@tutamail.com<br>Svar normalt inom 24 timmar.</p>
+          <p>sulitify@tutamail.com<br>Vi svarar vanligtvis inom 24 timmar.</p>
         </div>
         <div class="contact-card" onclick="focusContactForm('Beställning')">
           ${badgeIcon('box')}
           <h5>Order &amp; leverans</h5>
-          <p>Har du frågor om din beställning? Vi hjälper dig gärna.</p>
+          <p>Har du frågor om din beställning? Vi hjälper dig mer än gärna med din förfrågan.</p>
         </div>
         <div class="contact-card" onclick="focusContactForm('Retur')">
           ${badgeIcon('return')}
@@ -3013,7 +3056,7 @@ const infoModalContent = {
         <div class="contact-card" onclick="focusContactForm('Order')">
           ${badgeIcon('box')}
           <h5>Order &amp; delivery</h5>
-          <p>Questions about your order? We're happy to help.</p>
+          <p>Questions about your order? We're more than happy to help.</p>
         </div>
         <div class="contact-card" onclick="focusContactForm('Return')">
           ${badgeIcon('return')}
@@ -3139,8 +3182,234 @@ const infoModalContent = {
     ` }
   },
   faq: {
-    sv: { title: 'FAQ', body: 'Vanliga frågor fylls i inför lanseringen. Har du en fråga redan nu, hör av dig via sociala medier.' },
-    en: { title: 'FAQ', body: 'Frequently asked questions will be filled in ahead of launch. Got a question already? Reach out on social media.' }
+    sv: { title: 'Vanliga frågor', body: `
+      <div class="faq-category">
+        <h4>Leverans</h4>
+        <details class="faq-item">
+          <summary>Hur lång är leveranstiden? <span class="faq-arrow">▼</span></summary>
+          <p>Leveranstiden varierar något beroende på produkt och leverantör, men vi strävar alltid efter snabb och pålitlig leverans. Exakt leveranstid visas på produktsidan innan du lägger din beställning.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Vilka fraktalternativ finns? <span class="faq-arrow">▼</span></summary>
+          <p>Vi erbjuder pålitliga fraktalternativ anpassade efter produkten. Fullständiga fraktval publiceras i kassan när butiken lanseras.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Kan jag spåra min beställning? <span class="faq-arrow">▼</span></summary>
+          <p>Ja, du får ett spårningsnummer så snart din order har skickats så att du kan följa paketet hela vägen hem.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Levererar ni till hela Sverige? <span class="faq-arrow">▼</span></summary>
+          <p>Ja, vi levererar till hela Sverige. Vid lansering ser vi också över möjligheten att leverera till fler länder i Norden.</p>
+        </details>
+      </div>
+
+      <div class="faq-category">
+        <h4>Betalning</h4>
+        <details class="faq-item">
+          <summary>Vilka betalningsmetoder accepterar ni? <span class="faq-arrow">▼</span></summary>
+          <p>Vi erbjuder trygga betalningssätt som kort, Swish och Klarna.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Är det säkert att handla hos Sulitify? <span class="faq-arrow">▼</span></summary>
+          <p>Ja. All betalning sker krypterat via etablerade betalningslösningar, och vi delar aldrig dina uppgifter med tredje part.</p>
+        </details>
+        <details class="faq-item">
+          <summary>När dras pengarna? <span class="faq-arrow">▼</span></summary>
+          <p>Det beror på betalningsmetod — vid kortbetalning dras pengarna i regel i samband med att beställningen skickas, medan Klarna kan ha egna villkor för betalning eller delbetalning.</p>
+        </details>
+      </div>
+
+      <div class="faq-category">
+        <h4>Returer</h4>
+        <details class="faq-item">
+          <summary>Hur returnerar jag en produkt? <span class="faq-arrow">▼</span></summary>
+          <p>Kontakta oss så skickar vi returinstruktioner. Hela processen steg för steg hittar du under <a onclick="showInfoModalKey('shipping')">Frakt &amp; Retur</a>.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Vem betalar returfrakten? <span class="faq-arrow">▼</span></summary>
+          <p>Vid ångrat köp står du som kund för returfrakten. Är produkten felaktig eller skadad, eller om vi skickat fel vara, står vi för samtliga kostnader.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Hur lång tid tar en återbetalning? <span class="faq-arrow">▼</span></summary>
+          <p>Så snart vi mottagit och godkänt returen behandlar vi återbetalningen så snart som möjligt, till samma betalningsmetod du använde vid köpet.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Vad gäller vid reklamation? <span class="faq-arrow">▼</span></summary>
+          <p>Om produkten är felaktig, skadad vid leverans eller inte stämmer med det du beställt hjälper vi dig kostnadsfritt — hör av dig så löser vi det tillsammans.</p>
+        </details>
+      </div>
+
+      <div class="faq-category">
+        <h4>Produkter</h4>
+        <details class="faq-item">
+          <summary>Hur väljer ni era produkter? <span class="faq-arrow">▼</span></summary>
+          <p>Vi undersöker och jämför noggrant innan en produkt får bli en del av sortimentet — vi väljer endast det vi själva skulle köpa. Läs mer under <a onclick="showInfoModalKey('about')">Om Oss</a>.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Vad betyder "The Sulitify Selection"? <span class="faq-arrow">▼</span></summary>
+          <p>Det är vår markering för produkter som vi anser erbjuder en särskilt bra kombination av kvalitet, funktion och design inom sin kategori.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Hur väljer jag rätt modell? <span class="faq-arrow">▼</span></summary>
+          <p>De flesta produkter har flera nivåer att välja mellan. Varje produktsida visar tydligt vad som skiljer nivåerna åt, så du kan välja det som passar dig bäst.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Ingår garanti? <span class="faq-arrow">▼</span></summary>
+          <p>Garantivillkor kan variera något beroende på produkt och tillverkare. Aktuell garantiinformation finns alltid på produktsidan.</p>
+        </details>
+      </div>
+
+      <div class="faq-category">
+        <h4>Konto</h4>
+        <details class="faq-item">
+          <summary>Behöver jag skapa konto? <span class="faq-arrow">▼</span></summary>
+          <p>Nej, det går bra att handla som gäst. Ett konto blir tillgängligt när butiken lanserar, för dig som vill spara dina uppgifter och följa dina ordrar enklare.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Hur ändrar jag min adress? <span class="faq-arrow">▼</span></summary>
+          <p>Kontofunktioner, inklusive att ändra dina uppgifter, aktiveras i samband med lanseringen. Tills då hjälper vi dig gärna direkt via mejl om något behöver ändras.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Jag har glömt mitt lösenord. <span class="faq-arrow">▼</span></summary>
+          <p>Funktionen för lösenordsåterställning aktiveras när kontofunktionerna går live. Hör av dig till oss så hjälper vi dig under tiden.</p>
+        </details>
+      </div>
+
+      <div class="faq-category">
+        <h4>Kundservice</h4>
+        <details class="faq-item">
+          <summary>Hur kontaktar jag er? <span class="faq-arrow">▼</span></summary>
+          <p>Enklast via mejl på sulitify@tutamail.com, eller via <a onclick="showInfoModalKey('contact')">kontaktformuläret</a> här i butiken.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Hur snabbt svarar ni? <span class="faq-arrow">▼</span></summary>
+          <p>Vi svarar vanligtvis inom 24 timmar.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Kan jag ändra min order? <span class="faq-arrow">▼</span></summary>
+          <p>Hör av dig så snart som möjligt efter att du lagt din beställning — om ordern inte redan har skickats gör vi vårt bästa för att hjälpa dig ändra den.</p>
+        </details>
+      </div>
+
+      <div class="trust-box">
+        <p style="font-style:normal;">Hittar du inte svaret?<br>Vi hjälper dig mer än gärna via ett enkelt knapptryck.</p>
+        <button type="button" class="btn-primary" style="width:100%;margin-top:12px;" onclick="showInfoModalKey('contact')">Kontakta oss →</button>
+      </div>
+    ` },
+    en: { title: 'FAQ', body: `
+      <div class="faq-category">
+        <h4>Shipping</h4>
+        <details class="faq-item">
+          <summary>How long is the delivery time? <span class="faq-arrow">▼</span></summary>
+          <p>Delivery time varies slightly by product and supplier, but we always aim for fast, reliable delivery. Exact delivery time is shown on the product page before you order.</p>
+        </details>
+        <details class="faq-item">
+          <summary>What shipping options are available? <span class="faq-arrow">▼</span></summary>
+          <p>We offer reliable shipping options suited to each product. Full shipping choices will appear at checkout once the store launches.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Can I track my order? <span class="faq-arrow">▼</span></summary>
+          <p>Yes, you'll get a tracking number as soon as your order ships, so you can follow your package all the way home.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Do you deliver across Sweden? <span class="faq-arrow">▼</span></summary>
+          <p>Yes, we deliver across all of Sweden. At launch we're also looking into shipping to more Nordic countries.</p>
+        </details>
+      </div>
+
+      <div class="faq-category">
+        <h4>Payment</h4>
+        <details class="faq-item">
+          <summary>What payment methods do you accept? <span class="faq-arrow">▼</span></summary>
+          <p>We offer secure payment methods such as card, Swish and Klarna.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Is it safe to shop at Sulitify? <span class="faq-arrow">▼</span></summary>
+          <p>Yes. All payments are encrypted via established payment providers, and we never share your details with third parties.</p>
+        </details>
+        <details class="faq-item">
+          <summary>When is my card charged? <span class="faq-arrow">▼</span></summary>
+          <p>It depends on the payment method — card payments are usually charged when your order ships, while Klarna may have its own terms for payment or instalments.</p>
+        </details>
+      </div>
+
+      <div class="faq-category">
+        <h4>Returns</h4>
+        <details class="faq-item">
+          <summary>How do I return a product? <span class="faq-arrow">▼</span></summary>
+          <p>Contact us and we'll send return instructions. The full step-by-step process is under <a onclick="showInfoModalKey('shipping')">Shipping &amp; Returns</a>.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Who pays for return shipping? <span class="faq-arrow">▼</span></summary>
+          <p>For a change of mind, return shipping is paid by the customer. If the product is faulty, damaged, or we sent the wrong item, we cover all costs.</p>
+        </details>
+        <details class="faq-item">
+          <summary>How long does a refund take? <span class="faq-arrow">▼</span></summary>
+          <p>Once we've received and approved your return, we process the refund as soon as possible, to the same payment method you used.</p>
+        </details>
+        <details class="faq-item">
+          <summary>What applies to a complaint? <span class="faq-arrow">▼</span></summary>
+          <p>If your product is faulty, damaged in transit, or not what you ordered, just get in touch — we'll sort it out for you, free of charge.</p>
+        </details>
+      </div>
+
+      <div class="faq-category">
+        <h4>Products</h4>
+        <details class="faq-item">
+          <summary>How do you choose your products? <span class="faq-arrow">▼</span></summary>
+          <p>We research and compare carefully before a product becomes part of our range — we only choose what we'd buy ourselves. Read more under <a onclick="showInfoModalKey('about')">About Us</a>.</p>
+        </details>
+        <details class="faq-item">
+          <summary>What does "The Sulitify Selection" mean? <span class="faq-arrow">▼</span></summary>
+          <p>It's our mark for products we believe offer an especially good combination of quality, function and design within their category.</p>
+        </details>
+        <details class="faq-item">
+          <summary>How do I choose the right model? <span class="faq-arrow">▼</span></summary>
+          <p>Most products come in a few tiers. Each product page clearly shows what sets the tiers apart, so you can pick what suits you best.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Is a warranty included? <span class="faq-arrow">▼</span></summary>
+          <p>Warranty terms can vary slightly by product and manufacturer. Current warranty details are always shown on the product page.</p>
+        </details>
+      </div>
+
+      <div class="faq-category">
+        <h4>Account</h4>
+        <details class="faq-item">
+          <summary>Do I need to create an account? <span class="faq-arrow">▼</span></summary>
+          <p>No, you can check out as a guest. An account will be available at launch, for anyone who wants to save their details and track orders more easily.</p>
+        </details>
+        <details class="faq-item">
+          <summary>How do I change my address? <span class="faq-arrow">▼</span></summary>
+          <p>Account features, including editing your details, go live at launch. Until then, just email us if something needs to be changed.</p>
+        </details>
+        <details class="faq-item">
+          <summary>I forgot my password. <span class="faq-arrow">▼</span></summary>
+          <p>Password reset will be available once account features go live. Get in touch with us and we'll help you in the meantime.</p>
+        </details>
+      </div>
+
+      <div class="faq-category">
+        <h4>Customer service</h4>
+        <details class="faq-item">
+          <summary>How do I contact you? <span class="faq-arrow">▼</span></summary>
+          <p>Easiest by email at sulitify@tutamail.com, or via the <a onclick="showInfoModalKey('contact')">contact form</a> here in the store.</p>
+        </details>
+        <details class="faq-item">
+          <summary>How quickly do you reply? <span class="faq-arrow">▼</span></summary>
+          <p>We typically reply within 24 hours.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Can I change my order? <span class="faq-arrow">▼</span></summary>
+          <p>Get in touch as soon as possible after placing your order — if it hasn't shipped yet, we'll do our best to help you change it.</p>
+        </details>
+      </div>
+
+      <div class="trust-box">
+        <p style="font-style:normal;">Can't find the answer?<br>We're more than happy to help — just one tap away.</p>
+        <button type="button" class="btn-primary" style="width:100%;margin-top:12px;" onclick="showInfoModalKey('contact')">Contact us →</button>
+      </div>
+    ` }
   },
   orders: {
     sv: { title: 'Orderhistorik', body: 'Din orderhistorik blir tillgänglig här så snart butiken och kundkonton är live.' },
@@ -3156,7 +3425,7 @@ const infoModalContent = {
   }
 };
 
-const infoModalDocKeys = ['shipping', 'contact', 'about'];
+const infoModalDocKeys = ['shipping', 'contact', 'about', 'faq'];
 
 // Guld-badge-ikoner: mörk cirkel + guldring + guld-linjeikon (samma känsla som candy-bevel-knapparna)
 function badgeIcon(type, size) {
