@@ -1,4 +1,4 @@
-<!-- Sulitify V6.53 — "Spara till nästa selection" bytt till "Spara till önskelistan" i varukorgen, matchar Önskelista-modalen -->
+<!-- Sulitify V6.54 — varukorgen sparas nu i localStorage (som önskelistan), guldlinje-avdelare + "Din Beställning"/"Din Önskelista" -->
 <!DOCTYPE html>
 <html lang="sv">
 <head>
@@ -1382,7 +1382,22 @@ nav {
   text-transform: uppercase;
   color: var(--gold-dark);
   font-weight: 700;
-  margin: 4px 0 10px;
+  white-space: nowrap;
+}
+
+.cart-section-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 4px 0 12px;
+}
+
+.cart-section-divider:first-child { margin-top: 0; }
+
+.cart-section-divider .divider-line {
+  flex: 1;
+  height: 1px;
+  background: var(--gold-rest);
 }
 
 .save-later-btn {
@@ -2306,6 +2321,14 @@ footer {
 <script>
 
 let cartItems = [];
+try {
+  const rawCart = localStorage.getItem('sulitify-cart-items');
+  if (rawCart) cartItems = JSON.parse(rawCart);
+} catch (e) { cartItems = []; }
+
+function persistCartItems() {
+  try { localStorage.setItem('sulitify-cart-items', JSON.stringify(cartItems)); } catch (e) {}
+}
 
 let savedItems = [];
 try {
@@ -2713,6 +2736,7 @@ function handleAddToCart(event, btn) {
     cartItems.push({ name, price, qty: 1 });
   }
   updateCartUI();
+  persistCartItems();
   openCartDrawer();
 }
 
@@ -2730,7 +2754,7 @@ function updateCartUI() {
       '</p>';
   } else {
     if (cartItems.length > 0) {
-      html += `<div class="cart-section-heading">${isEn ? 'Selected for order' : 'Beställ valda produkter'}</div>`;
+      html += `<div class="cart-section-divider"><span class="divider-line"></span><span class="cart-section-heading">${isEn ? 'Your Order' : 'Din Beställning'}</span><span class="divider-line"></span></div>`;
       html += cartItems.map((i, idx) => `
         <div class="cart-item">
           <div class="cart-item-info">
@@ -2757,7 +2781,7 @@ function updateCartUI() {
 
     if (savedItems.length > 0) {
       html += '<div class="saved-items-section">';
-      html += `<div class="cart-section-heading">${isEn ? 'Wishlist' : 'Önskelista'}</div>`;
+      html += `<div class="cart-section-divider"><span class="divider-line"></span><span class="cart-section-heading">${isEn ? 'Your Wishlist' : 'Din Önskelista'}</span><span class="divider-line"></span></div>`;
       html += savedItems.map((i, idx) => `
         <div class="saved-item">
           <div class="saved-item-info">
@@ -2792,6 +2816,7 @@ function saveForLater(idx) {
   }
   cartItems.splice(idx, 1);
   persistSavedItems();
+  persistCartItems();
   updateCartUI();
 }
 
@@ -2806,6 +2831,7 @@ function moveToCart(idx) {
   }
   savedItems.splice(idx, 1);
   persistSavedItems();
+  persistCartItems();
   updateCartUI();
 }
 
@@ -2818,6 +2844,7 @@ function removeSavedItem(idx) {
 function increaseQty(idx) {
   if (!cartItems[idx]) return;
   cartItems[idx].qty++;
+  persistCartItems();
   updateCartUI();
 }
 
@@ -2827,11 +2854,13 @@ function decreaseQty(idx) {
   if (cartItems[idx].qty <= 0) {
     cartItems.splice(idx, 1);
   }
+  persistCartItems();
   updateCartUI();
 }
 
 function removeFromCart(idx) {
   cartItems.splice(idx, 1);
+  persistCartItems();
   updateCartUI();
 }
 
