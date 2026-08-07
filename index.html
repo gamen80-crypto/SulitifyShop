@@ -1,4 +1,4 @@
-<!-- Sulitify V6.51 — Konsumentverket-länken i Frakt & Retur bytt till egen knapp, tog bort "(tidigare Hallå Konsument)" -->
+<!-- Sulitify V6.53 — "Spara till nästa selection" bytt till "Spara till önskelistan" i varukorgen, matchar Önskelista-modalen -->
 <!DOCTYPE html>
 <html lang="sv">
 <head>
@@ -2742,7 +2742,7 @@ function updateCartUI() {
             </div>
             <button class="save-later-btn" onclick="saveForLater(${idx})">
               <svg viewBox="0 0 24 24" width="12" height="12"><path d="M6 2h12v20l-6-4.5L6 22z"/></svg>
-              ${isEn ? 'Save for next selection' : 'Spara till nästa selection'}
+              ${isEn ? 'Save to wishlist' : 'Spara till önskelistan'}
             </button>
           </div>
           <span class="cart-item-price">${i.price * i.qty} kr</span>
@@ -2757,7 +2757,7 @@ function updateCartUI() {
 
     if (savedItems.length > 0) {
       html += '<div class="saved-items-section">';
-      html += `<div class="cart-section-heading">${isEn ? 'Saved for next selection' : 'Sparade till nästa selection'}</div>`;
+      html += `<div class="cart-section-heading">${isEn ? 'Wishlist' : 'Önskelista'}</div>`;
       html += savedItems.map((i, idx) => `
         <div class="saved-item">
           <div class="saved-item-info">
@@ -3481,8 +3481,47 @@ function renderInfoModal(key) {
 function openInfoModal(event, el) {
   event.preventDefault();
   const key = el.getAttribute('data-modal');
+  if (key === 'wishlist') {
+    renderWishlistModal();
+    document.getElementById('infoModalOverlay').classList.add('open');
+    return;
+  }
   renderInfoModal(key);
   document.getElementById('infoModalOverlay').classList.add('open');
+}
+
+// Önskelistan visar samma sparade-items-lista som redan finns i varukorgen (localStorage, ingen backend behövs)
+function renderWishlistModal() {
+  const lang = document.documentElement.lang === 'en' ? 'en' : 'sv';
+  const isEn = lang === 'en';
+  const box = document.querySelector('#infoModalOverlay .info-modal');
+  box.classList.add('info-modal--doc');
+  document.getElementById('infoModalPrice').classList.remove('show');
+  document.getElementById('infoModalImage').classList.remove('show');
+  document.getElementById('infoModalTitle').textContent = isEn ? 'Wishlist' : 'Önskelista';
+
+  let html = '';
+  if (savedItems.length === 0) {
+    html = '<p>' + (isEn
+      ? 'You have not saved anything yet. Use "Save to wishlist" on a cart item to add it here.'
+      : 'Du har inte sparat något än. Använd "Spara till önskelistan" på en produkt i varukorgen för att lägga den här.') + '</p>';
+  } else {
+    html += savedItems.map((i, idx) => `
+      <div class="saved-item">
+        <div class="saved-item-info">
+          <span class="cart-item-name">${i.name}</span>
+          <span class="saved-item-qty">${isEn ? 'Qty' : 'Antal'}: ${i.qty}</span>
+        </div>
+        <span class="cart-item-price">${i.price * i.qty} kr</span>
+        <div class="saved-item-actions">
+          <button class="move-to-cart-btn" onclick="moveToCart(${idx}); renderWishlistModal();" title="${isEn ? 'Add to cart' : 'Lägg i varukorgen'}">&#8635;</button>
+          <button class="cart-item-remove" onclick="removeSavedItem(${idx}); renderWishlistModal();" aria-label="Ta bort">&times;</button>
+        </div>
+      </div>
+    `).join('');
+  }
+  document.getElementById('infoModalBody').innerHTML = html;
+  box.scrollTop = 0;
 }
 
 // Låter kort i en modal hoppa till en annan modals innehåll (t.ex. "Innan du kontaktar oss")
