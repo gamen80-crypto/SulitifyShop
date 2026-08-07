@@ -1,4 +1,4 @@
-<!-- Sulitify V6.37 — ny helgyllene logga i header, footer och app-ikon -->
+<!-- Sulitify V6.47 — Frakt & Retur, Kontakt, Om Oss + guld-badge-ikonsystem, samlat och paketerat -->
 <!DOCTYPE html>
 <html lang="sv">
 <head>
@@ -581,6 +581,278 @@ nav {
   box-shadow: 0 20px 60px rgba(0,0,0,0.3);
 }
 
+.info-modal.info-modal--doc {
+  max-width: 620px;
+  max-height: 85vh;
+  overflow-y: auto;
+  text-align: left;
+}
+
+.info-modal.info-modal--doc .info-modal-title {
+  text-align: left;
+}
+
+.info-modal-body h4 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.15rem;
+  color: var(--gold-dark, #a0782a);
+  margin: 22px 0 8px;
+}
+
+.info-modal-body h4:first-child { margin-top: 0; }
+
+.info-modal-body p { margin: 0 0 10px; }
+
+.info-modal-body ul,
+.info-modal-body ol {
+  margin: 0 0 10px;
+  padding-left: 20px;
+}
+
+.info-modal-body li { margin-bottom: 4px; }
+
+.info-modal-body a { color: var(--gold-dark, #a0782a); text-decoration: underline; }
+
+/* ── BADGE-IKONER (guld-ring, mörk cirkel, linje-ikon) ── */
+.badge-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #2a2a2a 0%, #141414 70%);
+  border: 2px solid var(--gold, #c9a24a);
+  box-shadow:
+    inset 0 1px 2px rgba(255,255,255,0.08),
+    inset 0 -2px 4px rgba(0,0,0,0.5),
+    0 4px 10px rgba(0,0,0,0.25);
+  transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+  margin-bottom: 8px;
+}
+
+.badge-icon svg {
+  width: 24px;
+  height: 24px;
+  stroke: var(--gold, #c9a24a);
+  fill: none;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.badge-icon.filled svg { fill: var(--gold, #c9a24a); stroke: none; }
+
+.badge-icon.badge-lg { width: 92px; height: 92px; }
+.badge-icon.badge-lg svg { width: 42px; height: 42px; }
+
+.badge-icon.badge-sm {
+  width: 22px;
+  height: 22px;
+  vertical-align: middle;
+  margin: 0 6px 2px 0;
+  border-width: 1.5px;
+}
+.badge-icon.badge-sm svg { width: 12px; height: 12px; }
+
+.contact-card:hover .badge-icon,
+.value-card:hover .badge-icon,
+.about-timeline-step:hover .badge-icon {
+  border-color: var(--gold-light, #f2d57e);
+  box-shadow:
+    inset 0 1px 2px rgba(255,255,255,0.12),
+    inset 0 -2px 4px rgba(0,0,0,0.5),
+    0 0 14px rgba(242,213,126,0.55),
+    0 6px 14px rgba(0,0,0,0.3);
+  transform: translateY(-2px);
+}
+
+/* ── OM OSS: tidslinje ── */
+.about-timeline {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  margin: 10px 0 22px;
+}
+
+.about-timeline-step {
+  flex: 1;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.about-timeline-step h5 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.98rem;
+  margin: 0 0 4px;
+  color: var(--ink, #1c1c1c);
+}
+
+.about-timeline-step p { font-size: 0.78rem; color: var(--ink-soft, #6b6b6b); margin: 0; line-height: 1.4; }
+
+.about-timeline-arrow {
+  align-self: center;
+  font-size: 1.2rem;
+  color: var(--gold-dark, #a0782a);
+  padding-top: 16px;
+}
+
+/* ── OM OSS: The Sulitify Selection-showcase ── */
+.selection-showcase {
+  text-align: center;
+  padding: 22px 14px;
+  margin: 6px 0 22px;
+  border: 1px solid rgba(201,162,74,0.3);
+  border-radius: 12px;
+  background: var(--cream, #faf7f2);
+}
+
+.selection-showcase h4 { margin-top: 12px !important; }
+
+@media (max-width: 480px) {
+  .about-timeline { flex-direction: column; }
+  .about-timeline-arrow { transform: rotate(90deg); padding: 2px 0; }
+}
+
+/* ── KONTAKT-MODAL ── */
+.contact-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin: 4px 0 22px;
+}
+
+.contact-card {
+  background: var(--cream, #faf7f2);
+  border: 1px solid rgba(201,162,74,0.3);
+  border-radius: 10px;
+  padding: 16px 16px 14px;
+  cursor: pointer;
+  transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+}
+
+.contact-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--gold, #c9a24a);
+  box-shadow: 0 10px 24px rgba(201,162,74,0.25);
+}
+
+.contact-card .cc-icon { font-size: 1.4rem; display: block; margin-bottom: 6px; }
+
+.contact-card h5 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.02rem;
+  margin: 0 0 4px;
+  color: var(--ink, #1c1c1c);
+}
+
+.contact-card p { margin: 0; font-size: 0.82rem; color: var(--ink-soft, #6b6b6b); line-height: 1.4; }
+
+.contact-form { margin: 4px 0 24px; }
+
+.contact-form label {
+  display: block;
+  font-size: 0.75rem;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--ink-soft, #6b6b6b);
+  margin: 14px 0 5px;
+}
+
+.contact-form label:first-of-type { margin-top: 0; }
+
+.contact-form input,
+.contact-form select,
+.contact-form textarea {
+  width: 100%;
+  padding: 11px 14px;
+  border: 1px solid rgba(201,162,74,0.4);
+  border-radius: 8px;
+  background: var(--white, #fff);
+  color: var(--ink, #1c1c1c);
+  font-size: 0.9rem;
+  font-family: inherit;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.contact-form input:focus,
+.contact-form select:focus,
+.contact-form textarea:focus {
+  border-color: var(--gold, #c9a24a);
+}
+
+.contact-form textarea { resize: vertical; min-height: 90px; }
+
+.contact-form button.btn-primary {
+  width: 100%;
+  margin-top: 18px;
+  text-align: center;
+}
+
+.pre-contact-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin: 10px 0 22px;
+}
+
+.pre-contact-card {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--white, #fff);
+  border: 1px solid rgba(201,162,74,0.3);
+  border-radius: 999px;
+  padding: 10px 14px;
+  font-size: 0.82rem;
+  color: var(--ink-mid, #3a3a3a);
+  cursor: pointer;
+  transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+}
+
+.pre-contact-card:hover {
+  border-color: var(--gold, #c9a24a);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(201,162,74,0.2);
+}
+
+.pre-contact-card .pc-check { color: var(--gold-dark, #a0782a); font-weight: 700; }
+
+.trust-box {
+  border: 1px solid rgba(201,162,74,0.35);
+  border-radius: 10px;
+  padding: 20px 22px;
+  text-align: center;
+  background: var(--cream, #faf7f2);
+  margin: 8px 0 20px;
+}
+
+.trust-box .crown { font-size: 1.3rem; display: block; margin-bottom: 8px; }
+.trust-box p { margin: 0; font-size: 0.92rem; color: var(--ink-mid, #3a3a3a); font-style: italic; }
+
+.info-modal-body .closing-note {
+  font-size: 0.85rem;
+  color: var(--ink-soft, #6b6b6b);
+  border-top: 1px solid rgba(201,162,74,0.2);
+  padding-top: 16px;
+  margin-top: 4px;
+}
+
+.info-modal-body .closing-cta {
+  margin-top: 14px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.05rem;
+  color: var(--ink, #1c1c1c);
+}
+
+@media (max-width: 480px) {
+  .info-modal.info-modal--doc { padding: 28px 20px; }
+  .contact-cards, .pre-contact-cards { grid-template-columns: 1fr; }
+}
+
 .info-modal-close {
   position: absolute;
   top: 12px;
@@ -794,12 +1066,13 @@ nav {
 
 .pd-review-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
 .pd-review-card { border: 1px solid var(--border); border-radius: 12px; padding: 18px; }
-.pd-review-card .crown-rating { display: flex; gap: 3px; margin-bottom: 10px; }
+.pd-review-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 10px; }
+.pd-review-card .crown-rating { display: flex; gap: 3px; }
 .pd-review-card .crown-icon { width: 15px; height: 15px; }
 .pd-review-card .crown-icon.filled path { fill: var(--gold); stroke: none; }
 .pd-review-card .crown-icon.empty path { fill: none; stroke: var(--gold-rest); stroke-width: 1.4; }
 .pd-review-card p { font-size: 0.84rem; color: var(--ink); line-height: 1.5; margin-bottom: 10px; }
-.pd-verified { display: inline-flex; align-items: center; gap: 4px; font-size: 0.64rem; letter-spacing: 0.5px; text-transform: uppercase; color: var(--gold-dark); font-weight: 700; margin-bottom: 4px; }
+.pd-verified { display: inline-flex; align-items: center; gap: 4px; font-size: 0.64rem; letter-spacing: 0.5px; text-transform: uppercase; color: var(--gold-dark); font-weight: 700; }
 .pd-review-author { font-size: 0.76rem; color: var(--ink-soft); font-weight: 600; }
 
 
@@ -2552,16 +2825,318 @@ const infoModalContent = {
     en: { title: 'My Account', body: 'Account and login features go live when the store launches. We\'re preparing everything behind the scenes right now.' }
   },
   about: {
-    sv: { title: 'Om Oss', body: 'Sulitify kurerar premiumprodukter med enkel, förfinad känsla. Mer om vår historia kommer snart.' },
-    en: { title: 'About Us', body: 'Sulitify curates premium products with a simple, refined feel. More about our story coming soon.' }
+    sv: { title: 'Om Oss', body: `
+      <p style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--ink);margin-bottom:14px;">Vår ambition är att erbjuda kvalitetsprodukter så att våra kunder alltid är nöjda.</p>
+
+      <div class="contact-cards value-cards">
+        <div class="contact-card value-card">
+          ${badgeIcon('crown')}
+          <h5>Vårt löfte</h5>
+          <p>Vi säljer inte produkter bara för att fylla en butik. Varje produkt ska förtjäna sin plats i The Sulitify Selection.</p>
+        </div>
+        <div class="contact-card value-card">
+          ${badgeIcon('star')}
+          <h5>Vår filosofi</h5>
+          <p>Vi tror att bra design ska kännas naturlig. Samma tanke gäller både våra produkter och vår webbplats.</p>
+        </div>
+        <div class="contact-card value-card">
+          ${badgeIcon('handshake')}
+          <h5>Vår kundservice</h5>
+          <p>Bra kundservice handlar inte om att vinna diskussioner. Den handlar om att hitta lösningar tillsammans.</p>
+        </div>
+        <div class="contact-card value-card">
+          ${badgeIcon('trophy')}
+          <h5>The Sulitify Selection</h5>
+          <p>Vår markering för produkter som verkligen förtjänar en plats hos dig. Vi väljer endast det vi själva skulle köpa.</p>
+        </div>
+      </div>
+
+      <div class="contact-cards value-cards">
+        <div class="contact-card value-card">
+          ${badgeIcon('search')}
+          <h5>Ärliga produktbeskrivningar</h5>
+        </div>
+        <div class="contact-card value-card">
+          ${badgeIcon('palette')}
+          <h5>Design som håller över tid</h5>
+        </div>
+        <div class="contact-card value-card">
+          ${badgeIcon('chat')}
+          <h5>Personlig kundservice</h5>
+        </div>
+        <div class="contact-card value-card">
+          ${badgeIcon('truck')}
+          <h5>Trygga leveranser</h5>
+        </div>
+      </div>
+
+      <div class="trust-box">
+        ${badgeIcon('crown')}
+        <p>Tack för att du besöker Sulitify. Vi hoppas att du hittar något som förtjänar en plats även hemma hos dig.</p>
+      </div>
+
+      <button type="button" class="btn-primary" style="width:100%;" onclick="goToBestsellers(event)">Utforska The Sulitify Selection</button>
+    ` },
+    en: { title: 'About Us', body: `
+      <p style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--ink);margin-bottom:14px;">Our ambition is to offer quality products so our customers are always satisfied.</p>
+
+      <div class="contact-cards value-cards">
+        <div class="contact-card value-card">
+          ${badgeIcon('crown')}
+          <h5>Our promise</h5>
+          <p>We don't sell products just to fill a store. Every product has to earn its place in The Sulitify Selection.</p>
+        </div>
+        <div class="contact-card value-card">
+          ${badgeIcon('star')}
+          <h5>Our philosophy</h5>
+          <p>We believe good design should feel natural. The same idea applies to both our products and our website.</p>
+        </div>
+        <div class="contact-card value-card">
+          ${badgeIcon('handshake')}
+          <h5>Our customer service</h5>
+          <p>Good customer service isn't about winning arguments. It's about finding solutions together.</p>
+        </div>
+        <div class="contact-card value-card">
+          ${badgeIcon('trophy')}
+          <h5>The Sulitify Selection</h5>
+          <p>Our mark for products that truly earn a place in your home. We only choose what we'd buy ourselves.</p>
+        </div>
+      </div>
+
+      <div class="contact-cards value-cards">
+        <div class="contact-card value-card">
+          ${badgeIcon('search')}
+          <h5>Honest product descriptions</h5>
+        </div>
+        <div class="contact-card value-card">
+          ${badgeIcon('palette')}
+          <h5>Design that lasts</h5>
+        </div>
+        <div class="contact-card value-card">
+          ${badgeIcon('chat')}
+          <h5>Personal customer service</h5>
+        </div>
+        <div class="contact-card value-card">
+          ${badgeIcon('truck')}
+          <h5>Reliable shipping</h5>
+        </div>
+      </div>
+
+      <div class="trust-box">
+        ${badgeIcon('crown')}
+        <p>Thank you for visiting Sulitify. We hope you find something that deserves a place in your home too.</p>
+      </div>
+
+      <button type="button" class="btn-primary" style="width:100%;" onclick="goToBestsellers(event)">Explore The Sulitify Selection</button>
+    ` }
   },
   contact: {
-    sv: { title: 'Kontakt', body: 'Kontaktvägar öppnas i samband med butikslanseringen. Håll utkik!' },
-    en: { title: 'Contact', body: 'Contact channels open when the store launches. Stay tuned!' }
+    sv: { title: 'Kontakt', body: `
+      <p style="font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:var(--ink);margin-bottom:14px;">Att välja rätt produkt är minst lika viktigt som att få hjälp när behovet uppstår.</p>
+      <p>Har du en fråga om en produkt, din beställning eller behöver hjälp att välja rätt? Vi finns här för att hjälpa dig. Hör av dig så återkommer vi så snart vi kan.</p>
+
+      <div class="contact-cards">
+        <div class="contact-card" onclick="window.location.href='mailto:sulitify@tutamail.com'">
+          ${badgeIcon('email')}
+          <h5>E-post</h5>
+          <p>sulitify@tutamail.com<br>Svar normalt inom 24 timmar.</p>
+        </div>
+        <div class="contact-card" onclick="focusContactForm('Beställning')">
+          ${badgeIcon('box')}
+          <h5>Order &amp; leverans</h5>
+          <p>Har du frågor om din beställning? Vi hjälper dig gärna.</p>
+        </div>
+        <div class="contact-card" onclick="focusContactForm('Retur')">
+          ${badgeIcon('return')}
+          <h5>Returer &amp; reklamationer</h5>
+          <p>Behöver du returnera en vara? Vi guidar dig genom processen.</p>
+        </div>
+        <div class="contact-card" onclick="focusContactForm('Samarbete')">
+          ${badgeIcon('handshake')}
+          <h5>Samarbeten</h5>
+          <p>Leverantörer eller företag? Kontakta oss här.</p>
+        </div>
+      </div>
+
+      <form class="contact-form" id="contactFormSection" onsubmit="sendContactMessage(event)">
+        <label for="contactName">Namn</label>
+        <input type="text" id="contactName" required>
+
+        <label for="contactEmail">E-post</label>
+        <input type="email" id="contactEmail" required>
+
+        <label for="contactSubject">Ämne</label>
+        <select id="contactSubject" required>
+          <option value="" disabled selected>Välj ämne</option>
+          <option value="Produktfråga">Produktfråga</option>
+          <option value="Beställning">Beställning</option>
+          <option value="Retur">Retur</option>
+          <option value="Reklamation">Reklamation</option>
+          <option value="Samarbete">Samarbete</option>
+          <option value="Övrigt">Övrigt</option>
+        </select>
+
+        <label for="contactMessage">Meddelande</label>
+        <textarea id="contactMessage" required></textarea>
+
+        <button type="submit" class="btn-primary">Skicka meddelande</button>
+      </form>
+
+      <h4>Innan du kontaktar oss</h4>
+      <p>Vi finns här när du behöver oss, men ofta hittar du svaret snabbast här nedan:</p>
+      <div class="pre-contact-cards">
+        <div class="pre-contact-card" onclick="showInfoModalKey('shipping')"><span class="pc-check">✓</span> Leverans</div>
+        <div class="pre-contact-card" onclick="showInfoModalKey('shipping')"><span class="pc-check">✓</span> Returer</div>
+        <div class="pre-contact-card" onclick="showInfoModalKey('payment')"><span class="pc-check">✓</span> Betalning</div>
+        <div class="pre-contact-card" onclick="showInfoModalKey('faq')"><span class="pc-check">✓</span> Vanliga frågor</div>
+      </div>
+
+      <div class="trust-box">
+        ${badgeIcon('crown')}
+        <p>Vi tror att bra kundservice handlar om mer än att svara på frågor. Vi lyssnar, hjälper och söker alltid den bästa lösningen tillsammans med dig.</p>
+      </div>
+
+      <p class="closing-note">Tack för att du kontaktar Sulitify. Vi uppskattar varje fråga, synpunkt och idé. Oavsett om du behöver hjälp med en beställning eller bara vill veta mer om en produkt gör vi vårt bästa för att ge dig ett tydligt och personligt svar.</p>
+
+      <p class="closing-cta">Vi tror att de bästa lösningarna börjar med ett samtal. Berätta hur vi kan hjälpa dig – så hittar vi en lösning tillsammans.</p>
+    ` },
+    en: { title: 'Contact', body: `
+      <p style="font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:var(--ink);margin-bottom:14px;">Choosing the right product matters just as much as getting help when you need it.</p>
+      <p>Have a question about a product, your order, or need help choosing? We're here for you. Get in touch and we'll get back to you as soon as we can.</p>
+
+      <div class="contact-cards">
+        <div class="contact-card" onclick="window.location.href='mailto:sulitify@tutamail.com'">
+          ${badgeIcon('email')}
+          <h5>Email</h5>
+          <p>sulitify@tutamail.com<br>Replies usually within 24 hours.</p>
+        </div>
+        <div class="contact-card" onclick="focusContactForm('Order')">
+          ${badgeIcon('box')}
+          <h5>Order &amp; delivery</h5>
+          <p>Questions about your order? We're happy to help.</p>
+        </div>
+        <div class="contact-card" onclick="focusContactForm('Return')">
+          ${badgeIcon('return')}
+          <h5>Returns &amp; complaints</h5>
+          <p>Need to return an item? We'll guide you through it.</p>
+        </div>
+        <div class="contact-card" onclick="focusContactForm('Partnership')">
+          ${badgeIcon('handshake')}
+          <h5>Partnerships</h5>
+          <p>Supplier or business inquiry? Reach out here.</p>
+        </div>
+      </div>
+
+      <form class="contact-form" id="contactFormSection" onsubmit="sendContactMessage(event)">
+        <label for="contactName">Name</label>
+        <input type="text" id="contactName" required>
+
+        <label for="contactEmail">Email</label>
+        <input type="email" id="contactEmail" required>
+
+        <label for="contactSubject">Subject</label>
+        <select id="contactSubject" required>
+          <option value="" disabled selected>Choose a subject</option>
+          <option value="Product question">Product question</option>
+          <option value="Order">Order</option>
+          <option value="Return">Return</option>
+          <option value="Complaint">Complaint</option>
+          <option value="Partnership">Partnership</option>
+          <option value="Other">Other</option>
+        </select>
+
+        <label for="contactMessage">Message</label>
+        <textarea id="contactMessage" required></textarea>
+
+        <button type="submit" class="btn-primary">Send message</button>
+      </form>
+
+      <h4>Before you contact us</h4>
+      <p>We're here whenever you need us, but you'll often find the answer even faster below:</p>
+      <div class="pre-contact-cards">
+        <div class="pre-contact-card" onclick="showInfoModalKey('shipping')"><span class="pc-check">✓</span> Shipping</div>
+        <div class="pre-contact-card" onclick="showInfoModalKey('shipping')"><span class="pc-check">✓</span> Returns</div>
+        <div class="pre-contact-card" onclick="showInfoModalKey('payment')"><span class="pc-check">✓</span> Payment</div>
+        <div class="pre-contact-card" onclick="showInfoModalKey('faq')"><span class="pc-check">✓</span> FAQ</div>
+      </div>
+
+      <div class="trust-box">
+        ${badgeIcon('crown')}
+        <p>We believe great customer service is about more than answering questions. We listen, help, and always look for the best solution together with you.</p>
+      </div>
+
+      <p class="closing-note">Thank you for contacting Sulitify. We appreciate every question, comment and idea. Whether you need help with an order or just want to know more about a product, we do our best to give you a clear and personal reply.</p>
+
+      <p class="closing-cta">We believe the best solutions start with a conversation. Tell us how we can help — and we'll find a solution together.</p>
+    ` }
+  },
+  payment: {
+    sv: { title: 'Betalning', body: 'Vi erbjuder trygga betalningssätt som kort, Swish och Klarna. Fullständig information publiceras när butiken lanseras.' },
+    en: { title: 'Payment', body: 'We offer secure payment methods such as card, Swish and Klarna. Full details will be published when the store launches.' }
   },
   shipping: {
-    sv: { title: 'Frakt & Retur', body: 'Fullständig frakt- och returinformation publiceras när butiken är live.' },
-    en: { title: 'Shipping & Returns', body: 'Full shipping and return details will be published when the store goes live.' }
+    sv: { title: 'Frakt & Retur', body: `
+      <p>Vi väljer våra produkter med stor omsorg och hoppas att du blir lika nöjd som våra andra kunder. Om något mot förmodan inte känns helt rätt går det självklart bra att returnera varan.</p>
+
+      <h4>Ångerrätt</h4>
+      <p>Enligt lag har du minst 14 dagars ångerrätt vid köp på nätet. Hos oss förlänger vi den till <strong>30 dagar</strong>, så du får extra tid att bestämma dig.</p>
+      <ul>
+        <li>Produkten ska vara i väsentligen oförändrat skick.</li>
+        <li>Vid ångrat köp står du som kund för returfrakten.</li>
+      </ul>
+
+      <h4>Reklamation</h4>
+      <p>Ångerrätt och reklamation är inte samma sak. Om din produkt istället är felaktig, skadad vid leverans eller inte stämmer med det du beställt, hör av dig till oss — vi hjälper dig lösa det, helt kostnadsfritt.</p>
+
+      <h4>Så går en retur till</h4>
+      <ol>
+        <li>Kontakta oss.</li>
+        <li>Vi skickar returinstruktioner.</li>
+        <li>Skicka tillbaka produkten.</li>
+        <li>Vi behandlar returen.</li>
+        <li>Återbetalning sker när returen är godkänd.</li>
+      </ol>
+
+      <h4>Återbetalning</h4>
+      <ul>
+        <li>Återbetalning sker till samma betalningsmetod som du använde vid köpet.</li>
+        <li>Så snart vi mottagit och godkänt returen behandlar vi återbetalningen.</li>
+      </ul>
+
+      <h4>Din konsumenträtt</h4>
+      <p>Vi följer svensk konsumentlagstiftning och respekterar alltid dina rättigheter som kund. Vill du läsa mer hittar du bra information hos <a href="https://www.konsumentverket.se" target="_blank" rel="noopener">Konsumentverket</a> och <a href="https://www.hallakonsument.se" target="_blank" rel="noopener">Hallå Konsument</a>.</p>
+    ` },
+    en: { title: 'Shipping & Returns', body: `
+      <p>We choose our products with great care and hope you'll be just as happy as our other customers. If something doesn't feel quite right, you're of course welcome to return it.</p>
+
+      <h4>Right of withdrawal</h4>
+      <p>By law you have at least 14 days' right of withdrawal on online purchases. We extend that to <strong>30 days</strong>, giving you extra time to decide.</p>
+      <ul>
+        <li>The product should be returned in essentially unchanged condition.</li>
+        <li>For a change of mind, return shipping is paid by the customer.</li>
+      </ul>
+
+      <h4>Faulty or wrong items</h4>
+      <p>A change of mind and a faulty item are handled differently. If your product is faulty, damaged in transit, or not what you ordered, just get in touch — we'll sort it out for you, free of charge.</p>
+
+      <h4>How a return works</h4>
+      <ol>
+        <li>Contact us.</li>
+        <li>We send you return instructions.</li>
+        <li>Send the product back.</li>
+        <li>We process the return.</li>
+        <li>Your refund is issued once the return is approved.</li>
+      </ol>
+
+      <h4>Refunds</h4>
+      <ul>
+        <li>Refunds are made to the same payment method used for the purchase.</li>
+        <li>Once we've received and approved the return, we process the refund as soon as possible.</li>
+      </ul>
+
+      <h4>Your consumer rights</h4>
+      <p>We follow Swedish consumer protection law and always respect your rights as a customer. For more details, see the Swedish Consumer Agency (Konsumentverket) and Hallå Konsument.</p>
+    ` }
   },
   faq: {
     sv: { title: 'FAQ', body: 'Vanliga frågor fylls i inför lanseringen. Har du en fråga redan nu, hör av dig via sociala medier.' },
@@ -2581,14 +3156,91 @@ const infoModalContent = {
   }
 };
 
+const infoModalDocKeys = ['shipping', 'contact', 'about'];
+
+// Guld-badge-ikoner: mörk cirkel + guldring + guld-linjeikon (samma känsla som candy-bevel-knapparna)
+function badgeIcon(type, size) {
+  const paths = {
+    email: '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 6l9 7 9-7"/>',
+    box: '<path d="M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3z"/><path d="M12 3v9M12 12l8-4.5M12 12l-8-4.5"/>',
+    'return': '<path d="M9 10H4V5"/><path d="M4 10c1.5-3.5 5-6 9-6a9 9 0 1 1-8 13"/>',
+    handshake: '<path d="M3 13l4-4 3 3 5-5 6 6-3 3-3-3-5 5-3-3-4 4z"/>',
+    search: '<circle cx="11" cy="11" r="6"/><path d="M20 20l-4.35-4.35"/>',
+    flask: '<path d="M9 3h6M10 3v6l-5 9a2 2 0 0 0 2 3h10a2 2 0 0 0 2-3l-5-9V3"/>',
+    star: '<path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14 2 9.27l6.91-1.01L12 2z"/>',
+    trophy: '<path d="M8 4h8v4a4 4 0 0 1-8 0V4z"/><path d="M8 5H5a2 2 0 0 0 2 4M16 5h3a2 2 0 0 1-2 4"/><path d="M10 13v2M14 13v2M8 19h8M9 19c0-1.5.5-2.5 1-3h4c.5.5 1 1.5 1 3"/>',
+    palette: '<path d="M12 3a9 9 0 1 0 0 18c1.5 0 2-1 2-2s-.5-1.5-1-2 .2-2 1.5-2H17a4 4 0 0 0 4-4c0-4.4-4-8-9-8z"/><circle cx="7.5" cy="10.5" r="1.2"/><circle cx="10.5" cy="7.5" r="1.2"/><circle cx="14.5" cy="7.5" r="1.2"/><circle cx="17" cy="10.5" r="1.2"/>',
+    chat: '<path d="M4 4h16v12H8l-4 4V4z"/>',
+    truck: '<path d="M3 7h11v8H3V7z"/><path d="M14 10h4l3 3v2h-7v-5z"/><circle cx="7" cy="17" r="1.6"/><circle cx="17.5" cy="17" r="1.6"/>',
+    crown: '<path d="M3 17h18v2H3v-2zm0-2l2.5-8L9 12l3-9 3 9 3.5-5L21 15H3z"/>'
+  };
+  const filled = type === 'crown';
+  const sizeClass = size === 'lg' ? ' badge-lg' : (size === 'sm' ? ' badge-sm' : '');
+  const cls = 'badge-icon' + sizeClass + (filled ? ' filled' : '');
+  return '<span class="' + cls + '"><svg viewBox="0 0 24 24">' + (paths[type] || '') + '</svg></span>';
+}
+
+// Om Oss-knappen "Utforska The Sulitify Selection": stänger modalen och scrollar till Bästsäljare
+function goToBestsellers(event) {
+  if (event) event.preventDefault();
+  closeInfoModal();
+  setTimeout(function () {
+    const el = document.getElementById('bestsellers');
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 300);
+}
+
+function renderInfoModal(key) {
+  const lang = document.documentElement.lang === 'en' ? 'en' : 'sv';
+  const content = (infoModalContent[key] && infoModalContent[key][lang]) || { title: '', body: '' };
+  const box = document.querySelector('#infoModalOverlay .info-modal');
+  document.getElementById('infoModalTitle').textContent = content.title;
+  document.getElementById('infoModalPrice').classList.remove('show');
+  document.getElementById('infoModalImage').classList.remove('show');
+  if (infoModalDocKeys.includes(key)) {
+    box.classList.add('info-modal--doc');
+    document.getElementById('infoModalBody').innerHTML = content.body;
+  } else {
+    box.classList.remove('info-modal--doc');
+    document.getElementById('infoModalBody').textContent = content.body;
+  }
+  box.scrollTop = 0;
+}
+
 function openInfoModal(event, el) {
   event.preventDefault();
   const key = el.getAttribute('data-modal');
-  const lang = document.documentElement.lang === 'en' ? 'en' : 'sv';
-  const content = (infoModalContent[key] && infoModalContent[key][lang]) || { title: '', body: '' };
-  document.getElementById('infoModalTitle').textContent = content.title;
-  document.getElementById('infoModalBody').textContent = content.body;
+  renderInfoModal(key);
   document.getElementById('infoModalOverlay').classList.add('open');
+}
+
+// Låter kort i en modal hoppa till en annan modals innehåll (t.ex. "Innan du kontaktar oss")
+function showInfoModalKey(key) {
+  renderInfoModal(key);
+}
+
+// Sektion 2 i Kontakt: förvalt ämne + hoppa ner till formuläret
+function focusContactForm(subjectValue) {
+  const select = document.getElementById('contactSubject');
+  if (select) select.value = subjectValue;
+  const formSection = document.getElementById('contactFormSection');
+  if (formSection) formSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  const nameField = document.getElementById('contactName');
+  if (nameField) setTimeout(() => nameField.focus(), 350);
+}
+
+// Formuläret har ingen backend ännu — bygger ett mailto: med ifyllda fält
+function sendContactMessage(event) {
+  event.preventDefault();
+  const name = document.getElementById('contactName').value.trim();
+  const email = document.getElementById('contactEmail').value.trim();
+  const subject = document.getElementById('contactSubject').value;
+  const message = document.getElementById('contactMessage').value.trim();
+
+  const subjectLine = `Sulitify — ${subject || 'Kontakt'}`;
+  const bodyLines = [`Namn: ${name}`, `E-post: ${email}`, '', message].join('\n');
+  const mailto = `mailto:sulitify@tutamail.com?subject=${encodeURIComponent(subjectLine)}&body=${encodeURIComponent(bodyLines)}`;
+  window.location.href = mailto;
 }
 
 function closeInfoModal(event) {
@@ -2757,9 +3409,11 @@ function renderProductDetailDeep() {
 function renderPdReviews() {
   document.getElementById('pdReviewGrid').innerHTML = pdPlaceholderReviews.map(r => `
     <div class="pd-review-card">
-      <span class="crown-rating">${crownIcons(r.rating)}</span>
+      <div class="pd-review-top">
+        <span class="crown-rating">${crownIcons(r.rating)}</span>
+        <span class="pd-verified">✓ Verifierat köp</span>
+      </div>
       <p>"${r.text}"</p>
-      <div class="pd-verified">✓ Verifierat köp</div>
       <div class="pd-review-author">${r.author}</div>
     </div>
   `).join('');
@@ -2826,6 +3480,7 @@ function closeProductDetail(event) {
 
 function openProductModal(card) {
   const lang = document.documentElement.lang === 'en' ? 'en' : 'sv';
+  document.querySelector('#infoModalOverlay .info-modal').classList.remove('info-modal--doc');
   const nameEl = card.querySelector('h4');
   const priceEl = card.querySelector('.price, .product-price');
   const descEl = card.querySelector('p');
