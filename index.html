@@ -1,4 +1,4 @@
-<!-- Sulitify V6.59 — LED Strip fick riktigt innehåll via PRODUCT_DETAILS-mekanismen -->
+<!-- Sulitify V6.60 — Dörrsensor fick riktigt innehåll via PRODUCT_DETAILS-mekanismen -->
 <!DOCTYPE html>
 <html lang="sv">
 <head>
@@ -1980,7 +1980,7 @@ footer {
       <div class="product-card" data-tiered="smartplug"><img class="product-card-thumb" src="https://picsum.photos/seed/smartplugbundle/82/58" alt="Sulitify Smart Plug"><div class="product-card-text"><div class="product-card-info"><h4 data-i18n="prod.smartplugbundle">Sulitify Smart Plug</h4><p class="product-card-desc" data-i18n="desc.smartplugbundle">Smart strömstyrning — välj din nivå.</p></div><span class="product-price">Från 159 kr</span></div></div>
       <div class="product-card" data-single="ledstrip"><img class="product-card-thumb" src="https://picsum.photos/seed/ledstrip/82/58" alt="LED Strip"><div class="product-card-text"><div class="product-card-info"><h4 data-i18n="prod.ledstrip">LED Strip</h4><p class="product-card-desc" data-i18n="desc.ledstrip">Skapa atmosfär med färgstark LED-belysning.</p></div><span class="product-price">249 kr</span></div></div>
       <div class="category-more">
-        <div class="product-card"><img class="product-card-thumb" src="https://picsum.photos/seed/doorsensor/82/58" alt="Dörrsensor"><div class="product-card-text"><div class="product-card-info"><h4 data-i18n="prod.doorsensor">Dörrsensor</h4><p class="product-card-desc" data-i18n="desc.doorsensor">Få notis direkt när dörren öppnas.</p></div><span class="product-price">229 kr</span></div></div>
+        <div class="product-card" data-single="doorsensor"><img class="product-card-thumb" src="https://picsum.photos/seed/doorsensor/82/58" alt="Dörrsensor"><div class="product-card-text"><div class="product-card-info"><h4 data-i18n="prod.doorsensor">Dörrsensor</h4><p class="product-card-desc" data-i18n="desc.doorsensor">Få notis direkt när dörren öppnas.</p></div><span class="product-price">229 kr</span></div></div>
         <div class="product-card" data-single="robotvac"><img class="product-card-thumb" src="https://picsum.photos/seed/robotvac/82/58" alt="Robotdammsugare"><div class="product-card-text"><div class="product-card-info"><h4 data-i18n="prod.robotvac">Robotdammsugare</h4><p class="product-card-desc" data-i18n="desc.robotvac">Automatisk städning, dag som natt.</p></div><span class="product-price">1499 kr</span></div></div>
       </div>
       <button class="show-more-btn" data-category="smarthome" onclick="toggleCategory(this)">
@@ -3764,6 +3764,25 @@ const PRODUCT_DETAILS = {
       { rating: 5, text: 'Perfekt bakom TV:n, synkar snyggt med filmen och skapar en helt annan känsla i rummet.', author: 'Oscar, Gävle' },
       { rating: 5, text: 'Klistret höll galant och färgerna är mycket starkare än jag trodde.', author: 'Sofia, Sundsvall' },
       { rating: 4, text: 'Lätt att klippa till rätt längd, appen är smidig att styra scener från.', author: 'Daniel, Borås' },
+    ],
+  },
+  doorsensor: {
+    pitch: '"Vet direkt när dörren öppnas — även när du inte är hemma."',
+    why: [
+      { icon: '🚪', title: 'Notis i realtid', text: 'Få en notis i mobilen exakt när dörren eller fönstret öppnas, var du än befinner dig.' },
+      { icon: '🔗', title: 'Kopplas till andra smarta enheter', text: 'Låt sensorn trigga lampor eller larm automatiskt när den upptäcker rörelse i dörren.' },
+      { icon: '🔋', title: 'Batteri i över ett år', text: 'Litet, discret och kräver knappt något underhåll tack vare den långa batteritiden.' },
+    ],
+    specs: [
+      ['Räckvidd', 'Upp till 100 meter'],
+      ['Batteritid', 'Upp till 12 månader'],
+      ['Montering', 'Självhäftande, skruvfri'],
+      ['Mått', '4 × 2 × 1,2 cm'],
+    ],
+    reviews: [
+      { rating: 5, text: 'Sitter dold ovanpå dörrkarmen och notisen kommer direkt när någon öppnar.', author: 'Therese, Halmstad' },
+      { rating: 4, text: 'Enkel installation, satt upp den på under en minut.', author: 'Robert, Skövde' },
+      { rating: 5, text: 'Batteriet har hållit i över ett halvår redan, inget att klaga på.', author: 'Malin, Kristianstad' },
     ],
   },
 };
