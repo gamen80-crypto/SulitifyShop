@@ -1,4 +1,4 @@
-<!-- Sulitify V6.55 — Aroma Diffuser fick riktigt innehåll (Essential/Signature/Prestige), inte längre platshållare -->
+<!-- Sulitify V6.58 — Smart Lampa fick riktigt innehåll via PRODUCT_DETAILS-mekanismen -->
 <!DOCTYPE html>
 <html lang="sv">
 <head>
@@ -1975,13 +1975,13 @@ footer {
 
     <div class="category-col" data-category="smarthome">
       <div class="category-title" data-i18n="cat.smarthome">Smart Hem</div>
-      <div class="product-card"><img class="product-card-thumb" src="https://picsum.photos/seed/smartlamp/82/58" alt="Smart Lampa"><div class="product-card-text"><div class="product-card-info"><h4 data-i18n="prod.smartlamp">Smart Lampa</h4><p class="product-card-desc" data-i18n="desc.smartlamp">Dimbar smart belysning styrd via app.</p></div><span class="product-price">299 kr</span></div></div>
-      <div class="product-card"><img class="product-card-thumb" src="https://picsum.photos/seed/wificam/82/58" alt="WiFi Kamera"><div class="product-card-text"><div class="product-card-info"><h4 data-i18n="prod.wificam">WiFi Kamera</h4><p class="product-card-desc" data-i18n="desc.wificam">Håll koll på hemmet var du än är.</p></div><span class="product-price">499 kr</span></div></div>
+      <div class="product-card" data-single="smartlamp"><img class="product-card-thumb" src="https://picsum.photos/seed/smartlamp/82/58" alt="Smart Lampa"><div class="product-card-text"><div class="product-card-info"><h4 data-i18n="prod.smartlamp">Smart Lampa</h4><p class="product-card-desc" data-i18n="desc.smartlamp">Dimbar smart belysning styrd via app.</p></div><span class="product-price">299 kr</span></div></div>
+      <div class="product-card" data-single="wificam"><img class="product-card-thumb" src="https://picsum.photos/seed/wificam/82/58" alt="WiFi Kamera"><div class="product-card-text"><div class="product-card-info"><h4 data-i18n="prod.wificam">WiFi Kamera</h4><p class="product-card-desc" data-i18n="desc.wificam">Håll koll på hemmet var du än är.</p></div><span class="product-price">499 kr</span></div></div>
       <div class="product-card" data-tiered="smartplug"><img class="product-card-thumb" src="https://picsum.photos/seed/smartplugbundle/82/58" alt="Sulitify Smart Plug"><div class="product-card-text"><div class="product-card-info"><h4 data-i18n="prod.smartplugbundle">Sulitify Smart Plug</h4><p class="product-card-desc" data-i18n="desc.smartplugbundle">Smart strömstyrning — välj din nivå.</p></div><span class="product-price">Från 159 kr</span></div></div>
       <div class="product-card"><img class="product-card-thumb" src="https://picsum.photos/seed/ledstrip/82/58" alt="LED Strip"><div class="product-card-text"><div class="product-card-info"><h4 data-i18n="prod.ledstrip">LED Strip</h4><p class="product-card-desc" data-i18n="desc.ledstrip">Skapa atmosfär med färgstark LED-belysning.</p></div><span class="product-price">249 kr</span></div></div>
       <div class="category-more">
         <div class="product-card"><img class="product-card-thumb" src="https://picsum.photos/seed/doorsensor/82/58" alt="Dörrsensor"><div class="product-card-text"><div class="product-card-info"><h4 data-i18n="prod.doorsensor">Dörrsensor</h4><p class="product-card-desc" data-i18n="desc.doorsensor">Få notis direkt när dörren öppnas.</p></div><span class="product-price">229 kr</span></div></div>
-        <div class="product-card"><img class="product-card-thumb" src="https://picsum.photos/seed/robotvac/82/58" alt="Robotdammsugare"><div class="product-card-text"><div class="product-card-info"><h4 data-i18n="prod.robotvac">Robotdammsugare</h4><p class="product-card-desc" data-i18n="desc.robotvac">Automatisk städning, dag som natt.</p></div><span class="product-price">1499 kr</span></div></div>
+        <div class="product-card" data-single="robotvac"><img class="product-card-thumb" src="https://picsum.photos/seed/robotvac/82/58" alt="Robotdammsugare"><div class="product-card-text"><div class="product-card-info"><h4 data-i18n="prod.robotvac">Robotdammsugare</h4><p class="product-card-desc" data-i18n="desc.robotvac">Automatisk städning, dag som natt.</p></div><span class="product-price">1499 kr</span></div></div>
       </div>
       <button class="show-more-btn" data-category="smarthome" onclick="toggleCategory(this)">
         <span class="btn-label-more" data-i18n="cta.viewcategory">Se hela kategorin →</span>
@@ -3687,6 +3687,93 @@ const TIERED_PRODUCTS = {
   }
 };
 
+// Generell mekanism för enprisprodukter (icke-tiered) med riktigt innehåll.
+// Nyckel = värdet i produktkortets data-single-attribut.
+const PRODUCT_DETAILS = {
+  robotvac: {
+    pitch: '"Automatisk städning som anpassar sig efter ditt hem — dag som natt."',
+    why: [
+      { icon: '🗺️', title: 'Smart kartläggning', text: 'Skapar en karta över hemmet och navigerar smidigt runt möbler och hinder.' },
+      { icon: '🔋', title: 'Laddar sig själv', text: 'Återvänder automatiskt till laddstationen när batteriet börjar ta slut.' },
+      { icon: '📱', title: 'Styr via app', text: 'Schemalägg städning, välj rum och följ statusen direkt i mobilen.' },
+    ],
+    specs: [
+      ['Sugkraft', '2200 Pa'],
+      ['Batteritid', 'Upp till 120 minuter'],
+      ['Dammbehållare', '600 ml'],
+      ['Mått', 'Ø32 × 8,5 cm'],
+    ],
+    reviews: [
+      { rating: 5, text: 'Kör den varje dag, kartlägger lägenheten perfekt och missar inga hörn.', author: 'Peter, Linköping' },
+      { rating: 5, text: 'Går tillbaka och laddar helt själv, behöver aldrig tänka på den.', author: 'Sara, Örebro' },
+      { rating: 4, text: 'Tyst för en robotdammsugare och appen är enkel att förstå.', author: 'Mikael, Helsingborg' },
+    ],
+  },
+  wificam: {
+    pitch: '"Håll koll på hemmet i realtid — var i världen du än befinner dig."',
+    why: [
+      { icon: '📹', title: 'Skarp bild dag och natt', text: 'Full HD-upplösning med infraröd nattsyn för tydlig bild dygnet runt.' },
+      { icon: '🔔', title: 'Rörelselarm direkt i mobilen', text: 'Få en notis så fort något rör sig framför kameran, oavsett var du är.' },
+      { icon: '🎙️', title: 'Tvåvägskommunikation', text: 'Prata och lyssna genom kameran via inbyggd mikrofon och högtalare.' },
+    ],
+    specs: [
+      ['Upplösning', '1080p Full HD'],
+      ['Synfält', '130° vidvinkel'],
+      ['Nattsyn', 'Upp till 10 meter'],
+      ['Anslutning', 'WiFi 2.4 GHz'],
+    ],
+    reviews: [
+      { rating: 5, text: 'Ser precis vad som händer hemma via mobilen, bildkvaliteten är riktigt bra.', author: 'Camilla, Västerås' },
+      { rating: 4, text: 'Enkel att sätta upp och notiserna kommer direkt när något rör sig.', author: 'Fredrik, Norrköping' },
+      { rating: 5, text: 'Nattsynen är imponerande, ser lika bra i mörker som på dagen.', author: 'Linda, Jönköping' },
+    ],
+  },
+  smartlamp: {
+    pitch: '"Rätt ljus för varje stund — dimmat, färgat eller varmvitt, direkt via appen."',
+    why: [
+      { icon: '💡', title: 'Miljontals färger', text: 'Ställ in exakt den nyans och intensitet som passar stunden, från varmvitt till färgat mood-ljus.' },
+      { icon: '⏰', title: 'Schemalägg belysningen', text: 'Låt lampan tändas och släckas automatiskt efter dina egna tider, dag som natt.' },
+      { icon: '🎵', title: 'Följer musik och film', text: 'Synka ljuset med ljud eller skärm för en mer levande atmosfär i rummet.' },
+    ],
+    specs: [
+      ['Ljusstyrka', '800 lumen'],
+      ['Färgtemperatur', '2700K – 6500K + RGB'],
+      ['Sockel', 'E27'],
+      ['Livslängd', 'Upp till 25 000 timmar'],
+    ],
+    reviews: [
+      { rating: 5, text: 'Älskar att kunna ändra ljuset efter humör, funkar perfekt med musiken också.', author: 'Emma, Uppsala' },
+      { rating: 5, text: 'Schemat gör att lamporna tänds automatiskt innan jag kommer hem.', author: 'Johan, Malmö' },
+      { rating: 4, text: 'Enkel att koppla in i appen och färgerna är riktigt fina.', author: 'Anna, Karlstad' },
+    ],
+  },
+};
+
+function renderProductDetailReal(data) {
+  document.getElementById('pdWhyGrid').innerHTML = data.why.map(w => `
+    <div class="pd-why-card">
+      <div class="pd-why-icon">${w.icon}</div>
+      <h4>${w.title}</h4>
+      <p>${w.text}</p>
+    </div>
+  `).join('');
+
+  document.getElementById('pdSpecTable').innerHTML = data.specs.map(s => `
+    <tr><td>${s[0]}</td><td>${s[1]}</td></tr>
+  `).join('');
+
+  document.getElementById('pdReviewGrid').innerHTML = data.reviews.map(r => `
+    <div class="pd-review-card">
+      <div class="pd-review-top">
+        <span class="crown-rating">${crownIcons(r.rating)}</span>
+        <span class="pd-verified">✓ Verifierat köp</span>
+      </div>
+      <p>"${r.text}"</p>
+      <div class="pd-review-author">${r.author}</div>
+    </div>
+  `).join('');
+}
+
 let pdSelectedModelId = null;
 
 function renderTierCards(tieredId) {
@@ -3806,6 +3893,8 @@ function renderPdReviews() {
 function openProductDetail(card) {
   const lang = document.documentElement.lang === 'en' ? 'en' : 'sv';
   const tieredId = card.getAttribute('data-tiered');
+  const singleId = card.getAttribute('data-single');
+  const singleData = singleId ? PRODUCT_DETAILS[singleId] : null;
   const nameEl = card.querySelector('h4');
   const priceEl = card.querySelector('.price, .product-price');
   const descEl = card.querySelector('p');
@@ -3818,7 +3907,7 @@ function openProductDetail(card) {
   document.getElementById('pdName').textContent = name;
   document.getElementById('pdPitch').textContent = tieredId && TIERED_PRODUCTS[tieredId]
     ? TIERED_PRODUCTS[tieredId].pitch
-    : (descEl && descEl.textContent.trim() ? descEl.textContent.trim() : genericProductDesc[lang]);
+    : (singleData ? singleData.pitch : (descEl && descEl.textContent.trim() ? descEl.textContent.trim() : genericProductDesc[lang]));
 
   const imgSrc = imgEl ? imgEl.getAttribute('src') : '';
   document.getElementById('pdImage').src = upscaleImage(imgSrc);
@@ -3851,7 +3940,11 @@ function openProductDetail(card) {
     }
     addBtn.setAttribute('data-name', name);
     addBtn.setAttribute('data-price', priceNum);
-    renderProductDetailDeep();
+    if (singleData) {
+      renderProductDetailReal(singleData);
+    } else {
+      renderProductDetailDeep();
+    }
   }
 
   document.getElementById('productDetailOverlay').classList.add('open');
