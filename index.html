@@ -1,4 +1,4 @@
-<!-- Sulitify V6.58 — Smart Lampa fick riktigt innehåll via PRODUCT_DETAILS-mekanismen -->
+<!-- Sulitify V6.59 — LED Strip fick riktigt innehåll via PRODUCT_DETAILS-mekanismen -->
 <!DOCTYPE html>
 <html lang="sv">
 <head>
@@ -1978,7 +1978,7 @@ footer {
       <div class="product-card" data-single="smartlamp"><img class="product-card-thumb" src="https://picsum.photos/seed/smartlamp/82/58" alt="Smart Lampa"><div class="product-card-text"><div class="product-card-info"><h4 data-i18n="prod.smartlamp">Smart Lampa</h4><p class="product-card-desc" data-i18n="desc.smartlamp">Dimbar smart belysning styrd via app.</p></div><span class="product-price">299 kr</span></div></div>
       <div class="product-card" data-single="wificam"><img class="product-card-thumb" src="https://picsum.photos/seed/wificam/82/58" alt="WiFi Kamera"><div class="product-card-text"><div class="product-card-info"><h4 data-i18n="prod.wificam">WiFi Kamera</h4><p class="product-card-desc" data-i18n="desc.wificam">Håll koll på hemmet var du än är.</p></div><span class="product-price">499 kr</span></div></div>
       <div class="product-card" data-tiered="smartplug"><img class="product-card-thumb" src="https://picsum.photos/seed/smartplugbundle/82/58" alt="Sulitify Smart Plug"><div class="product-card-text"><div class="product-card-info"><h4 data-i18n="prod.smartplugbundle">Sulitify Smart Plug</h4><p class="product-card-desc" data-i18n="desc.smartplugbundle">Smart strömstyrning — välj din nivå.</p></div><span class="product-price">Från 159 kr</span></div></div>
-      <div class="product-card"><img class="product-card-thumb" src="https://picsum.photos/seed/ledstrip/82/58" alt="LED Strip"><div class="product-card-text"><div class="product-card-info"><h4 data-i18n="prod.ledstrip">LED Strip</h4><p class="product-card-desc" data-i18n="desc.ledstrip">Skapa atmosfär med färgstark LED-belysning.</p></div><span class="product-price">249 kr</span></div></div>
+      <div class="product-card" data-single="ledstrip"><img class="product-card-thumb" src="https://picsum.photos/seed/ledstrip/82/58" alt="LED Strip"><div class="product-card-text"><div class="product-card-info"><h4 data-i18n="prod.ledstrip">LED Strip</h4><p class="product-card-desc" data-i18n="desc.ledstrip">Skapa atmosfär med färgstark LED-belysning.</p></div><span class="product-price">249 kr</span></div></div>
       <div class="category-more">
         <div class="product-card"><img class="product-card-thumb" src="https://picsum.photos/seed/doorsensor/82/58" alt="Dörrsensor"><div class="product-card-text"><div class="product-card-info"><h4 data-i18n="prod.doorsensor">Dörrsensor</h4><p class="product-card-desc" data-i18n="desc.doorsensor">Få notis direkt när dörren öppnas.</p></div><span class="product-price">229 kr</span></div></div>
         <div class="product-card" data-single="robotvac"><img class="product-card-thumb" src="https://picsum.photos/seed/robotvac/82/58" alt="Robotdammsugare"><div class="product-card-text"><div class="product-card-info"><h4 data-i18n="prod.robotvac">Robotdammsugare</h4><p class="product-card-desc" data-i18n="desc.robotvac">Automatisk städning, dag som natt.</p></div><span class="product-price">1499 kr</span></div></div>
@@ -3745,6 +3745,25 @@ const PRODUCT_DETAILS = {
       { rating: 5, text: 'Älskar att kunna ändra ljuset efter humör, funkar perfekt med musiken också.', author: 'Emma, Uppsala' },
       { rating: 5, text: 'Schemat gör att lamporna tänds automatiskt innan jag kommer hem.', author: 'Johan, Malmö' },
       { rating: 4, text: 'Enkel att koppla in i appen och färgerna är riktigt fina.', author: 'Anna, Karlstad' },
+    ],
+  },
+  ledstrip: {
+    pitch: '"Färgstark stämning på sekunder — klistra upp, koppla in och välj din vibe."',
+    why: [
+      { icon: '🎨', title: '16 miljoner färger', text: 'Blanda exakt den ton du vill ha, eller växla mellan färdiga scener för olika stämningar.' },
+      { icon: '✂️', title: 'Klipp och forma fritt', text: 'Anpassa längden och böj remsan runt hörn för att följa rummets form perfekt.' },
+      { icon: '🎬', title: 'Musik- och filmsynk', text: 'Låt ljuset pulsera i takt med låten eller skärmens innehåll för extra känsla.' },
+    ],
+    specs: [
+      ['Längd', '5 meter'],
+      ['LED-täthet', '60 LED/meter'],
+      ['Färgläge', 'RGB + 16M färger'],
+      ['Montering', 'Självhäftande baksida'],
+    ],
+    reviews: [
+      { rating: 5, text: 'Perfekt bakom TV:n, synkar snyggt med filmen och skapar en helt annan känsla i rummet.', author: 'Oscar, Gävle' },
+      { rating: 5, text: 'Klistret höll galant och färgerna är mycket starkare än jag trodde.', author: 'Sofia, Sundsvall' },
+      { rating: 4, text: 'Lätt att klippa till rätt längd, appen är smidig att styra scener från.', author: 'Daniel, Borås' },
     ],
   },
 };
