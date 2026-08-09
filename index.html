@@ -1,4 +1,4 @@
-<!-- Sulitify V6.63 — Powerbank och Trådlösa Hörlurar fick riktigt innehåll via PRODUCT_DETAILS-mekanismen -->
+<!-- Sulitify V6.65 — Ringbelysning fick riktigt innehåll via PRODUCT_DETAILS-mekanismen (Tech-kategorin klar) -->
 <!DOCTYPE html>
 <html lang="sv">
 <head>
@@ -1997,9 +1997,9 @@ footer {
       <div class="product-card" data-single="powerbank"><img class="product-card-thumb" src="https://picsum.photos/seed/powerbank/82/58" alt="Powerbank"><div class="product-card-text"><div class="product-card-info"><h4 data-i18n="prod.powerbank">Powerbank</h4><p class="product-card-desc" data-i18n="desc.powerbank">Aldrig utan ström, var du än är.</p></div><span class="product-price">279 kr</span></div></div>
       <div class="category-more">
         <div class="product-card" data-single="earbuds"><img class="product-card-thumb" src="https://picsum.photos/seed/earbuds/82/58" alt="Trådlösa Hörlurar"><div class="product-card-text"><div class="product-card-info"><h4 data-i18n="prod.earbuds">Trådlösa Hörlurar</h4><p class="product-card-desc" data-i18n="desc.earbuds">Kristallklart ljud, helt sladdfritt.</p></div><span class="product-price">449 kr</span></div></div>
-        <div class="product-card"><img class="product-card-thumb" src="https://picsum.photos/seed/keyboard/82/58" alt="Trådlöst Tangentbord"><div class="product-card-text"><div class="product-card-info"><h4 data-i18n="prod.keyboard">Tangentbord</h4><p class="product-card-desc" data-i18n="desc.keyboard">Trådlöst, tyst och responsivt skrivande.</p></div><span class="product-price">399 kr</span></div></div>
-        <div class="product-card"><img class="product-card-thumb" src="https://picsum.photos/seed/tripod/82/58" alt="Flexibelt Stativ"><div class="product-card-text"><div class="product-card-info"><h4 data-i18n="prod.tripod">Flexibelt Stativ</h4><p class="product-card-desc" data-i18n="desc.tripod">Flexibelt stöd för perfekta bilder.</p></div><span class="product-price">199 kr</span></div></div>
-        <div class="product-card"><img class="product-card-thumb" src="https://picsum.photos/seed/ringlight/82/58" alt="Ringbelysning"><div class="product-card-text"><div class="product-card-info"><h4 data-i18n="prod.ringlight">Ringbelysning</h4><p class="product-card-desc" data-i18n="desc.ringlight">Jämn belysning för foto och video.</p></div><span class="product-price">329 kr</span></div></div>
+        <div class="product-card" data-single="keyboard"><img class="product-card-thumb" src="https://picsum.photos/seed/keyboard/82/58" alt="Trådlöst Tangentbord"><div class="product-card-text"><div class="product-card-info"><h4 data-i18n="prod.keyboard">Tangentbord</h4><p class="product-card-desc" data-i18n="desc.keyboard">Trådlöst, tyst och responsivt skrivande.</p></div><span class="product-price">399 kr</span></div></div>
+        <div class="product-card" data-single="tripod"><img class="product-card-thumb" src="https://picsum.photos/seed/tripod/82/58" alt="Flexibelt Stativ"><div class="product-card-text"><div class="product-card-info"><h4 data-i18n="prod.tripod">Flexibelt Stativ</h4><p class="product-card-desc" data-i18n="desc.tripod">Flexibelt stöd för perfekta bilder.</p></div><span class="product-price">199 kr</span></div></div>
+        <div class="product-card" data-single="ringlight"><img class="product-card-thumb" src="https://picsum.photos/seed/ringlight/82/58" alt="Ringbelysning"><div class="product-card-text"><div class="product-card-info"><h4 data-i18n="prod.ringlight">Ringbelysning</h4><p class="product-card-desc" data-i18n="desc.ringlight">Jämn belysning för foto och video.</p></div><span class="product-price">329 kr</span></div></div>
       </div>
       <button class="show-more-btn" data-category="tech" onclick="toggleCategory(this)">
         <span class="btn-label-more" data-i18n="cta.viewcategory">Se hela kategorin →</span>
@@ -3878,6 +3878,63 @@ const PRODUCT_DETAILS = {
       { rating: 5, text: 'Brusreduceringen gör pendlingen mycket skönare, hör knappt tåget längre.', author: 'Rebecka, Uppsala' },
       { rating: 4, text: 'Sitter bekvämt hela dagen och laddar snabbt i fodralet.', author: 'Tobias, Karlstad' },
       { rating: 5, text: 'Ljudkvaliteten överraskade mig positivt för priset, riktigt bra bas.', author: 'Wilma, Västervik' },
+    ],
+  },
+  keyboard: {
+    pitch: '"Tyst, responsivt skrivande — trådlöst på skrivbordet var du än sätter dig."',
+    why: [
+      { icon: '⌨️', title: 'Tysta scissor-switchar', text: 'Mjuka, tysta knapptryckningar gör den perfekt för kontoret eller sena kvällar utan att störa.' },
+      { icon: '🔗', title: 'Koppla till tre enheter', text: 'Växla smidigt mellan dator, surfplatta och telefon utan att para om.' },
+      { icon: '🔋', title: 'Månader mellan laddningar', text: 'Effektivt batteri gör att du sällan behöver tänka på laddning.' },
+    ],
+    specs: [
+      ['Anslutning', 'Bluetooth 5.0 + 2.4GHz'],
+      ['Batteritid', 'Upp till 3 månader'],
+      ['Layout', 'Nordisk, tyst scissor'],
+      ['Kompatibilitet', 'Windows, macOS, iOS, Android'],
+    ],
+    reviews: [
+      { rating: 5, text: 'Tyst nog för öppet kontor och känns skönt att skriva på hela dagen.', author: 'Cecilia, Linköping' },
+      { rating: 4, text: 'Enkelt att växla mellan dator och surfplatta, funkar precis som det ska.', author: 'Patrik, Örnsköldsvik' },
+      { rating: 5, text: 'Har inte laddat den på över två månader, riktigt bra batteritid.', author: 'Ida, Södertälje' },
+    ],
+  },
+  tripod: {
+    pitch: '"Flexibelt stöd för perfekta bilder — böj, vira och ställ var du vill."',
+    why: [
+      { icon: '🐙', title: 'Böjbara ben', text: 'Vira benen runt räcken, grenar eller cykelstyren för vinklar ett vanligt stativ inte klarar.' },
+      { icon: '📱', title: 'Passar telefon och kamera', text: 'Universalfäste fungerar med både mobiler och kompaktkameror.' },
+      { icon: '🎒', title: 'Litet och lätt att ta med', text: 'Vikbar och kompakt, får plats i väskan för spontana foton och videos på resan.' },
+    ],
+    specs: [
+      ['Höjd', '22 cm hopfällt'],
+      ['Max belastning', '1.5 kg'],
+      ['Material', 'Aluminium + silikon'],
+      ['Fäste', 'Universal skruvfäste'],
+    ],
+    reviews: [
+      { rating: 5, text: 'Virar den runt cykelstyret för videos, håller stadigt även i fart.', author: 'Gustav, Karlskrona' },
+      { rating: 4, text: 'Perfekt för videosamtal på resan, lätt att fästa var som helst.', author: 'Malin, Trollhättan' },
+      { rating: 5, text: 'Använder den till matbilder på restaurang, stabil och smidig att ställa in.', author: 'Oskar, Uddevalla' },
+    ],
+  },
+  ringlight: {
+    pitch: '"Jämn, smickrande belysning för foto och video — redo på sekunder."',
+    why: [
+      { icon: '💡', title: 'Skuggfritt, jämnt ljus', text: 'Ringformen fördelar ljuset jämnt över ansiktet utan hårda skuggor.' },
+      { icon: '🎛️', title: 'Justerbar färgtemperatur', text: 'Växla mellan varmt och kallt ljus, eller allt däremellan, för rätt känsla i varje inspelning.' },
+      { icon: '📱', title: 'Universellt telefonfäste', text: 'Klämfäste passar de flesta telefoner och kompaktkameror rakt ur boxen.' },
+    ],
+    specs: [
+      ['Diameter', '26 cm'],
+      ['Färgtemperatur', '3000K – 6000K'],
+      ['Ljusstyrka', 'Steglöst dimbar, 10 nivåer'],
+      ['Strömkälla', 'USB, 5V'],
+    ],
+    reviews: [
+      { rating: 5, text: 'Gör enorm skillnad för videosamtal och innehåll till sociala medier.', author: 'Frida, Norrtälje' },
+      { rating: 4, text: 'Enkel att fästa och ljuset är verkligen jämnt utan skuggor.', author: 'Kevin, Kalmar' },
+      { rating: 5, text: 'Justerar färgtemperaturen beroende på tid på dagen, riktigt smidigt.', author: 'Amanda, Borlänge' },
     ],
   },
 };
