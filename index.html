@@ -1,4 +1,4 @@
-<!-- Sulitify V6.70 — Hela Husdjur-kategorin (8 produkter) fick riktigt innehåll via PRODUCT_DETAILS-mekanismen. Alla 26 produkter är nu klara! -->
+<!-- Sulitify V6.71 — Nyheter-korten fick exklusiv sneak peek-popup (mörk/guld) vid klick, plus Beställ Nu-knapp direkt på korten -->
 <!DOCTYPE html>
 <html lang="sv">
 <head>
@@ -950,6 +950,96 @@ nav {
 
 .product-card, .new-card {
   cursor: pointer;
+}
+
+/* ── SNEAK PEEK (Nyheter — exklusiv förhandstitt, mörk/guld stil) ── */
+.sneak-peek-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.72);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.sneak-peek-overlay.open { display: flex; }
+
+.sneak-peek-box {
+  background: var(--ink);
+  border: 1px solid var(--gold-dark);
+  border-radius: 18px;
+  max-width: 420px;
+  width: 100%;
+  padding: 32px 28px;
+  position: relative;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(201,162,74,0.15);
+  text-align: center;
+  animation: sneakPeekIn 0.25s ease;
+}
+
+@keyframes sneakPeekIn {
+  from { opacity: 0; transform: translateY(8px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.sneak-peek-close {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  background: none;
+  border: none;
+  color: var(--gold-rest);
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+
+.sneak-peek-close:hover { opacity: 1; }
+
+.sneak-peek-badge {
+  display: inline-block;
+  border: 1px solid var(--gold);
+  color: var(--gold-light);
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  border-radius: 999px;
+  margin-bottom: 18px;
+}
+
+.sneak-peek-img {
+  width: 100%;
+  max-width: 220px;
+  border-radius: 12px;
+  margin: 0 auto 20px;
+  display: block;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+}
+
+.sneak-peek-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.5rem;
+  color: var(--cream);
+  margin-bottom: 10px;
+}
+
+.sneak-peek-teaser {
+  color: var(--gold-rest);
+  font-size: 0.92rem;
+  line-height: 1.6;
+  margin-bottom: 18px;
+}
+
+.sneak-peek-note {
+  color: var(--ink-soft);
+  font-size: 0.78rem;
+  border-top: 1px solid rgba(201,162,74,0.2);
+  padding-top: 14px;
 }
 
 /* ── PRODUKTDETALJ (fullständig mockup-vy) ── */
@@ -2105,39 +2195,43 @@ footer {
 
   <div class="new-grid">
 
-    <div class="new-card">
+    <div class="new-card" data-preview="clock">
       <img src="https://picsum.photos/seed/clock/400/300" alt="Crystal LED Clock">
       <div class="new-card-body">
         <h4>Crystal LED Clock</h4>
         <p data-i18n="newarrivals.clock">Modern LED-klocka med stilren design för hemmet.</p>
         <div class="price">499 kr</div>
+        <button class="btn-mini add-to-cart-btn" data-name="Crystal LED Clock" data-price="499" data-i18n="cta.order">Beställ Nu</button>
       </div>
     </div>
 
-    <div class="new-card">
+    <div class="new-card" data-preview="blender">
       <img src="https://picsum.photos/seed/blender/400/300" alt="Portable Blender Pro">
       <div class="new-card-body">
         <h4>Portable Blender Pro</h4>
         <p data-i18n="newarrivals.blender">Perfekt för smoothies hemma eller på resan.</p>
         <div class="price">399 kr</div>
+        <button class="btn-mini add-to-cart-btn" data-name="Portable Blender Pro" data-price="399" data-i18n="cta.order">Beställ Nu</button>
       </div>
     </div>
 
-    <div class="new-card">
+    <div class="new-card" data-preview="charger">
       <img src="https://picsum.photos/seed/charger/400/300" alt="Magnetic Charging Station">
       <div class="new-card-body">
         <h4>Magnetic Charging Station</h4>
         <p data-i18n="newarrivals.charger">Elegant laddningsstation för flera enheter.</p>
         <div class="price">799 kr</div>
+        <button class="btn-mini add-to-cart-btn" data-name="Magnetic Charging Station" data-price="799" data-i18n="cta.order">Beställ Nu</button>
       </div>
     </div>
 
-    <div class="new-card">
+    <div class="new-card" data-preview="candle">
       <img src="https://picsum.photos/seed/candle/400/300" alt="Nordic Aroma Candle">
       <div class="new-card-body">
         <h4>Nordic Aroma Candle</h4>
         <p data-i18n="newarrivals.candle">Premiumdoftljus för en avslappnande miljö.</p>
         <div class="price">249 kr</div>
+        <button class="btn-mini add-to-cart-btn" data-name="Nordic Aroma Candle" data-price="249" data-i18n="cta.order">Beställ Nu</button>
       </div>
     </div>
 
@@ -2234,6 +2328,18 @@ footer {
     <div class="info-modal-title" id="infoModalTitle"></div>
     <div class="info-modal-price" id="infoModalPrice"></div>
     <div class="info-modal-body" id="infoModalBody"></div>
+  </div>
+</div>
+
+<!-- SNEAK PEEK (Nyheter — exklusiv förhandstitt för kommande produkter) -->
+<div class="sneak-peek-overlay" id="sneakPeekOverlay" onclick="closeSneakPeek(event)">
+  <div class="sneak-peek-box" role="dialog" aria-modal="true" onclick="event.stopPropagation()">
+    <button class="sneak-peek-close" onclick="closeSneakPeek(event)" aria-label="Stäng">&times;</button>
+    <div class="sneak-peek-badge" id="sneakPeekBadge">Kommer snart</div>
+    <img class="sneak-peek-img" id="sneakPeekImage" alt="">
+    <div class="sneak-peek-title" id="sneakPeekTitle"></div>
+    <div class="sneak-peek-teaser" id="sneakPeekTeaser"></div>
+    <div class="sneak-peek-note" id="sneakPeekNote"></div>
   </div>
 </div>
 
@@ -4249,6 +4355,58 @@ function renderProductDetailReal(data) {
   `).join('');
 }
 
+// Sneak peek-innehåll för "Nyheter"-korten — kommande produkter, ännu inte i huvudkatalogen.
+const SNEAK_PEEK_DETAILS = {
+  clock: {
+    badge: 'Kommer snart',
+    teaser: 'En handgjord kristallyta möter varmt LED-ljus — en klocka som känns mer som ett smyckeskrin än en pryl på hyllan.',
+    note: 'Lanseras för utvalda kunder innan den släpps i butiken.',
+  },
+  blender: {
+    badge: 'Kommer snart',
+    teaser: 'Tyst, kraftfull och laddningsbar — gör en smoothie på kontoret, i bilen eller på flyget utan en enda sladd.',
+    note: 'Lanseras för utvalda kunder innan den släpps i butiken.',
+  },
+  charger: {
+    badge: 'Kommer snart',
+    teaser: 'Tre enheter, ett magnetfäste, noll sladdar på nattduksbordet. Byggd för skrivbord som ska se lika bra ut som de fungerar.',
+    note: 'Lanseras för utvalda kunder innan den släpps i butiken.',
+  },
+  candle: {
+    badge: 'Kommer snart',
+    teaser: 'Handgjuten i Norden med en doftprofil vi finslipat i flera månader — mjuk, varm och långt ifrån standard.',
+    note: 'Lanseras för utvalda kunder innan den släpps i butiken.',
+  },
+};
+
+function openSneakPeek(card) {
+  const previewId = card.getAttribute('data-preview');
+  const data = SNEAK_PEEK_DETAILS[previewId];
+  if (!data) return;
+
+  const nameEl = card.querySelector('h4');
+  const imgEl = card.querySelector('img');
+
+  document.getElementById('sneakPeekBadge').textContent = data.badge;
+  document.getElementById('sneakPeekTitle').textContent = nameEl ? nameEl.textContent.trim() : '';
+  document.getElementById('sneakPeekTeaser').textContent = data.teaser;
+  document.getElementById('sneakPeekNote').textContent = data.note;
+  const imgField = document.getElementById('sneakPeekImage');
+  if (imgEl && imgEl.getAttribute('src')) {
+    imgField.src = imgEl.getAttribute('src');
+    imgField.style.display = '';
+  } else {
+    imgField.style.display = 'none';
+  }
+
+  document.getElementById('sneakPeekOverlay').classList.add('open');
+}
+
+function closeSneakPeek(event) {
+  if (event) event.preventDefault();
+  document.getElementById('sneakPeekOverlay').classList.remove('open');
+}
+
 let pdSelectedModelId = null;
 
 function renderTierCards(tieredId) {
@@ -4464,9 +4622,11 @@ function openProductModal(card) {
 }
 
 document.addEventListener('click', function (e) {
-  const btn = e.target.closest('.show-more-btn');
-  if (btn) return; // handled by toggleCategory, don't open the modal too
-  const card = e.target.closest('.product-card, .new-card');
+  const btn = e.target.closest('.show-more-btn, .add-to-cart-btn');
+  if (btn) return; // handled by toggleCategory / handleAddToCart, don't open a modal too
+  const newCard = e.target.closest('.new-card');
+  if (newCard) { openSneakPeek(newCard); return; }
+  const card = e.target.closest('.product-card');
   if (card) openProductDetail(card);
 });
 
@@ -4523,7 +4683,12 @@ function performSearch() {
   resultsEl.querySelectorAll('.search-result-item').forEach((el, idx) => {
     el.addEventListener('click', () => {
       closeSearchOverlay();
-      openProductDetail(matches[idx].el);
+      const target = matches[idx].el;
+      if (target.classList.contains('new-card')) {
+        openSneakPeek(target);
+      } else {
+        openProductDetail(target);
+      }
     });
   });
 }
