@@ -1,4 +1,4 @@
-<!-- Sulitify V6.73 — Fixade .btn-mini-stil så Nyheter-knapparna får samma guld-pill-utseende som resten av sajten -->
+<!-- Sulitify V6.75 — Ändrade engelska "Your Order/Wishlist" till "My Order/Wishlist" för samma ägandekänsla som svenska -->
 <!DOCTYPE html>
 <html lang="sv">
 <head>
@@ -2860,7 +2860,7 @@ function updateCartUI() {
       '</p>';
   } else {
     if (cartItems.length > 0) {
-      html += `<div class="cart-section-divider"><span class="divider-line"></span><span class="cart-section-heading">${isEn ? 'Your Order' : 'Din Beställning'}</span><span class="divider-line"></span></div>`;
+      html += `<div class="cart-section-divider"><span class="divider-line"></span><span class="cart-section-heading">${isEn ? 'My Order' : 'Min Beställning'}</span><span class="divider-line"></span></div>`;
       html += cartItems.map((i, idx) => `
         <div class="cart-item">
           <div class="cart-item-info">
@@ -2887,7 +2887,7 @@ function updateCartUI() {
 
     if (savedItems.length > 0) {
       html += '<div class="saved-items-section">';
-      html += `<div class="cart-section-divider"><span class="divider-line"></span><span class="cart-section-heading">${isEn ? 'Your Wishlist' : 'Din Önskelista'}</span><span class="divider-line"></span></div>`;
+      html += `<div class="cart-section-divider"><span class="divider-line"></span><span class="cart-section-heading">${isEn ? 'My Wishlist' : 'Min Önskelista'}</span><span class="divider-line"></span></div>`;
       html += savedItems.map((i, idx) => `
         <div class="saved-item">
           <div class="saved-item-info">
