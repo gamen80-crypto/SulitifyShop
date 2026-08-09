@@ -1,4 +1,4 @@
-<!-- Sulitify V6.60 — Dörrsensor fick riktigt innehåll via PRODUCT_DETAILS-mekanismen -->
+<!-- Sulitify V6.61 — Projektor fick riktigt innehåll via PRODUCT_DETAILS-mekanismen (start på Tech-kategorin) -->
 <!DOCTYPE html>
 <html lang="sv">
 <head>
@@ -1991,7 +1991,7 @@ footer {
 
     <div class="category-col" data-category="tech">
       <div class="category-title" data-i18n="cat.tech">Teknik</div>
-      <div class="product-card"><img class="product-card-thumb" src="https://picsum.photos/seed/projector/82/58" alt="Projektor"><div class="product-card-text"><div class="product-card-info"><h4 data-i18n="prod.projector">Projektor</h4><p class="product-card-desc" data-i18n="desc.projector">Hemmabio i fickformat, var du vill.</p></div><span class="product-price">899 kr</span></div></div>
+      <div class="product-card" data-single="projector"><img class="product-card-thumb" src="https://picsum.photos/seed/projector/82/58" alt="Projektor"><div class="product-card-text"><div class="product-card-info"><h4 data-i18n="prod.projector">Projektor</h4><p class="product-card-desc" data-i18n="desc.projector">Hemmabio i fickformat, var du vill.</p></div><span class="product-price">899 kr</span></div></div>
       <div class="product-card"><img class="product-card-thumb" src="https://picsum.photos/seed/smartwatch/82/58" alt="Smart Watch"><div class="product-card-text"><div class="product-card-info"><h4 data-i18n="prod.smartwatch">Smart Watch</h4><p class="product-card-desc" data-i18n="desc.smartwatch">Håll koll på hälsa, aktivitet och notiser.</p></div><span class="product-price">599 kr</span></div></div>
       <div class="product-card"><img class="product-card-thumb" src="https://picsum.photos/seed/speaker/82/58" alt="Högtalare"><div class="product-card-text"><div class="product-card-info"><h4 data-i18n="prod.speaker">Högtalare</h4><p class="product-card-desc" data-i18n="desc.speaker">Kraftfullt ljud i ett kompakt format.</p></div><span class="product-price">349 kr</span></div></div>
       <div class="product-card"><img class="product-card-thumb" src="https://picsum.photos/seed/powerbank/82/58" alt="Powerbank"><div class="product-card-text"><div class="product-card-info"><h4 data-i18n="prod.powerbank">Powerbank</h4><p class="product-card-desc" data-i18n="desc.powerbank">Aldrig utan ström, var du än är.</p></div><span class="product-price">279 kr</span></div></div>
@@ -3783,6 +3783,25 @@ const PRODUCT_DETAILS = {
       { rating: 5, text: 'Sitter dold ovanpå dörrkarmen och notisen kommer direkt när någon öppnar.', author: 'Therese, Halmstad' },
       { rating: 4, text: 'Enkel installation, satt upp den på under en minut.', author: 'Robert, Skövde' },
       { rating: 5, text: 'Batteriet har hållit i över ett halvår redan, inget att klaga på.', author: 'Malin, Kristianstad' },
+    ],
+  },
+  projector: {
+    pitch: '"Hemmabio i fickformat — projicera stort på väggen, var du än befinner dig."',
+    why: [
+      { icon: '🎬', title: 'Stor bild, litet format', text: 'Visar upp till 120 tum på vilken vägg eller duk som helst, direkt från din ficka.' },
+      { icon: '📶', title: 'Trådlös skärmdelning', text: 'Spegla mobilen eller datorn utan sladdar via inbyggd WiFi-anslutning.' },
+      { icon: '🔊', title: 'Inbyggd högtalare', text: 'Ljud och bild i samma enhet, redo för film direkt utan extra utrustning.' },
+    ],
+    specs: [
+      ['Upplösning', '1080p nativt, stödjer 4K'],
+      ['Bildstorlek', 'Upp till 120 tum'],
+      ['Ljuskälla', 'LED, 15 000 timmars livslängd'],
+      ['Anslutning', 'WiFi, HDMI, USB-C'],
+    ],
+    reviews: [
+      { rating: 5, text: 'Kör den på altanen på sommaren, bilden är skarpare än jag väntat mig i det priset.', author: 'Viktor, Lund' },
+      { rating: 4, text: 'Trådlös spegling från mobilen funkar smidigt utan krångel.', author: 'Elin, Umeå' },
+      { rating: 5, text: 'Perfekt för filmkvällar med barnen, lätt att flytta runt i huset.', author: 'Marcus, Eskilstuna' },
     ],
   },
 };
