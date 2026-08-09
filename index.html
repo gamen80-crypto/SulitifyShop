@@ -1,4 +1,4 @@
-<!-- Sulitify V6.71 — Nyheter-korten fick exklusiv sneak peek-popup (mörk/guld) vid klick, plus Beställ Nu-knapp direkt på korten -->
+<!-- Sulitify V6.73 — Fixade .btn-mini-stil så Nyheter-knapparna får samma guld-pill-utseende som resten av sajten -->
 <!DOCTYPE html>
 <html lang="sv">
 <head>
@@ -948,7 +948,7 @@ nav {
   display: block;
 }
 
-.product-card, .new-card {
+.product-card, .new-card, .product-card-dark {
   cursor: pointer;
 }
 
@@ -1678,7 +1678,7 @@ nav {
   font-size: 1rem;
 }
 
-.product-card-dark-body .btn-mini {
+.btn-mini {
   display: inline-block;
   margin-top: 10px;
   padding: 10px 22px;
@@ -1698,7 +1698,7 @@ nav {
     0 4px 14px rgba(201,162,74,0.25);
 }
 
-.product-card-dark-body .btn-mini:hover {
+.btn-mini:hover {
   transform: translateY(-2px);
   box-shadow:
     inset 0 1px 1px rgba(255,255,255,0.6),
@@ -4407,6 +4407,44 @@ function closeSneakPeek(event) {
   document.getElementById('sneakPeekOverlay').classList.remove('open');
 }
 
+// Bästsäljare-korten (product-card-dark) — ljus infomodal med kort produktteaser
+const BESTSELLER_PREVIEW = {
+  'Aroma Luxe Diffuser': 'En doft av lugn i varje rum — ultraljudsteknik som sprider mjuk ånga tyst, timme efter timme.',
+  'Nordic Glow Lamp': 'Skandinavisk enkelhet möter varmt, dimbart ljus — en lampa som lika mycket är ett formobjekt som en ljuskälla.',
+  'Serenity Humidifier': 'Håller luften behaglig även de torraste vinterkvällarna, helt ljudlöst i sovrummet.',
+  'Bamboo Ambient Light': 'Naturmaterial och mjukt ljus i kombination — stämningsbelysning som känns hemtrevlig snarare än teknisk.',
+};
+
+function openBestsellerPreview(card) {
+  const nameEl = card.querySelector('h4');
+  const priceEl = card.querySelector('.price, .product-price');
+  const imgEl = card.querySelector('img');
+  const name = nameEl ? nameEl.textContent.trim() : '';
+
+  const box = document.querySelector('#infoModalOverlay .info-modal');
+  box.classList.remove('info-modal--doc');
+  document.getElementById('infoModalTitle').textContent = name;
+
+  const priceField = document.getElementById('infoModalPrice');
+  if (priceEl) {
+    priceField.textContent = priceEl.textContent.trim();
+    priceField.classList.add('show');
+  } else {
+    priceField.classList.remove('show');
+  }
+
+  const imgField = document.getElementById('infoModalImage');
+  if (imgEl && imgEl.getAttribute('src')) {
+    imgField.src = imgEl.getAttribute('src');
+    imgField.classList.add('show');
+  } else {
+    imgField.classList.remove('show');
+  }
+
+  document.getElementById('infoModalBody').innerHTML = `<p>${BESTSELLER_PREVIEW[name] || ''}</p>`;
+  document.getElementById('infoModalOverlay').classList.add('open');
+}
+
 let pdSelectedModelId = null;
 
 function renderTierCards(tieredId) {
@@ -4626,6 +4664,8 @@ document.addEventListener('click', function (e) {
   if (btn) return; // handled by toggleCategory / handleAddToCart, don't open a modal too
   const newCard = e.target.closest('.new-card');
   if (newCard) { openSneakPeek(newCard); return; }
+  const darkCard = e.target.closest('.product-card-dark');
+  if (darkCard) { openBestsellerPreview(darkCard); return; }
   const card = e.target.closest('.product-card');
   if (card) openProductDetail(card);
 });
@@ -4686,6 +4726,8 @@ function performSearch() {
       const target = matches[idx].el;
       if (target.classList.contains('new-card')) {
         openSneakPeek(target);
+      } else if (target.classList.contains('product-card-dark')) {
+        openBestsellerPreview(target);
       } else {
         openProductDetail(target);
       }
