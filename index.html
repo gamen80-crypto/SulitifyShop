@@ -1,4 +1,4 @@
-<!-- Sulitify V6.61 — Projektor fick riktigt innehåll via PRODUCT_DETAILS-mekanismen (start på Tech-kategorin) -->
+<!-- Sulitify V6.62 — Smart Watch och Högtalare fick riktigt innehåll via PRODUCT_DETAILS-mekanismen -->
 <!DOCTYPE html>
 <html lang="sv">
 <head>
@@ -1992,8 +1992,8 @@ footer {
     <div class="category-col" data-category="tech">
       <div class="category-title" data-i18n="cat.tech">Teknik</div>
       <div class="product-card" data-single="projector"><img class="product-card-thumb" src="https://picsum.photos/seed/projector/82/58" alt="Projektor"><div class="product-card-text"><div class="product-card-info"><h4 data-i18n="prod.projector">Projektor</h4><p class="product-card-desc" data-i18n="desc.projector">Hemmabio i fickformat, var du vill.</p></div><span class="product-price">899 kr</span></div></div>
-      <div class="product-card"><img class="product-card-thumb" src="https://picsum.photos/seed/smartwatch/82/58" alt="Smart Watch"><div class="product-card-text"><div class="product-card-info"><h4 data-i18n="prod.smartwatch">Smart Watch</h4><p class="product-card-desc" data-i18n="desc.smartwatch">Håll koll på hälsa, aktivitet och notiser.</p></div><span class="product-price">599 kr</span></div></div>
-      <div class="product-card"><img class="product-card-thumb" src="https://picsum.photos/seed/speaker/82/58" alt="Högtalare"><div class="product-card-text"><div class="product-card-info"><h4 data-i18n="prod.speaker">Högtalare</h4><p class="product-card-desc" data-i18n="desc.speaker">Kraftfullt ljud i ett kompakt format.</p></div><span class="product-price">349 kr</span></div></div>
+      <div class="product-card" data-single="smartwatch"><img class="product-card-thumb" src="https://picsum.photos/seed/smartwatch/82/58" alt="Smart Watch"><div class="product-card-text"><div class="product-card-info"><h4 data-i18n="prod.smartwatch">Smart Watch</h4><p class="product-card-desc" data-i18n="desc.smartwatch">Håll koll på hälsa, aktivitet och notiser.</p></div><span class="product-price">599 kr</span></div></div>
+      <div class="product-card" data-single="speaker"><img class="product-card-thumb" src="https://picsum.photos/seed/speaker/82/58" alt="Högtalare"><div class="product-card-text"><div class="product-card-info"><h4 data-i18n="prod.speaker">Högtalare</h4><p class="product-card-desc" data-i18n="desc.speaker">Kraftfullt ljud i ett kompakt format.</p></div><span class="product-price">349 kr</span></div></div>
       <div class="product-card"><img class="product-card-thumb" src="https://picsum.photos/seed/powerbank/82/58" alt="Powerbank"><div class="product-card-text"><div class="product-card-info"><h4 data-i18n="prod.powerbank">Powerbank</h4><p class="product-card-desc" data-i18n="desc.powerbank">Aldrig utan ström, var du än är.</p></div><span class="product-price">279 kr</span></div></div>
       <div class="category-more">
         <div class="product-card"><img class="product-card-thumb" src="https://picsum.photos/seed/earbuds/82/58" alt="Trådlösa Hörlurar"><div class="product-card-text"><div class="product-card-info"><h4 data-i18n="prod.earbuds">Trådlösa Hörlurar</h4><p class="product-card-desc" data-i18n="desc.earbuds">Kristallklart ljud, helt sladdfritt.</p></div><span class="product-price">449 kr</span></div></div>
@@ -3802,6 +3802,44 @@ const PRODUCT_DETAILS = {
       { rating: 5, text: 'Kör den på altanen på sommaren, bilden är skarpare än jag väntat mig i det priset.', author: 'Viktor, Lund' },
       { rating: 4, text: 'Trådlös spegling från mobilen funkar smidigt utan krångel.', author: 'Elin, Umeå' },
       { rating: 5, text: 'Perfekt för filmkvällar med barnen, lätt att flytta runt i huset.', author: 'Marcus, Eskilstuna' },
+    ],
+  },
+  smartwatch: {
+    pitch: '"Din hälsa, aktivitet och notiser på handleden — dygnet runt."',
+    why: [
+      { icon: '❤️', title: 'Kontinuerlig hälsoövervakning', text: 'Mäter puls, syresättning och sömn automatiskt, dygnet runt utan att du behöver göra något.' },
+      { icon: '🏃', title: 'Över 100 träningslägen', text: 'Från löpning till simning — klockan känner igen och loggar din aktivitet automatiskt.' },
+      { icon: '🔔', title: 'Notiser direkt på handleden', text: 'Se samtal, meddelanden och påminnelser utan att behöva plocka fram mobilen.' },
+    ],
+    specs: [
+      ['Batteritid', 'Upp till 7 dagar'],
+      ['Vattentäthet', 'IP68'],
+      ['Skärm', '1.4" AMOLED touch'],
+      ['Kompatibilitet', 'iOS & Android'],
+    ],
+    reviews: [
+      { rating: 5, text: 'Sömnmätningen är förvånansvärt exakt och batteriet räcker hela veckan.', author: 'Hanna, Gävle' },
+      { rating: 4, text: 'Bra pris för allt den kan, notiserna gör att jag missar mindre.', author: 'Erik, Falun' },
+      { rating: 5, text: 'Använder den till löpning och simning, känner av båda automatiskt.', author: 'Josefin, Växjö' },
+    ],
+  },
+  speaker: {
+    pitch: '"Kraftfullt ljud i ett kompakt format — ta med festen vart du vill."',
+    why: [
+      { icon: '🔊', title: 'Rikt ljud i litet format', text: 'Levererar djup bas och tydlig diskant trots det kompakta formatet, perfekt för både inne och ute.' },
+      { icon: '💧', title: 'Vattentät IPX7', text: 'Ta med den till poolen, stranden eller badrummet utan oro för stänk och regn.' },
+      { icon: '🔗', title: 'Para ihop två högtalare', text: 'Koppla samman två enheter trådlöst för äkta stereoljud i hela rummet.' },
+    ],
+    specs: [
+      ['Uteffekt', '20W'],
+      ['Batteritid', 'Upp till 12 timmar'],
+      ['Anslutning', 'Bluetooth 5.0'],
+      ['Vattentäthet', 'IPX7'],
+    ],
+    reviews: [
+      { rating: 5, text: 'Basen är imponerande för storleken, tar den till stranden hela sommaren.', author: 'Simon, Helsingborg' },
+      { rating: 4, text: 'Ljudet fyller hela lägenheten och batteriet håller en hel kväll.', author: 'Nathalie, Örebro' },
+      { rating: 5, text: 'Parade ihop två för fest, riktigt bra stereokänsla i trädgården.', author: 'Adam, Luleå' },
     ],
   },
 };
