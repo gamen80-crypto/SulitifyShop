@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sidan hittades inte – Sulitify</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --gold:#c9a24a;
+    --gold-light:#f2d57e;
+    --gold-dark:#a0782a;
+    --gold-rest:#d9bd82;
+    --ink:#1c1c1c;
+    --ink-mid:#3a3a3a;
+    --ink-soft:#6b6b6b;
+    --cream:#faf7f2;
+    --cream-dark:#f0ebe0;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:'Inter', sans-serif;
+    background:var(--cream);
+    color:var(--ink);
+    text-align:center;
+    padding:24px;
+  }
+  .wrap{max-width:520px;}
+  .crown{
+    width:56px;
+    height:56px;
+    margin:0 auto 24px;
+    display:block;
+  }
+  h1{
+    font-family:'Cormorant Garamond', serif;
+    font-weight:700;
+    font-size:clamp(48px,10vw,96px);
+    margin:0;
+    background:linear-gradient(135deg, var(--gold-light), var(--gold-dark));
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    line-height:1;
+  }
+  h2{
+    font-family:'Cormorant Garamond', serif;
+    font-weight:600;
+    font-size:clamp(22px,4vw,32px);
+    margin:12px 0 8px;
+    color:var(--ink);
+  }
+  p{
+    color:var(--ink-soft);
+    font-size:16px;
+    line-height:1.6;
+    margin:0 0 32px;
+  }
+  .btn{
+    display:inline-block;
+    padding:14px 36px;
+    border-radius:999px;
+    background:linear-gradient(135deg, var(--gold-light), var(--gold) 45%, var(--gold-dark));
+    color:#fff;
+    font-family:'Inter', sans-serif;
+    font-weight:600;
+    font-size:15px;
+    text-decoration:none;
+    box-shadow:0 4px 14px rgba(160,120,42,0.35), inset 0 1px 0 rgba(255,255,255,0.4);
+    transition:transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .btn:hover{
+    transform:translateY(-2px);
+    box-shadow:0 6px 18px rgba(160,120,42,0.45), inset 0 1px 0 rgba(255,255,255,0.5);
+  }
+  .divider{
+    width:64px;
+    height:2px;
+    margin:24px auto;
+    background:var(--gold-rest);
+    border-radius:2px;
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <svg class="crown" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M3 17h18v2H3v-2zm0-2l2.5-8L9 12l3-9 3 9 3.5-5L21 15H3z" fill="#c9a24a"/>
+    </svg>
+    <h1>404</h1>
+    <div class="divider"></div>
+    <h2>Den här sidan finns inte</h2>
+    <p>Länken kan vara felstavad, eller sidan har flyttats. Men var lugn — vårt sortiment väntar fortfarande på dig.</p>
+    <a class="btn" href="/">Tillbaka till Sulitify</a>
+  </div>
+</body>
+</html>
