@@ -24,6 +24,16 @@
 <meta name="twitter:image" content="https://sulitify.shop/icon-512.png">
 
 <!-- PWA -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "OnlineStore",
+  "name": "Sulitify",
+  "url": "https://sulitify.shop",
+  "description": "Sulitify – kuraterade premiumprodukter inom Hem, Tech, Wellness och Husdjur.",
+  "logo": "https://sulitify.shop/icon-512.png"
+}
+</script>
 <link rel="manifest" href="/manifest.json">
 <meta name="theme-color" content="#1c1c1c">
 <meta name="mobile-web-app-capable" content="yes">
@@ -4882,6 +4892,46 @@ function applyProductImages() {
   });
 }
 applyProductImages();
+
+// ── SCHEMA.ORG PRODUCT-MARKUP ──
+// Byggs dynamiskt från samma kort-data (namn, pris, bild) som redan finns i DOM:en,
+// så den hänger alltid ihop med PRODUCT_IMAGES och priserna ovan — ingen manuell synk behövs.
+function injectProductSchema() {
+  const cards = document.querySelectorAll('.product-card[data-single], .product-card[data-tiered]');
+  const products = [];
+  cards.forEach((card) => {
+    const name = card.querySelector('h4')?.textContent?.trim();
+    const desc = card.querySelector('.product-card-desc')?.textContent?.trim();
+    const priceText = card.querySelector('.product-price')?.textContent || '';
+    const priceMatch = priceText.match(/(\d+)/);
+    const img = card.querySelector('img')?.src;
+    if (!name || !priceMatch) return;
+    products.push({
+      '@type': 'Product',
+      name,
+      description: desc || undefined,
+      image: img || undefined,
+      offers: {
+        '@type': 'Offer',
+        priceCurrency: 'SEK',
+        price: priceMatch[1],
+        availability: 'https://schema.org/InStock',
+        url: 'https://sulitify.shop/',
+      },
+    });
+  });
+
+  const schema = {
+    '@context': 'https://schema.org',
+    '@graph': products,
+  };
+
+  const script = document.createElement('script');
+  script.type = 'application/ld+json';
+  script.textContent = JSON.stringify(schema);
+  document.head.appendChild(script);
+}
+injectProductSchema();
 </script>
 </body>
 </html>
