@@ -1,5 +1,5 @@
 // Sulitify service worker — v1
-const CACHE_NAME = 'sulitify-cache-v23';
+const CACHE_NAME = 'sulitify-cache-v24';
 const OFFLINE_URL = '/';
 
 const CORE_ASSETS = [

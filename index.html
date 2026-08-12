@@ -2436,7 +2436,7 @@ footer {
       <div class="cart-drawer-total">
         <span data-i18n="cart.total">Totalt</span>: <span id="cartDrawerTotal">0 kr</span>
       </div>
-      <button class="btn-primary cart-checkout-btn" onclick="openInfoModal(event, this)" data-modal="checkout" data-i18n="cart.checkout">Till kassan</button>
+      <button class="btn-primary cart-checkout-btn" onclick="startCheckout(event, this)" data-i18n="cart.checkout">Till kassan</button>
     </div>
   </div>
 </div>
@@ -3573,9 +3573,17 @@ const infoModalContent = {
     sv: { title: 'Önskelista', body: 'Önskelistan aktiveras tillsammans med kundkonton vid lansering.' },
     en: { title: 'Wishlist', body: 'The wishlist activates together with customer accounts at launch.' }
   },
-  checkout: {
-    sv: { title: 'Kassan', body: 'Kassan och betalning aktiveras när butiken lanseras. Din varukorg sparas kvar tills då.' },
-    en: { title: 'Checkout', body: 'Checkout and payment activate when the store launches. Your cart is saved until then.' }
+  'order-success': {
+    sv: { title: 'Tack för din beställning!', body: 'Din betalning gick igenom. En bekräftelse skickas till din e-post inom kort.' },
+    en: { title: 'Thank you for your order!', body: 'Your payment went through. A confirmation will be emailed to you shortly.' }
+  },
+  'order-cancelled': {
+    sv: { title: 'Beställningen avbröts', body: 'Ingen betalning gjordes. Din varukorg är fortfarande sparad om du vill försöka igen.' },
+    en: { title: 'Order cancelled', body: 'No payment was made. Your cart is still saved if you want to try again.' }
+  },
+  'checkout-error': {
+    sv: { title: 'Något gick fel', body: 'Vi kunde inte öppna kassan just nu. Försök igen om en liten stund.' },
+    en: { title: 'Something went wrong', body: 'We could not open checkout right now. Please try again shortly.' }
   }
 };
 
@@ -4813,6 +4821,57 @@ const PRODUCT_IMAGES = {
   charger: 'https://picsum.photos/seed/charger/400/300',
   candle: 'https://picsum.photos/seed/candle/400/300',
 };
+
+// ── STRIPE CHECKOUT ──
+async function startCheckout(event, btn) {
+  event.preventDefault();
+  if (cartItems.length === 0) return;
+
+  const originalText = btn.textContent;
+  btn.disabled = true;
+  btn.textContent = '…';
+
+  try {
+    const res = await fetch('/create-checkout-session', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ items: cartItems }),
+    });
+    const data = await res.json();
+
+    if (!res.ok || !data.url) {
+      throw new Error(data.error || 'Kunde inte starta kassan.');
+    }
+    window.location.href = data.url;
+  } catch (err) {
+    console.error('Sulitify checkout error:', err);
+    renderInfoModal('checkout-error');
+    document.getElementById('infoModalOverlay').classList.add('open');
+    btn.disabled = false;
+    btn.textContent = originalText;
+  }
+}
+
+// Kollar om vi kom tillbaka från Stripe (success/cancel) och visar rätt meddelande
+(function handleCheckoutRedirect() {
+  const params = new URLSearchParams(window.location.search);
+  const status = params.get('checkout');
+  if (status === 'success') {
+    cartItems = [];
+    persistCartItems();
+    updateCartUI();
+    renderInfoModal('order-success');
+    document.getElementById('infoModalOverlay').classList.add('open');
+  } else if (status === 'cancelled') {
+    renderInfoModal('order-cancelled');
+    document.getElementById('infoModalOverlay').classList.add('open');
+  }
+  if (status) {
+    params.delete('checkout');
+    const newUrl = window.location.pathname + (params.toString() ? '?' + params.toString() : '');
+    window.history.replaceState({}, '', newUrl);
+  }
+})();
 
 function applyProductImages() {
   document.querySelectorAll('[data-img]').forEach((img) => {
